@@ -6,8 +6,8 @@ import java.sql.SQLException;
 
 public class ConexionBaseDatos {
 
-    //private static String url="jdbc:sqlite:G:\\Mi unidad\\SEMESTRE IV\\PROGRAMACION EN AMBIENTE WEB\\javaweb\\base-project-jsf\\base-project-jsf\\empleado.sqlite";
-    private static String url = "jdbc:postgresql://localhost:5432/empleados";
+    private static String url="jdbc:sqlite:G:\\Mi unidad\\SEMESTRE IV\\PROGRAMACION EN AMBIENTE WEB\\javaweb\\base-project-jsf\\base-project-jsf\\empleado.sqlite";
+    //private static String url = "jdbc:postgresql://localhost:5432/empleados";
 
     public static Connection getConnection(){
 
