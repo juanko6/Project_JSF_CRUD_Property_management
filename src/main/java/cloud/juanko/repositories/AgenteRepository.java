@@ -20,7 +20,7 @@ public class AgenteRepository implements IRepository<Agente>{
                 agente.setCedula(rs.getLong("cedula"));
                 agente.setNombre(rs.getString("nombre"));
                 agente.setApellido(rs.getString("apellido"));
-                agente.setFechaNacimiento(rs.getDate("fecha_nacimiento"));
+                agente.setFechaNacimiento(rs.getString("fecha_nacimiento"));
                 agente.setUsuario(rs.getString("usuario"));
                 agente.setContrasena(rs.getString("contrasena"));
                 agente.setFechaExpedicion(rs.getString("fecha_expedicioncedula"));
@@ -58,7 +58,7 @@ public class AgenteRepository implements IRepository<Agente>{
             stmt.setLong(1, agente.getCedula());
             stmt.setString(2, agente.getNombre());
             stmt.setString(3, agente.getApellido());
-            stmt.setDate(4, (Date) agente.getFechaNacimiento());
+            stmt.setString(4, agente.getFechaNacimiento());
             stmt.setString(5, agente.getUsuario());
             stmt.setString(6, agente.getContrasena());
             stmt.setString(7, agente.getFechaExpedicion());
@@ -106,7 +106,7 @@ public class AgenteRepository implements IRepository<Agente>{
         ) {
             stmt.setString(1, agente.getNombre());
             stmt.setString(2, agente.getApellido());
-            stmt.setDate(3, (Date) agente.getFechaNacimiento());
+            stmt.setString(3, agente.getFechaNacimiento());
             stmt.setString(4, agente.getUsuario());
             stmt.setString(5, agente.getContrasena());
             stmt.setString(6, agente.getFechaExpedicion());
