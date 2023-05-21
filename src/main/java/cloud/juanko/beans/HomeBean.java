@@ -16,8 +16,11 @@ public class HomeBean{
 
     public HomeBean() {
         this.menuList = new ArrayList<>();
-        this.menuList.add(new Menu(1,"Agente", "/proyecto-base-1.0/faces/listar-agente.xhtml"));
-        //this.menuList.add(new Menu(2,"OTRO MENU", "/proyecto-base-1.0/faces/listar-articulo.xhtml"));
+        this.menuList.add(new Menu(1,"Agente", "/ProyectoIntegrador-1.0/faces/listar-agente.xhtml"));
+        this.menuList.add(new Menu(2,"Propietario", "/ProyectoIntegrador-1.0/faces/listar-propietario.xhtml"));
+        this.menuList.add(new Menu(3,"Cliente", "/ProyectoIntegrador-1.0/faces/listar-cliente.xhtml"));
+        this.menuList.add(new Menu(4,"Inmueble", "/ProyectoIntegrador-1.0/faces/listar-inmueble.xhtml"));
+
 
     }
 

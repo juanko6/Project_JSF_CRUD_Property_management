@@ -114,6 +114,8 @@ public class AgenteRepository implements IRepository<Agente>{
             stmt.setString(8, agente.getDireccion());
             stmt.setLong(9, agente.getCelular());
 
+            stmt.setLong(10, agente.getCedula());
+
 
 
             stmt.executeUpdate();
@@ -130,7 +132,7 @@ public class AgenteRepository implements IRepository<Agente>{
 
     @Override
     public boolean validar(String usuario, String contrasena) {
-        System.out.println("Validando empleadorepository " + usuario + contrasena);
+        System.out.println("Validando Agente repository " + usuario + contrasena);
 
 
         try {
@@ -143,7 +145,6 @@ public class AgenteRepository implements IRepository<Agente>{
 
             ResultSet resultSet = statement.executeQuery();
             conect.close();
-            System.out.println(resultSet);
             if (resultSet.next()) {
                 // Usuario y contraseña válidos
                 return true;

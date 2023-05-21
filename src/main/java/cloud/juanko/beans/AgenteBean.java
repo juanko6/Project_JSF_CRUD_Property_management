@@ -49,13 +49,13 @@ public class AgenteBean implements Serializable {
     public String validar(){
 
 
-        System.out.println("entra en empleadoBean "+ getInusuario() + getIncontrasena()+"");
+        System.out.println("entra en AgenteBean "+ getInusuario() + getIncontrasena()+"");
 
         if(agenteService.validar(getInusuario(), getIncontrasena())){
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Bienvenido " + agente.getNombre() +""+agente.getApellido()));
             //PrimeFaces.current().ajax().update("form:messages", "form:dtagente");
 
-            System.out.println("Validando empleado "+getIncontrasena());
+            System.out.println("Validando Agente "+getIncontrasena());
 
             return "listar-agente.xhtml";
         }
