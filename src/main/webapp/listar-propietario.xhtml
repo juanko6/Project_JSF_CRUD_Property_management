@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Bienvenido a Inmobiliaria SA</title>
+    <link href="css/dashboard.css" rel="stylesheet"/>
+</h:head>
+<h:body>
+    <main>
+        <ui:composition template="WEB-INF/plantillas/home.xhtml">
+        <ui:define name="contenido">
+        <h:form id="form">
+            <p:growl id="messages" showDetail="true"/>
+            <div class="card">
+
+                <p:toolbar>
+                    <p:toolbarGroup>
+                        <p:commandButton value="Nuevo Propietario" icon="pi pi-plus" actionListener="#{propietarioBean.irCrear()}"
+                                         update=":dialogs:manage-propietario-content" oncomplete="PF('managePropietarioDialog').show()"
+                                         styleClass="ui-button-success" style="margin-right: .5rem">
+                            <p:resetInput target=":dialogs:manage-propietario-content" />
+                        </p:commandButton>
+
+
+                    </p:toolbarGroup>
+                </p:toolbar>
+
+
+
+                <p:dataTable id="dtpropietario" widgetVar="dtpropietario" var="propietario" value="#{propietarioBean.listar()}"
+                             emptyMessage="No se encuentra"
+                             reflow="true" styleClass="products-table" selection="#{propietarioBean.selectedProducts}"
+                             rowKey="#{propietario.cedula}" paginator="true" rows="10" rowSelectMode="add" paginatorPosition="bottom">
+
+                    <f:facet name="header">
+                        <div class="products-table-header">
+                            <span style="font-weight: bold">PROPIETARIOS</span>
+                            <span class="filter-container ui-input-icon-left"> <i class="pi pi-search"></i>
+                        <p:inputText id="globalFilter" onkeyup="PF('dtpropietario').filter()" placeholder="Search" />
+                    </span>
+                        </div>
+                    </f:facet>
+
+
+
+                    <!-- <p:column selectionMode="multiple" exportable="false"></p:column> -->
+
+                    <p:column headerText="#{msgs['tcedula']}" filterBy="#{propietario.cedula}" filterMatchMode="contains">
+                        <h:outputText value="#{propietario.cedula}"/>
+
+                    </p:column>
+
+                    <p:column headerText="#{msgs['tnombre']}" filterBy="#{propietario.nombre}">
+                        <h:outputText value="#{propietario.nombre}" />
+                    </p:column>
+
+                    <p:column headerText="#{msgs['tapellido']}" filterBy="#{propietario.apellido}">
+                        <h:outputText value="#{propietario.apellido}"/>
+                    </p:column>
+
+                    <p:column headerText="#{msgs['tfechanacimiento']}" filterBy="#{propietario.fechaNacimiento}">
+                        <h:outputText value="#{propietario.fechaNacimiento}" />
+                    </p:column>
+
+                    <p:column headerText="#{msgs['tfechaexpedicion']}" filterBy="#{propietario.fechaExpedicion}">
+                        <h:outputText value="#{propietario.fechaExpedicion}"/>
+                    </p:column>
+
+                    <p:column headerText="#{msgs['tcorreo']}" filterBy="#{propietario.correo}">
+                        <h:outputText value="#{propietario.correo}"/>
+                    </p:column>
+
+                    <p:column headerText="#{msgs['tdireccion']}" filterBy="#{propietario.direccion}">
+                        <h:outputText value="#{propietario.direccion}"/>
+                    </p:column>
+
+                    <p:column headerText="#{msgs['tcelular']}" filterBy="#{propietario.celular}">
+                        <h:outputText value="#{propietario.celular}"/>
+                    </p:column>
+
+                    <p:column exportable="false">
+                        <p:commandButton icon="pi pi-pencil" update=":dialogs:actualizar-propietario-content"
+                                         oncomplete="PF('actualizarPropietarioDialog').show()"
+                                         styleClass="edit-button rounded-button ui-button-success"
+                                         process="@this">
+                            <f:setPropertyActionListener value="#{propietario}" target="#{propietarioBean.agente}"/>
+                            <p:resetInput target=":dialogs:actualizar-propietario-content"/>
+                        </p:commandButton>
+                        <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash"
+                                         process="@this"
+                                         oncomplete="PF('deletePropietarioDialog').show()">
+                            <f:setPropertyActionListener value="#{propietario}" target="#{propietarioBean.propietario}"/>
+                        </p:commandButton>
+                    </p:column>
+
+                </p:dataTable>
+            </div>
+
+            <!-- <h:commandButton action="#{empleadoBean.irCrear()}" value="Crear"/> -->
+
+
+
+            <p:confirmDialog widgetVar="deletePropietarioDialog" showEffect="fade" width="300"
+                             message="Desea eliminar el Propietario?" header="Confirm" severity="warn">
+                <p:commandButton value="Si" icon="pi pi-check" actionListener="#{propietarioBean.eliminar()}"
+                                 process="@this"
+                                 oncomplete="PF('deletePropietarioDialog').hide()"/>
+                <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                 onclick="PF('deletePropietarioDialog').hide()"/>
+            </p:confirmDialog>
+
+        </h:form>
+            <h:form id="dialogs">
+
+                <!--
+                nuevo dialogo para crear empleado
+                   -->
+
+                <p:dialog header="Ingrese Nuevo Propietario" showEffect="fade" modal="true" widgetVar="managePropietarioDialog"
+                          responsive="true">
+                    <p:outputPanel id="manage-propietario-content" class="ui-fluid">
+                        <p:outputPanel rendered="#{not empty propietarioBean.propietario}">
+                            <div class="field">
+                                <p:outputLabel for="cedula">#{msgs['tcedula']}</p:outputLabel>
+                                <p:inputText id="cedula" value="#{propietarioBean.propietario.cedula}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="nombre">#{msgs['tnombre']}</p:outputLabel>
+                                <p:inputText id="nombre" value="#{propietarioBean.propietario.nombre}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="apellido">#{msgs['tapellido']}</p:outputLabel>
+                                <p:inputText id="apellido" value="#{propietarioBean.propietario.apellido}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="fechanacimiento">#{msgs['tfechanacimiento']}</p:outputLabel>
+                                <p:inputText id="fechanacimiento" value="#{propietarioBean.propietario.fechaNacimiento}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="fechaexpedicion">#{msgs['tfechaexpedicion']}</p:outputLabel>
+                                <p:inputText id="fechaexpedicion" value="#{propietarioBean.propietario.fechaExpedicion}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="correo">#{msgs['tcorreo']}</p:outputLabel>
+                                <p:inputText id="correo" value="#{propietarioBean.propietario.correo}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="direccion">#{msgs['tdireccion']}</p:outputLabel>
+                                <p:inputText id="direccion" value="#{propietarioBean.propietario.direccion}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="celular">#{msgs['tcelular']}</p:outputLabel>
+                                <p:inputText id="celular" value="#{propietarioBean.propietario.celular}" required="true"/>
+                            </div>
+
+                        </p:outputPanel>
+                    </p:outputPanel>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{propietarioBean.guardar()}"
+                                         update="manage-propietario-content" process="manage-propietario-content @this"
+                                         oncomplete="PF('managePropietarioDialog').hide()"/>
+                        <p:commandButton value="Cancel" icon="pi pi-times"
+                                         onclick="PF('managePropietarioDialog').hide()"
+                                         class="ui-button-secondary" type="button"/>
+                    </f:facet>
+                </p:dialog>
+
+
+                <!--
+                nuevo dialogo para actualizar
+                -->
+
+                <p:dialog header="Detalles del Propietario" showEffect="fade" modal="true" widgetVar="actualizarPropietarioDialog"
+                          responsive="true">
+                    <p:outputPanel id="actualizar-propietario-content" class="ui-fluid">
+                        <p:outputPanel rendered="#{not empty propietarioBean.propietario}">
+                            <!--<div class="field">
+                                <p:outputLabel for="cedula">#{msgs['tcedula']}</p:outputLabel>
+                                <p:inputText id="actcedula" value="#{agenteBean.empleado.id}" required="true"/>
+                            </div>-->
+                            <div class="field">
+                                <p:outputLabel for="nombre">#{msgs['tnombre']}</p:outputLabel>
+                                <p:inputText id="actnombre" value="#{propietarioBean.propietario.nombre}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="apellido">#{msgs['tapellido']}</p:outputLabel>
+                                <p:inputText id="actapellido" value="#{propietarioBean.propietario.apellido}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="fechanacimiento">#{msgs['tfechanacimiento']}</p:outputLabel>
+                                <p:inputText id="actfechanacimiento" value="#{propietarioBean.propietario.fechaNacimiento}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="fechaexpedicion">#{msgs['tfechaexpedicion']}</p:outputLabel>
+                                <p:inputText id="actfechaexpedicion" value="#{propietarioBean.propietario.fechaExpedicion}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="correo">#{msgs['tcorreo']}</p:outputLabel>
+                                <p:inputText id="actcorreo" value="#{propietarioBean.propietario.correo}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="direccion">#{msgs['tdireccion']}</p:outputLabel>
+                                <p:inputText id="actdireccion" value="#{propietarioBean.propietario.direccion}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="celular">#{msgs['tcelular']}</p:outputLabel>
+                                <p:inputText id="actcelular" value="#{propietarioBean.propietario.celular}" required="true"/>
+                            </div>
+
+                        </p:outputPanel>
+                    </p:outputPanel>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{propietarioBean.actualizar()}"
+                                         update="actualizar-propietario-content" process="actualizar-propietario-content @this"
+                                         oncomplete="PF('actualizarPropietarioDialog').hide()"/>
+                        <p:commandButton value="Cancel" icon="pi pi-times"
+                                         onclick="PF('actualizarPropietarioDialog').hide()"
+                                         class="ui-button-secondary" type="button"/>
+                    </f:facet>
+                </p:dialog>
+
+        </h:form>
+        </ui:define>
+        </ui:composition>
+    </main>
+
+</h:body>
+</html>
