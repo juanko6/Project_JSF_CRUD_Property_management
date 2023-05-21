@@ -4,30 +4,41 @@ package cloud.juanko.models;
 public class Agente {
 
     private int id;
-
+    private Long cedula;
     private String nombre;
-    private String ciudad;
-    private String departamento;
-    private int salario;
+    private String apellido;
+    private String fechaNacimiento;
+    private String usuario;
+    private String contrasena;
+    private String fechaExpedicion;
+    private String correo;
+    private String direccion;
+    private Long celular;
 
-    public Agente(int id, String nombre, String ciudad, String departamento, int salario) {
-        this.id = id;
+
+    public Agente(Long cedula, String nombre, String apellido, String fechaNacimiento, String usuario, String contrasena, String fechaExpedicion, String correo, String direccion, Long celular) {
+        this.cedula = cedula;
         this.nombre = nombre;
-        this.ciudad = ciudad;
-        this.departamento = departamento;
-        this.salario = salario;
+        this.apellido = apellido;
+        this.fechaNacimiento = fechaNacimiento;
+        this.usuario = usuario;
+        this.contrasena = contrasena;
+        this.fechaExpedicion = fechaExpedicion;
+        this.correo = correo;
+        this.direccion = direccion;
+        this.celular = celular;
     }
 
     public Agente() {
 
     }
 
-    public int getId() {
-        return id;
+    public Long getCedula() {
+        return cedula;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setCedula(Long cedula) {
+        this.cedula = cedula;
     }
 
     public String getNombre() {
@@ -38,27 +49,75 @@ public class Agente {
         this.nombre = nombre;
     }
 
-    public String getCiudad() {
-        return ciudad;
+    public String getApellido() {
+        return apellido;
     }
 
-    public void setCiudad(String ciudad) {
-        this.ciudad = ciudad;
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
     }
 
-    public String getDepartamento() {
-        return departamento;
+    public String getFechaNacimiento() {
+        return fechaNacimiento;
     }
 
-    public void setDepartamento(String departamento) {
-        this.departamento = departamento;
+    public void setFechaNacimiento(String fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
     }
 
-    public int getSalario() {
-        return salario;
+    public String getUsuario() {
+        return usuario;
     }
 
-    public void setSalario(int salario) {
-        this.salario = salario;
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getContrasena() {
+        return contrasena;
+    }
+
+    public void setContrasena(String contrasena) {
+        this.contrasena = contrasena;
+    }
+
+    public String getFechaExpedicion() {
+        return fechaExpedicion;
+    }
+
+    public void setFechaExpedicion(String fechaExpedicion) {
+        this.fechaExpedicion = fechaExpedicion;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public Long getCelular() {
+        return celular;
+    }
+
+    public void setCelular(Long celular) {
+        this.celular = celular;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

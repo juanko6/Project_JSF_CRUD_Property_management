@@ -1,5 +1,6 @@
 package cloud.juanko.repositories;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface IRepository<T> {
@@ -7,11 +8,11 @@ public interface IRepository<T> {
     T consultar();
     boolean crear(T t);
 
-    boolean eliminar(int id);
+    boolean eliminar(Long cedula);
 
     boolean actualizar(T t);
 
-    boolean validar(int id, String nombre);
+    boolean validar(String usuario, String contrasena);
 
 
 }

@@ -13,15 +13,20 @@ public class AgenteRepository implements IRepository<Agente>{
         Connection conect = ConexionBaseDatos.getConnection();
 
         try (Statement stmt = conect.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT * FROM empleados")
+             ResultSet rs = stmt.executeQuery("SELECT * FROM agente_comercial")
         ) {
             while(rs.next()){
                 Agente agente = new Agente();
-                agente.setId(rs.getInt("id"));
+                agente.setCedula(rs.getLong("cedula"));
                 agente.setNombre(rs.getString("nombre"));
-                agente.setCiudad(rs.getString("ciudad"));
-                agente.setDepartamento(rs.getString("departament"));
-                agente.setSalario(rs.getInt("salario"));
+                agente.setApellido(rs.getString("apellido"));
+                agente.setFechaNacimiento(rs.getDate("fecha_nacimiento"));
+                agente.setUsuario(rs.getString("usuario"));
+                agente.setContrasena(rs.getString("contrasena"));
+                agente.setFechaExpedicion(rs.getString("fecha_expedicioncedula"));
+                agente.setCorreo(rs.getString("correo"));
+                agente.setDireccion(rs.getString("direccion"));
+                agente.setCelular(rs.getLong("celular"));
 
                 listaAgente.add(agente);
 
@@ -45,16 +50,21 @@ public class AgenteRepository implements IRepository<Agente>{
     public boolean crear(Agente agente) {
 
         Connection conect = ConexionBaseDatos.getConnection();
-        String sql =  "insert into empleados (id, nombre, ciudad, departament, salario) values (?,?,?,?,?)";
+        String sql =  "insert into agente_comercial (cedula, nombre, apellido, fecha_nacimiento, usuario, contrasena, fecha_expedicioncedula, correo, direccion, celular) values (?,?,?,?,?,?,?,?,?,?)";
 
         try(
                 PreparedStatement stmt = conect.prepareStatement(sql)
         ) {
-            stmt.setInt(1, agente.getId());
+            stmt.setLong(1, agente.getCedula());
             stmt.setString(2, agente.getNombre());
-            stmt.setString(3, agente.getDepartamento());
-            stmt.setString(4, agente.getCiudad());
-            stmt.setInt(5, agente.getSalario());
+            stmt.setString(3, agente.getApellido());
+            stmt.setDate(4, (Date) agente.getFechaNacimiento());
+            stmt.setString(5, agente.getUsuario());
+            stmt.setString(6, agente.getContrasena());
+            stmt.setString(7, agente.getFechaExpedicion());
+            stmt.setString(8, agente.getCorreo());
+            stmt.setString(9, agente.getDireccion());
+            stmt.setLong(10, agente.getCelular());
             stmt.executeUpdate();
             return true;
 
@@ -66,14 +76,14 @@ public class AgenteRepository implements IRepository<Agente>{
 
 
     @Override
-    public boolean eliminar(int id) {
+    public boolean eliminar(Long cedula) {
         Connection conect = ConexionBaseDatos.getConnection();
-        String sql =  "delete from empleados where id = ?";
+        String sql =  "delete from agente_comercial where cedula = ?";
 
         try(
                 PreparedStatement stmt = conect.prepareStatement(sql)
         ) {
-            stmt.setInt(1,id);
+            stmt.setLong(1,cedula);
             stmt.executeUpdate();
             conect.close();
             return true;
@@ -89,19 +99,25 @@ public class AgenteRepository implements IRepository<Agente>{
 
         Connection conect = ConexionBaseDatos.getConnection();
 
-        String sql =  "update empleados SET nombre = ?, departament = ?, salario = ?, ciudad = ? WHERE id = ?";
+        String sql =  "update agente_comercial SET nombre = ?, apellido = ?, fecha_nacimiento = ?, usuario = ?, contrasena = ?, fecha_expedicioncedula = ?, correo = ?, direccion = ?, celular = ? WHERE cedula = ?";
 
         try(
                 PreparedStatement stmt = conect.prepareStatement(sql);
         ) {
             stmt.setString(1, agente.getNombre());
-            stmt.setString(2, agente.getDepartamento());
-            stmt.setInt(3, agente.getSalario());
-            stmt.setString(4, agente.getCiudad());
-            stmt.setInt(5, agente.getId());
+            stmt.setString(2, agente.getApellido());
+            stmt.setDate(3, (Date) agente.getFechaNacimiento());
+            stmt.setString(4, agente.getUsuario());
+            stmt.setString(5, agente.getContrasena());
+            stmt.setString(6, agente.getFechaExpedicion());
+            stmt.setString(7, agente.getCorreo());
+            stmt.setString(8, agente.getDireccion());
+            stmt.setLong(9, agente.getCelular());
+
+
 
             stmt.executeUpdate();
-            System.out.println("se actualizo empleado");
+            System.out.println("se actualizo Agente");
             conect.close();
             return true;
 
@@ -113,20 +129,21 @@ public class AgenteRepository implements IRepository<Agente>{
 
 
     @Override
-    public boolean validar(int id, String nombre) {
-        System.out.println("Validando empleadorepository " + id + nombre);
+    public boolean validar(String usuario, String contrasena) {
+        System.out.println("Validando empleadorepository " + usuario + contrasena);
 
 
         try {
             Connection conect = ConexionBaseDatos.getConnection();
-            String query = "SELECT * FROM empleados WHERE nombre = ? AND id = ?";
+            String query = "SELECT * FROM agente_comercial WHERE usuario = ? AND contrasena = ?";
 
             PreparedStatement statement = conect.prepareStatement(query);
-            statement.setString(1, nombre);
-            statement.setInt(2, id);
+            statement.setString(1, usuario);
+            statement.setString(2, contrasena);
 
             ResultSet resultSet = statement.executeQuery();
             conect.close();
+            System.out.println(resultSet);
             if (resultSet.next()) {
                 // Usuario y contraseña válidos
                 return true;

@@ -21,10 +21,8 @@ import java.util.Map;
 public class AgenteBean implements Serializable {
     private AgenteService agenteService;
     private Agente agente;
-    private Map<String, String> departamentos = new HashMap<>();
-    private String labeled;
-    private int inid;
-    private String innombre ;
+    private String inusuario;
+    private String incontrasena ;
     private Agente selectedProduct;
 
     private List<Agente> selectedProducts;
@@ -36,13 +34,6 @@ public class AgenteBean implements Serializable {
         agente = new Agente();
         agenteService = new AgenteService();
 
-        departamentos = new HashMap<>();
-        departamentos.put("New York", "New York");
-        departamentos.put("London", "London");
-        departamentos.put("Paris", "Paris");
-        departamentos.put("Barcelona", "Barcelona");
-        departamentos.put("Istanbul", "Istanbul");
-        departamentos.put("Berlin", "Berlin");
     }
 
 
@@ -58,15 +49,15 @@ public class AgenteBean implements Serializable {
     public String validar(){
 
 
-        System.out.println("entra en empleadoBean "+ getInid() + getInnombre()+"");
+        System.out.println("entra en empleadoBean "+ getInusuario() + getIncontrasena()+"");
 
-        if(agenteService.validar(getInid(), getInnombre())){
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Bienvenido " + getInnombre()));
-            //PrimeFaces.current().ajax().update("form:messages", "form:dtempleados");
+        if(agenteService.validar(getInusuario(), getIncontrasena())){
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Bienvenido " + agente.getNombre() +""+agente.getApellido()));
+            //PrimeFaces.current().ajax().update("form:messages", "form:dtagente");
 
-            System.out.println("Validando empleado "+getInnombre());
+            System.out.println("Validando empleado "+getIncontrasena());
 
-            return "listar-empleado.xhtml";
+            return "listar-agente.xhtml";
         }
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("usuario o contraseña no coincide"));
 
@@ -88,46 +79,47 @@ public class AgenteBean implements Serializable {
 
     public String guardar(){
 
-        System.out.println("Nombre Empleado "+ agente.getNombre());
+        System.out.println("Nombre Agente "+ agente.getNombre());
         if(agenteService.guardar(agente)){
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Empleado Creado"));
-            PrimeFaces.current().ajax().update("form:messages", "form:dtempleados");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Agente Creado"));
+            PrimeFaces.current().ajax().update("form:messages", "form:dtagentes");
 
-            return "listar-empleado.xhtml";
+            return "listar-agente.xhtml";
         }
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Falló creando Empleado"));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Falló creando Agente"));
 
-        return "crear-empleado.xhtml";
+        return "listar-agente.xhtml";
 
     }
 
     public String irCrear() {
-       return null;
+        this.agente = new Agente();
+       return "crear-agente.xhtml";
     }
 
     public void eliminar(){
         System.out.println("Eliminar "+ agente.getNombre());
-        if(agenteService.eliminar(agente.getId())){
+        if(agenteService.eliminar(agente.getCedula())){
             System.out.println("Eliminación correcta");
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Empleado Eliminado"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Agente Eliminado"));
         }else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Falló eliminando Empleado"));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Falló eliminando Agente"));
         }
 
-        PrimeFaces.current().ajax().update("form:messages", "form:dtempleados");
+        PrimeFaces.current().ajax().update("form:messages", "form:dtagentes");
     }
 
     public String actualizar(){
         System.out.println("Actualizar "+this.agente.getNombre());
         if(agenteService.actualizar(agente)){
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Empleado Actualizado"));
-            PrimeFaces.current().ajax().update("form:messages", "form:dtempleados");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Agente Actualizado"));
+            PrimeFaces.current().ajax().update("form:messages", "form:dtagentes");
 
-            return "listar-empleado.xhtml";
+            return "listar-agente.xhtml";
         }
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Falló Actualizando Empleado"));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Falló Actualizando Agente"));
 
-        return "listar-empleado.xhtml";
+        return "listar-agente.xhtml";
     }
 
     public Agente getSelectedProduct() {
@@ -146,44 +138,35 @@ public class AgenteBean implements Serializable {
         this.selectedProducts = selectedProducts;
     }
 
-    public List<Agente> getEmpleados() {
+    public List<Agente> getAgentes() {
         return agentes;
     }
 
-    public void setEmpleados(List<Agente> agentes) {
+    public void setAgentes(List<Agente> agentes) {
         this.agentes = agentes;
     }
 
-
-    public String getInnombre() {
-        return innombre;
+        public Agente getAgente() {
+        return agente;
     }
 
-    public void setInnombre(String innombre) {
-        this.innombre = innombre;
+    public void setAgente(Agente agente) {
+        this.agente = agente;
     }
 
-    public int getInid() {
-        return inid;
+    public String getInusuario() {
+        return inusuario;
     }
 
-    public void setInid(int inid) {
-        this.inid = inid;
+    public void setInusuario(String inusuario) {
+        this.inusuario = inusuario;
     }
 
-    public String getLabeled() {
-        return labeled;
+    public String getIncontrasena() {
+        return incontrasena;
     }
 
-    public void setLabeled(String labeled) {
-        this.labeled = labeled;
-    }
-
-    public Map<String, String> getDepartamentos() {
-        return departamentos;
-    }
-
-    public void setDepartamentos(Map<String, String> departamentos) {
-        this.departamentos = departamentos;
+    public void setIncontrasena(String incontrasena) {
+        this.incontrasena = incontrasena;
     }
 }

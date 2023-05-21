@@ -7,16 +7,16 @@ import java.util.List;
 
 public class AgenteService implements IService<Agente>{
 
-    private AgenteRepository empleadorepository;
+    private AgenteRepository agenteRepository;
 
     public AgenteService() {
-        empleadorepository = new AgenteRepository();
+        agenteRepository = new AgenteRepository();
     }
 
     public List<Agente> listar(){
 
 
-        List<Agente> listaAgente = empleadorepository.listar();
+        List<Agente> listaAgente = agenteRepository.listar();
         /*Empleado empleado1 = new Empleado(1,"Juan", "Tulua", "Valle", 100L);
         Empleado empleado2 = new Empleado(1,"Mar", "Cali", "Valle", 200L);
         Empleado empleado3 = new Empleado(1,"Anto", "Buga", "Valle", 300L);
@@ -38,24 +38,24 @@ public class AgenteService implements IService<Agente>{
 
     @Override
     public boolean guardar(Agente agente) {
-        return empleadorepository.crear(agente);
+        return agenteRepository.crear(agente);
     }
 
     @Override
-    public boolean eliminar(int id) {
-        return empleadorepository.eliminar(id);
+    public boolean eliminar(Long cedula) {
+        return agenteRepository.eliminar(cedula);
     }
 
     @Override
     public boolean actualizar(Agente agente) {
-        return empleadorepository.actualizar(agente);
+        return agenteRepository.actualizar(agente);
     }
 
     @Override
-    public boolean validar(int id, String nombre) {
-        System.out.println("Validando empleadoservice" + id + nombre);
+    public boolean validar(String usuario, String contrasena) {
+        System.out.println("Validando Agenteservice" + usuario +" "+ contrasena);
 
-        return empleadorepository.validar(id, nombre);
+        return agenteRepository.validar(usuario, contrasena);
 
     }
 

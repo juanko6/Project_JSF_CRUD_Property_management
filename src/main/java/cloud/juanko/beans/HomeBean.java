@@ -16,7 +16,7 @@ public class HomeBean{
 
     public HomeBean() {
         this.menuList = new ArrayList<>();
-        this.menuList.add(new Menu(1,"Empleado", "/proyecto-base-1.0/faces/listar-empleado.xhtml"));
+        this.menuList.add(new Menu(1,"Agente", "/proyecto-base-1.0/faces/listar-agente.xhtml"));
         //this.menuList.add(new Menu(2,"OTRO MENU", "/proyecto-base-1.0/faces/listar-articulo.xhtml"));
 
     }

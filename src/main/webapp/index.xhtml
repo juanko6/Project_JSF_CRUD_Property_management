@@ -12,7 +12,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="description" content=""/>
 
-    <title>Signin Template · Bootstrap v5.3</title>
+    <title>Inicio de Sesion Inmobiliaria SA</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous"/>
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sign-in/"/>
 
@@ -80,26 +80,26 @@
 
 
 <main class="form-signin w-100 m-auto">
-    <h:form id="dtempleados">
+    <h:form id="dtagentes">
         <p:growl id="messages" showDetail="true"/>
         <img class="mb-4" src="img/bootstrap-logo.svg" alt="" width="72" height="57"/>
-        <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+        <h1 class="h3 mb-3 fw-normal">#{msgs['tinisesion']}</h1>
 
         <div class="form-floating">
-            <h:inputText type="text" class="form-control" id="innombres" value="#{empleadoBean.innombre}"/>
-            <h:outputLabel for="innombres" value="Nombre"/>
+            <h:inputText type="text" class="form-control" id="inusuario" value="#{agenteBean.inusuario}"/>
+            <h:outputLabel for="inusuario" value="#{msgs['tusuario']}"/>
         </div>
         <div class="form-floating">
-            <h:inputText type="number" class="form-control" id="inids" value="#{empleadoBean.inid}"/>
-            <h:outputLabel for="inids" value="Id"/>
+            <h:inputText type="password" class="form-control" id="incontrasena" value="#{agenteBean.incontrasena}"/>
+            <h:outputLabel for="incontrasena" value="#{msgs['tcontrasena']}"/>
         </div>
 
         <div class="checkbox mb-3">
             <label>
-                <input type="checkbox" value="remember-me"> Remember me </input>
+                <input type="checkbox" value="remember-me"> #{msgs['trecordar']}</input>
             </label>
         </div>
-        <h:commandButton value="#{msgs['empleadoIniciarSesion']}" class="w-100 btn btn-lg btn-primary" type="submit" action="#{empleadoBean.validar()}" process="@this"/>
+        <h:commandButton value="#{msgs['tinisesion']}" class="w-100 btn btn-lg btn-primary" type="submit" action="#{agenteBean.validar()}" process="@this"/>
         <p class="mt-5 mb-3 text-body-secondary">PI 2023</p>
     </h:form>
 

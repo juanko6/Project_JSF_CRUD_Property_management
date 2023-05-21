@@ -7,9 +7,9 @@ public interface IService <T> {
     T consultar();
 
     boolean guardar(T o);
-    boolean eliminar(int id);
+    boolean eliminar(Long cedula);
 
     boolean actualizar(T o);
 
-    boolean validar(int id, String nombre);
+    boolean validar(String usuario, String contrasena);
 }
