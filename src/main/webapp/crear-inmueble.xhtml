@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+   <title>Crear Inmueble Inmobiliaria SA</title>
+</h:head>
+<h:body>
+   <main>
+
+      <h:form>
+         <p:panel header="Crear Inmueble">
+            <p:messages/>
+            <h:panelGrid columns="2" columnClasses="label, value">
+
+               <h:outputText value="Codigo: *"/>
+               <p:inputText value="#{inmuebleBean.inmueble.codigo}" required="true" label="codigo"/>
+
+               <h:outputText value="Descripcion: *"/>
+               <p:inputText value="#{inmuebleBean.inmueble.descripcion}" required="true" label="descripcion"/>
+
+               <h:outputText value="Tipo: *"/>
+               <p:inputText value="#{inmuebleBean.inmueble.tipo}" required="true" label="tipo"/>
+
+               <h:outputText value="Estado: *"/>
+               <p:inputText value="#{inmuebleBean.inmueble.estado}" required="true" label="estado"/>
+
+
+               <h:outputText value="Tamano_m2: *"/>
+               <p:inputText value="#{inmuebleBean.inmueble.tamano_m2}" required="true" label="tamano_m2"/>
+
+               <h:outputText value="Modalidad: *"/>
+               <p:inputText value="#{inmuebleBean.inmueble.modalidad}" required="true" label="modalidad"/>
+
+               <h:outputText value="Direccion: *"/>
+               <p:inputText value="#{inmuebleBean.inmueble.direccion}" required="true" label="direccion"/>
+
+               <h:outputText value="Precio: *"/>
+               <p:inputText value="#{inmuebleBean.inmueble.precio}" required="true" label="precio"/>
+
+               <h:outputText value="Cantidad de baños: *"/>
+               <p:inputText value="#{inmuebleBean.inmueble.cant_banos}" required="true" label="cantidad de baños"/>
+
+               <h:outputText value="Fotos: *"/>
+               <p:inputText value="#{inmuebleBean.inmueble.fotos}" required="true" label="fotos"/>
+
+               <h:outputText value="Ubicacion: *"/>
+               <p:inputText value="#{inmuebleBean.inmueble.ubicacion}" required="true" label="ubicacion"/>
+
+
+
+            </h:panelGrid>
+            <h:commandButton value="Guardar" action="#{inmuebleBean.guardar()}"/>
+         </p:panel>
+      </h:form>
+   </main>
+</h:body>
+</html>
+
+

@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Bienvenido a Inmobiliaria SA</title>
+    <link href="css/dashboard.css" rel="stylesheet"/>
+</h:head>
+<h:body>
+    <main>
+        <ui:composition template="WEB-INF/plantillas/home.xhtml">
+        <ui:define name="contenido">
+        <h:form id="form">
+            <p:growl id="messages" showDetail="true"/>
+            <div class="card">
+
+                <p:toolbar>
+                    <p:toolbarGroup>
+                        <p:commandButton value="Nuevo Cliente" icon="pi pi-plus" actionListener="#{clienteBean.irCrear()}"
+                                         update=":dialogs:manage-cliente-content" oncomplete="PF('manageClienteDialog').show()"
+                                         styleClass="ui-button-success" style="margin-right: .5rem">
+                            <p:resetInput target=":dialogs:manage-cliente-content" />
+                        </p:commandButton>
+
+
+                    </p:toolbarGroup>
+                </p:toolbar>
+
+
+
+                <p:dataTable id="dtcliente" widgetVar="dtcliente" var="cliente" value="#{clienteBean.listar()}"
+                             emptyMessage="No se encuentra"
+                             reflow="true" styleClass="products-table" selection="#{clienteBean.selectedProducts}"
+                             rowKey="#{cliente.cedula}" paginator="true" rows="10" rowSelectMode="add" paginatorPosition="bottom">
+
+                    <f:facet name="header">
+                        <div class="products-table-header">
+                            <span style="font-weight: bold">ClienteS</span>
+                            <span class="filter-container ui-input-icon-left"> <i class="pi pi-search"></i>
+                        <p:inputText id="globalFilter" onkeyup="PF('dtcliente').filter()" placeholder="Search" />
+                    </span>
+                        </div>
+                    </f:facet>
+
+
+
+                    <!-- <p:column selectionMode="multiple" exportable="false"></p:column> -->
+
+                    <p:column headerText="#{msgs['tcedula']}" filterBy="#{cliente.cedula}" filterMatchMode="contains">
+                        <h:outputText value="#{cliente.cedula}"/>
+
+                    </p:column>
+
+                    <p:column headerText="#{msgs['tnombre']}" filterBy="#{cliente.nombre}">
+                        <h:outputText value="#{cliente.nombre}" />
+                    </p:column>
+
+                    <p:column headerText="#{msgs['tapellido']}" filterBy="#{cliente.apellido}">
+                        <h:outputText value="#{cliente.apellido}"/>
+                    </p:column>
+
+                    <p:column headerText="#{msgs['tfechanacimiento']}" filterBy="#{cliente.fechaNacimiento}">
+                        <h:outputText value="#{cliente.fechaNacimiento}" />
+                    </p:column>
+
+                    <p:column headerText="#{msgs['tfechaexpedicion']}" filterBy="#{cliente.fechaExpedicion}">
+                        <h:outputText value="#{cliente.fechaExpedicion}"/>
+                    </p:column>
+
+                    <p:column headerText="#{msgs['tcorreo']}" filterBy="#{cliente.correo}">
+                        <h:outputText value="#{cliente.correo}"/>
+                    </p:column>
+
+                    <p:column headerText="#{msgs['tdireccion']}" filterBy="#{cliente.direccion}">
+                        <h:outputText value="#{cliente.direccion}"/>
+                    </p:column>
+
+                    <p:column headerText="#{msgs['tcelular']}" filterBy="#{cliente.celular}">
+                        <h:outputText value="#{cliente.celular}"/>
+                    </p:column>
+
+                    <p:column exportable="false">
+                        <p:commandButton icon="pi pi-pencil" update=":dialogs:actualizar-cliente-content"
+                                         oncomplete="PF('actualizarClienteDialog').show()"
+                                         styleClass="edit-button rounded-button ui-button-success"
+                                         process="@this">
+                            <f:setPropertyActionListener value="#{cliente}" target="#{clienteBean.cliente}"/>
+                            <p:resetInput target=":dialogs:actualizar-cliente-content"/>
+                        </p:commandButton>
+                        <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash"
+                                         process="@this"
+                                         oncomplete="PF('deleteClienteDialog').show()">
+                            <f:setPropertyActionListener value="#{cliente}" target="#{clienteBean.cliente}"/>
+                        </p:commandButton>
+                    </p:column>
+
+                </p:dataTable>
+            </div>
+
+            <!-- <h:commandButton action="#{empleadoBean.irCrear()}" value="Crear"/> -->
+
+
+
+            <p:confirmDialog widgetVar="deleteClienteDialog" showEffect="fade" width="300"
+                             message="Desea eliminar el Cliente?" header="Confirm" severity="warn">
+                <p:commandButton value="Si" icon="pi pi-check" actionListener="#{clienteBean.eliminar()}"
+                                 process="@this"
+                                 oncomplete="PF('deleteClienteDialog').hide()"/>
+                <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                 onclick="PF('deleteClienteDialog').hide()"/>
+            </p:confirmDialog>
+
+        </h:form>
+            <h:form id="dialogs">
+
+                <!--
+                nuevo dialogo para crear empleado
+                   -->
+
+                <p:dialog header="Ingrese Nuevo Cliente" showEffect="fade" modal="true" widgetVar="manageClienteDialog"
+                          responsive="true">
+                    <p:outputPanel id="manage-cliente-content" class="ui-fluid">
+                        <p:outputPanel rendered="#{not empty clienteBean.cliente}">
+                            <div class="field">
+                                <p:outputLabel for="cedula">#{msgs['tcedula']}</p:outputLabel>
+                                <p:inputText id="cedula" value="#{clienteBean.cliente.cedula}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="nombre">#{msgs['tnombre']}</p:outputLabel>
+                                <p:inputText id="nombre" value="#{clienteBean.cliente.nombre}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="apellido">#{msgs['tapellido']}</p:outputLabel>
+                                <p:inputText id="apellido" value="#{clienteBean.cliente.apellido}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="fechanacimiento">#{msgs['tfechanacimiento']}</p:outputLabel>
+                                <p:inputText id="fechanacimiento" value="#{clienteBean.cliente.fechaNacimiento}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="fechaexpedicion">#{msgs['tfechaexpedicion']}</p:outputLabel>
+                                <p:inputText id="fechaexpedicion" value="#{clienteBean.cliente.fechaExpedicion}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="correo">#{msgs['tcorreo']}</p:outputLabel>
+                                <p:inputText id="correo" value="#{clienteBean.cliente.correo}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="direccion">#{msgs['tdireccion']}</p:outputLabel>
+                                <p:inputText id="direccion" value="#{clienteBean.cliente.direccion}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="celular">#{msgs['tcelular']}</p:outputLabel>
+                                <p:inputText id="celular" value="#{clienteBean.cliente.celular}" required="true"/>
+                            </div>
+
+                        </p:outputPanel>
+                    </p:outputPanel>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{clienteBean.guardar()}"
+                                         update="manage-cliente-content" process="manage-cliente-content @this"
+                                         oncomplete="PF('manageClienteDialog').hide()"/>
+                        <p:commandButton value="Cancel" icon="pi pi-times"
+                                         onclick="PF('manageClienteDialog').hide()"
+                                         class="ui-button-secondary" type="button"/>
+                    </f:facet>
+                </p:dialog>
+
+
+                <!--
+                nuevo dialogo para actualizar
+                -->
+
+                <p:dialog header="Detalles del Cliente" showEffect="fade" modal="true" widgetVar="actualizarClienteDialog"
+                          responsive="true">
+                    <p:outputPanel id="actualizar-cliente-content" class="ui-fluid">
+                        <p:outputPanel rendered="#{not empty clienteBean.cliente}">
+                            <!--<div class="field">
+                                <p:outputLabel for="cedula">#{msgs['tcedula']}</p:outputLabel>
+                                <p:inputText id="actcedula" value="#{agenteBean.empleado.id}" required="true"/>
+                            </div>-->
+                            <div class="field">
+                                <p:outputLabel for="nombre">#{msgs['tnombre']}</p:outputLabel>
+                                <p:inputText id="actnombre" value="#{clienteBean.cliente.nombre}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="apellido">#{msgs['tapellido']}</p:outputLabel>
+                                <p:inputText id="actapellido" value="#{clienteBean.cliente.apellido}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="fechanacimiento">#{msgs['tfechanacimiento']}</p:outputLabel>
+                                <p:inputText id="actfechanacimiento" value="#{clienteBean.cliente.fechaNacimiento}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="fechaexpedicion">#{msgs['tfechaexpedicion']}</p:outputLabel>
+                                <p:inputText id="actfechaexpedicion" value="#{clienteBean.cliente.fechaExpedicion}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="correo">#{msgs['tcorreo']}</p:outputLabel>
+                                <p:inputText id="actcorreo" value="#{clienteBean.cliente.correo}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="direccion">#{msgs['tdireccion']}</p:outputLabel>
+                                <p:inputText id="actdireccion" value="#{clienteBean.cliente.direccion}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="celular">#{msgs['tcelular']}</p:outputLabel>
+                                <p:inputText id="actcelular" value="#{clienteBean.cliente.celular}" required="true"/>
+                            </div>
+
+                        </p:outputPanel>
+                    </p:outputPanel>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{clienteBean.actualizar()}"
+                                         update="actualizar-cliente-content" process="actualizar-cliente-content @this"
+                                         oncomplete="PF('actualizarClienteDialog').hide()"/>
+                        <p:commandButton value="Cancel" icon="pi pi-times"
+                                         onclick="PF('actualizarClienteDialog').hide()"
+                                         class="ui-button-secondary" type="button"/>
+                    </f:facet>
+                </p:dialog>
+
+        </h:form>
+        </ui:define>
+        </ui:composition>
+    </main>
+
+</h:body>
+</html>

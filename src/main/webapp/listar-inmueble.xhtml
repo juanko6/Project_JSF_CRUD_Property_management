@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Bienvenido a Inmobiliaria SA</title>
+    <link href="css/dashboard.css" rel="stylesheet"/>
+</h:head>
+<h:body>
+    <main>
+        <ui:composition template="WEB-INF/plantillas/home.xhtml">
+        <ui:define name="contenido">
+        <h:form id="form">
+            <p:growl id="messages" showDetail="true"/>
+            <div class="card">
+
+                <p:toolbar>
+                    <p:toolbarGroup>
+                        <p:commandButton value="Nuevo Inmueble" icon="pi pi-plus" actionListener="#{inmuebleBean.irCrear()}"
+                                         update=":dialogs:manage-inmueble-content" oncomplete="PF('manageInmuebleDialog').show()"
+                                         styleClass="ui-button-success" style="margin-right: .5rem">
+                            <p:resetInput target=":dialogs:manage-inmueble-content" />
+                        </p:commandButton>
+
+
+                    </p:toolbarGroup>
+                </p:toolbar>
+
+
+
+                <p:dataTable id="dtinmueble" widgetVar="dtinmueble" var="inmueble" value="#{inmuebleBean.listar()}"
+                             emptyMessage="No se encuentra"
+                             reflow="true" styleClass="products-table" selection="#{inmuebleBean.selectedProducts}"
+                             rowKey="#{inmueble.codigo}" paginator="true" rows="10" rowSelectMode="add" paginatorPosition="bottom">
+
+                    <f:facet name="header">
+                        <div class="products-table-header">
+                            <span style="font-weight: bold">InmuebleS</span>
+                            <span class="filter-container ui-input-icon-left"> <i class="pi pi-search"></i>
+                        <p:inputText id="globalFilter" onkeyup="PF('dtinmueble').filter()" placeholder="Search" />
+                    </span>
+                        </div>
+                    </f:facet>
+
+
+
+                    <!-- <p:column selectionMode="multiple" exportable="false"></p:column> -->
+
+                    <p:column headerText="#{msgs['tcodigo']}" filterBy="#{inmueble.codigo}" filterMatchMode="contains">
+                        <h:outputText value="#{inmueble.codigo}"/>
+
+                    </p:column>
+
+                    <p:column headerText="#{msgs['tdescripcion']}" filterBy="#{inmueble.descripcion}">
+                        <h:outputText value="#{inmueble.descripcion}" />
+                    </p:column>
+
+                    <p:column headerText="#{msgs['ttipo']}" filterBy="#{inmueble.tipo}">
+                        <h:outputText value="#{inmueble.tipo}"/>
+                    </p:column>
+
+                    <p:column headerText="#{msgs['testado']}" filterBy="#{inmueble.estado}">
+                        <h:outputText value="#{inmueble.estado}" />
+                    </p:column>
+
+                    <p:column headerText="#{msgs['ttamano_m2']}" filterBy="#{inmueble.tamano_m2}">
+                        <h:outputText value="#{inmueble.tamano_m2}"/>
+                    </p:column>
+
+                    <p:column headerText="#{msgs['tmodalidad']}" filterBy="#{inmueble.modalidad}">
+                        <h:outputText value="#{inmueble.modalidad}"/>
+                    </p:column>
+
+                    <p:column headerText="#{msgs['tdireccion']}" filterBy="#{inmueble.direccion}">
+                        <h:outputText value="#{inmueble.direccion}"/>
+                    </p:column>
+
+                    <p:column headerText="#{msgs['tprecio']}" filterBy="#{inmueble.precio}">
+                        <h:outputText value="#{inmueble.precio}"/>
+                    </p:column>
+
+                    <p:column headerText="#{msgs['tcant_banos']}" filterBy="#{inmueble.cant_banos}">
+                        <h:outputText value="#{inmueble.cant_banos}"/>
+                    </p:column>
+
+                    <p:column headerText="#{msgs['tfotos']}" filterBy="#{inmueble.fotos}">
+                        <h:outputText value="#{inmueble.fotos}"/>
+                    </p:column>
+
+                    <p:column headerText="#{msgs['tubicacion']}" filterBy="#{inmueble.ubicacion}">
+                        <h:outputText value="#{inmueble.ubicacion}"/>
+                    </p:column>
+
+                    <p:column exportable="false">
+                        <p:commandButton icon="pi pi-pencil" update=":dialogs:actualizar-inmueble-content"
+                                         oncomplete="PF('actualizarInmuebleDialog').show()"
+                                         styleClass="edit-button rounded-button ui-button-success"
+                                         process="@this">
+                            <f:setPropertyActionListener value="#{inmueble}" target="#{inmuebleBean.inmueble}"/>
+                            <p:resetInput target=":dialogs:actualizar-inmueble-content"/>
+                        </p:commandButton>
+                        <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash"
+                                         process="@this"
+                                         oncomplete="PF('deleteInmuebleDialog').show()">
+                            <f:setPropertyActionListener value="#{inmueble}" target="#{inmuebleBean.inmueble}"/>
+                        </p:commandButton>
+                    </p:column>
+
+                </p:dataTable>
+            </div>
+
+            <!-- <h:commandButton action="#{empleadoBean.irCrear()}" value="Crear"/> -->
+
+
+
+            <p:confirmDialog widgetVar="deleteInmuebleDialog" showEffect="fade" width="300"
+                             message="Desea eliminar el Inmueble?" header="Confirm" severity="warn">
+                <p:commandButton value="Si" icon="pi pi-check" actionListener="#{inmuebleBean.eliminar()}"
+                                 process="@this"
+                                 oncomplete="PF('deleteInmuebleDialog').hide()"/>
+                <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                 onclick="PF('deleteInmuebleDialog').hide()"/>
+            </p:confirmDialog>
+
+        </h:form>
+            <h:form id="dialogs">
+
+                <!--
+                nuevo dialogo para crear empleado
+                   -->
+
+                <p:dialog header="Ingrese Nuevo Inmueble" showEffect="fade" modal="true" widgetVar="manageInmuebleDialog"
+                          responsive="true">
+                    <p:outputPanel id="manage-inmueble-content" class="ui-fluid">
+                        <p:outputPanel rendered="#{not empty inmuebleBean.inmueble}">
+                            <div class="field">
+                                <p:outputLabel for="codigo">#{msgs['tcodigo']}</p:outputLabel>
+                                <p:inputText id="codigo" value="#{inmuebleBean.inmueble.codigo}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="descripcion">#{msgs['tdescripcion']}</p:outputLabel>
+                                <p:inputText id="descripcion" value="#{inmuebleBean.inmueble.descripcion}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="tipo">#{msgs['ttipo']}</p:outputLabel>
+                                <p:inputText id="tipo" value="#{inmuebleBean.inmueble.tipo}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="estado">#{msgs['testado']}</p:outputLabel>
+                                <p:inputText id="estado" value="#{inmuebleBean.inmueble.estado}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="tamano_m2">#{msgs['ttamano_m2']}</p:outputLabel>
+                                <p:inputText id="tamano_m2" value="#{inmuebleBean.inmueble.tamano_m2}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="modalidad">#{msgs['tmodalidad']}</p:outputLabel>
+                                <p:inputText id="modalidad" value="#{inmuebleBean.inmueble.modalidad}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="direccion">#{msgs['tdireccion']}</p:outputLabel>
+                                <p:inputText id="direccion" value="#{inmuebleBean.inmueble.direccion}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="precio">#{msgs['tprecio']}</p:outputLabel>
+                                <p:inputText id="precio" value="#{inmuebleBean.inmueble.precio}" required="true"/>
+                            </div>
+
+                            <div class="field">
+                                <p:outputLabel for="cant_banos">#{msgs['tcant_banos']}</p:outputLabel>
+                                <p:inputText id="cant_banos" value="#{inmuebleBean.inmueble.cant_banos}" required="true"/>
+                            </div>
+
+                            <div class="field">
+                                <p:outputLabel for="fotos">#{msgs['tfotos']}</p:outputLabel>
+                                <p:inputText id="fotos" value="#{inmuebleBean.inmueble.fotos}" required="true"/>
+                            </div>
+
+                            <div class="field">
+                                <p:outputLabel for="ubicacion">#{msgs['tubicacion']}</p:outputLabel>
+                                <p:inputText id="ubicacion" value="#{inmuebleBean.inmueble.ubicacion}" required="true"/>
+                            </div>
+
+                        </p:outputPanel>
+                    </p:outputPanel>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{inmuebleBean.guardar()}"
+                                         update="manage-inmueble-content" process="manage-inmueble-content @this"
+                                         oncomplete="PF('manageInmuebleDialog').hide()"/>
+                        <p:commandButton value="Cancel" icon="pi pi-times"
+                                         onclick="PF('manageInmuebleDialog').hide()"
+                                         class="ui-button-secondary" type="button"/>
+                    </f:facet>
+                </p:dialog>
+
+
+                <!--
+                nuevo dialogo para actualizar
+                -->
+
+                <p:dialog header="Detalles del Inmueble" showEffect="fade" modal="true" widgetVar="actualizarInmuebleDialog"
+                          responsive="true">
+                    <p:outputPanel id="actualizar-inmueble-content" class="ui-fluid">
+                        <p:outputPanel rendered="#{not empty inmuebleBean.inmueble}">
+                            <!--<div class="field">
+                                <p:outputLabel for="codigo">#{msgs['tcodigo']}</p:outputLabel>
+                                <p:inputText id="actcodigo" value="#{agenteBean.empleado.id}" required="true"/>
+                            </div>-->
+                            <div class="field">
+                                <p:outputLabel for="descripcion">#{msgs['tdescripcion']}</p:outputLabel>
+                                <p:inputText id="actdescripcion" value="#{inmuebleBean.inmueble.descripcion}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="tipo">#{msgs['ttipo']}</p:outputLabel>
+                                <p:inputText id="acttipo" value="#{inmuebleBean.inmueble.tipo}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="estado">#{msgs['testado']}</p:outputLabel>
+                                <p:inputText id="actestado" value="#{inmuebleBean.inmueble.estado}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="tamano_m2">#{msgs['ttamano_m2']}</p:outputLabel>
+                                <p:inputText id="acttamano_m2" value="#{inmuebleBean.inmueble.tamano_m2}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="modalidad">#{msgs['tmodalidad']}</p:outputLabel>
+                                <p:inputText id="actmodalidad" value="#{inmuebleBean.inmueble.modalidad}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="direccion">#{msgs['tdireccion']}</p:outputLabel>
+                                <p:inputText id="actdireccion" value="#{inmuebleBean.inmueble.direccion}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="precio">#{msgs['tprecio']}</p:outputLabel>
+                                <p:inputText id="actprecio" value="#{inmuebleBean.inmueble.precio}" required="true"/>
+                            </div>
+
+                            <div class="field">
+                                <p:outputLabel for="cant_banos">#{msgs['tcant_banos']}</p:outputLabel>
+                                <p:inputText id="actcant_banos" value="#{inmuebleBean.inmueble.cant_banos}" required="true"/>
+                            </div>
+
+                            <div class="field">
+                                <p:outputLabel for="fotos">#{msgs['tfotos']}</p:outputLabel>
+                                <p:inputText id="actfotos" value="#{inmuebleBean.inmueble.fotos}" required="true"/>
+                            </div>
+
+                            <div class="field">
+                                <p:outputLabel for="ubicacion">#{msgs['tubicacion']}</p:outputLabel>
+                                <p:inputText id="actubicacion" value="#{inmuebleBean.inmueble.ubicacion}" required="true"/>
+                            </div>
+
+                        </p:outputPanel>
+                    </p:outputPanel>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{inmuebleBean.actualizar()}"
+                                         update="actualizar-inmueble-content" process="actualizar-inmueble-content @this"
+                                         oncomplete="PF('actualizarInmuebleDialog').hide()"/>
+                        <p:commandButton value="Cancel" icon="pi pi-times"
+                                         onclick="PF('actualizarInmuebleDialog').hide()"
+                                         class="ui-button-secondary" type="button"/>
+                    </f:facet>
+                </p:dialog>
+
+        </h:form>
+        </ui:define>
+        </ui:composition>
+    </main>
+
+</h:body>
+</html>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+   <title>Crear Cliente Inmobiliaria SA</title>
+</h:head>
+<h:body>
+   <main>
+
+      <h:form>
+         <p:panel header="Crear Cliente">
+            <p:messages/>
+            <h:panelGrid columns="2" columnClasses="label, value">
+
+               <h:outputText value="Cedula: *"/>
+               <p:inputText value="#{clienteBean.cliente.cedula}" required="true" label="Cedula"/>
+
+               <h:outputText value="Nombre: *"/>
+               <p:inputText value="#{clienteBean.cliente.nombre}" required="true" label="nombre"/>
+
+               <h:outputText value="Apellido: *"/>
+               <p:inputText value="#{clienteBean.cliente.apellido}" required="true" label="Apellido"/>
+
+               <h:outputText value="Fecha de Expedicion: *"/>
+               <p:inputText value="#{clienteBean.cliente.fechaExpedicion}" required="true" label="Fecha de Expedicion"/>
+
+
+               <h:outputText value="Direccion: *"/>
+               <p:inputText value="#{clienteBean.cliente.direccion}" required="true" label="Direccion"/>
+
+               <h:outputText value="Correo: *"/>
+               <p:inputText value="#{clienteBean.cliente.correo}" required="true" label="Correo"/>
+
+               <h:outputText value="Fecha de Nacimiento: *"/>
+               <p:inputText value="#{clienteBean.cliente.fechaNacimiento}" required="true" label="Fecha de Nacimiento"/>
+
+               <h:outputText value="Celular: *"/>
+               <p:inputText value="#{clienteBean.cliente.celular}" required="true" label="Celular"/>
+
+
+
+            </h:panelGrid>
+            <h:commandButton value="Guardar" action="#{clienteBean.guardar()}"/>
+         </p:panel>
+      </h:form>
+   </main>
+</h:body>
+</html>
+
+

@@ -88,7 +88,7 @@
                                          oncomplete="PF('actualizarPropietarioDialog').show()"
                                          styleClass="edit-button rounded-button ui-button-success"
                                          process="@this">
-                            <f:setPropertyActionListener value="#{propietario}" target="#{propietarioBean.agente}"/>
+                            <f:setPropertyActionListener value="#{propietario}" target="#{propietarioBean.propietario}"/>
                             <p:resetInput target=":dialogs:actualizar-propietario-content"/>
                         </p:commandButton>
                         <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash"
