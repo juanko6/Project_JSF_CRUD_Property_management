@@ -17,17 +17,21 @@ public class InmuebleRepository implements IRepository<Inmueble>{
         ) {
             while(rs.next()){
                 Inmueble inmueble = new Inmueble();
-                inmueble.setcodigo(rs.getLong("codigo"));
-                inmueble.setdescripcion(rs.getString("descripcion"));
-                inmueble.settipo(rs.getString("tipo"));
-                inmueble.setestado(rs.getString("estado"));
-                inmueble.settamano_m2(rs.getString("tamano_m2"));
-                inmueble.setmodalidad(rs.getString("modalidad"));
-                inmueble.setdireccion(rs.getString("direccion"));
-                inmueble.setprecio(rs.getLong("precio"));
-                inmueble.setcant_banos(rs.getLong("cant_banos"));
-                inmueble.setfotos(rs.getString("fotos"));
-                inmueble.setubicacion(rs.getString("ubicacion"));
+                inmueble.setCodigo(rs.getLong("codigo"));
+                inmueble.setDescripcion(rs.getString("descripcion"));
+                inmueble.setTipo(rs.getString("tipo"));
+                inmueble.setEstado(rs.getString("estado"));
+                inmueble.setTamano_m2(rs.getString("tamano_m2"));
+                inmueble.setModalidad(rs.getString("modalidad"));
+                inmueble.setDireccion(rs.getString("direccion"));
+                inmueble.setPrecio(rs.getLong("precio"));
+                inmueble.setCant_banos(rs.getLong("cant_banos"));
+                inmueble.setFotos(rs.getString("fotos"));
+                inmueble.setPais(rs.getString("pais"));
+                inmueble.setDepartamento(rs.getString("departamento"));
+                inmueble.setCiudad(rs.getString("ciudad"));
+                inmueble.setPropiedad(rs.getString("propiedad"));
+
 
                 listaInmueble.add(inmueble);
 
@@ -47,26 +51,35 @@ public class InmuebleRepository implements IRepository<Inmueble>{
         return null;
     }
 
+
+    /*
+    *
+    *
+    * TODO: cambiar tanto base de datos como aqui el model inmueble para que se almacene pais, departamento y ciudad
+     */
     @Override
     public boolean crear(Inmueble inmueble) {
 
         Connection conect = ConexionBaseDatos.getConnection();
-        String sql =  "insert into inmueble (codigo, descripcion, tipo, estado, tamano_m2, modalidad,direccion, precio, cant_banos,fotos,ubicacion) values (?,?,?,?,?,?,?,?,?,?,?)";
+        String sql =  "insert into inmueble (codigo, descripcion, tipo, estado, tamano_m2, modalidad,direccion, precio, cant_banos,fotos,pais,departamento,ciudad, propiedad) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
         try(
                 PreparedStatement stmt = conect.prepareStatement(sql)
         ) {
-            stmt.setLong(1, inmueble.getcodigo());
-            stmt.setString(2, inmueble.getdescripcion());
-            stmt.setString(3, inmueble.gettipo());
-            stmt.setString(4, inmueble.getestado());
-            stmt.setString(5, inmueble.gettamano_m2());
-            stmt.setString(6, inmueble.getmodalidad());
-            stmt.setString(7, inmueble.getdireccion());
-            stmt.setLong(8, inmueble.getprecio());
-            stmt.setLong(9, inmueble.getcant_banos());
-            stmt.setString(10, inmueble.getfotos());
-            stmt.setString(11, inmueble.getubicacion());
+            stmt.setLong(1, inmueble.getCodigo());
+            stmt.setString(2, inmueble.getDescripcion());
+            stmt.setString(3, inmueble.getTipo());
+            stmt.setString(4, inmueble.getEstado());
+            stmt.setString(5, inmueble.getTamano_m2());
+            stmt.setString(6, inmueble.getModalidad());
+            stmt.setString(7, inmueble.getDireccion());
+            stmt.setLong(8, inmueble.getPrecio());
+            stmt.setLong(9, inmueble.getCant_banos());
+            stmt.setString(10, inmueble.getFotos());
+            stmt.setString(11, inmueble.getPais());
+            stmt.setString(12, inmueble.getDepartamento());
+            stmt.setString(13, inmueble.getCiudad());
+            stmt.setString(14, inmueble.getPropiedad());
             stmt.executeUpdate();
             return true;
 
@@ -78,14 +91,14 @@ public class InmuebleRepository implements IRepository<Inmueble>{
 
 
     @Override
-    public boolean eliminar(Long cedula) {
+    public boolean eliminar(Long codigo) {
         Connection conect = ConexionBaseDatos.getConnection();
-        String sql =  "delete from inmueble where cedula = ?";
+        String sql =  "delete from inmueble where codigo = ?";
 
         try(
                 PreparedStatement stmt = conect.prepareStatement(sql)
         ) {
-            stmt.setLong(1,cedula);
+            stmt.setLong(1,codigo);
             stmt.executeUpdate();
             conect.close();
             return true;
@@ -101,23 +114,27 @@ public class InmuebleRepository implements IRepository<Inmueble>{
 
         Connection conect = ConexionBaseDatos.getConnection();
 
-        String sql =  "update Inmueble SET descripcion = ?, tipo = ?, estado = ?, tamano_m2 = ?, modalidad = ?, direccion = ?, precio = ?, cant_banos = ?,fotos = ?,ubicacion = ? WHERE codigo = ?";
+        String sql =  "update Inmueble SET descripcion = ?, tipo = ?, estado = ?, tamano_m2 = ?, modalidad = ?, direccion = ?, precio = ?, cant_banos = ?,fotos = ?,pais = ?,departamento = ?,ciudad = ?,propiedad = ? WHERE codigo = ?";
 
         try(
                 PreparedStatement stmt = conect.prepareStatement(sql);
         ) {
-            stmt.setString(1, inmueble.getdescripcion());
-            stmt.setString(2, inmueble.gettipo());
-            stmt.setString(3, inmueble.getestado());
-            stmt.setString(4, inmueble.gettamano_m2());
-            stmt.setString(5, inmueble.getmodalidad());
-            stmt.setString(6, inmueble.getdireccion());
-            stmt.setLong(7, inmueble.getprecio());
-            stmt.setLong(8, inmueble.getcant_banos());
-            stmt.setString(9, inmueble.getfotos());
-            stmt.setString(10, inmueble.getubicacion());
 
-            stmt.setLong(11, inmueble.getcodigo());
+            stmt.setString(1, inmueble.getDescripcion());
+            stmt.setString(2, inmueble.getTipo());
+            stmt.setString(3, inmueble.getEstado());
+            stmt.setString(4, inmueble.getTamano_m2());
+            stmt.setString(5, inmueble.getModalidad());
+            stmt.setString(6, inmueble.getDireccion());
+            stmt.setLong(7, inmueble.getPrecio());
+            stmt.setLong(8, inmueble.getCant_banos());
+            stmt.setString(9, inmueble.getFotos());
+            stmt.setString(10, inmueble.getPais());
+            stmt.setString(11, inmueble.getDepartamento());
+            stmt.setString(12, inmueble.getCiudad());
+            stmt.setString(13, inmueble.getPropiedad());
+
+            stmt.setLong(14, inmueble.getCodigo());
 
 
             stmt.executeUpdate();

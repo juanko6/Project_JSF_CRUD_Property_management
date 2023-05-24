@@ -50,7 +50,7 @@ public class AgenteRepository implements IRepository<Agente>{
     public boolean crear(Agente agente) {
 
         Connection conect = ConexionBaseDatos.getConnection();
-        String sql =  "insert into agente_comercial (cedula, nombre, apellido, fecha_nacimiento, usuario, contrasena, fecha_expedicioncedula, correo, direccion, celular) values (?,?,?,?,?,?,?,?,?,?)";
+        String sql =  "insert into public.agente_comercial (cedula, nombre, apellido, fecha_nacimiento, usuario, contrasena, fecha_expedicioncedula, correo, direccion, celular) values (?,?,?,?,?,?,?,?,?,?)";
 
         try(
                 PreparedStatement stmt = conect.prepareStatement(sql)
@@ -85,7 +85,7 @@ public class AgenteRepository implements IRepository<Agente>{
         ) {
             stmt.setLong(1,cedula);
             stmt.executeUpdate();
-            conect.close();
+            //conect.close();
             return true;
 
         } catch (SQLException e) {
@@ -99,7 +99,7 @@ public class AgenteRepository implements IRepository<Agente>{
 
         Connection conect = ConexionBaseDatos.getConnection();
 
-        String sql =  "update agente_comercial SET nombre = ?, apellido = ?, fecha_nacimiento = ?, usuario = ?, contrasena = ?, fecha_expedicioncedula = ?, correo = ?, direccion = ?, celular = ? WHERE cedula = ?";
+        String sql =  "update public.agente_comercial SET nombre = ?, apellido = ?, fecha_nacimiento = ?, usuario = ?, contrasena = ?, fecha_expedicioncedula = ?, correo = ?, direccion = ?, celular = ? WHERE cedula = ?";
 
         try(
                 PreparedStatement stmt = conect.prepareStatement(sql);
@@ -120,7 +120,7 @@ public class AgenteRepository implements IRepository<Agente>{
 
             stmt.executeUpdate();
             System.out.println("se actualizo Agente");
-            conect.close();
+            //conect.close();
             return true;
 
         } catch (SQLException e) {
@@ -144,7 +144,7 @@ public class AgenteRepository implements IRepository<Agente>{
             statement.setString(2, contrasena);
 
             ResultSet resultSet = statement.executeQuery();
-            conect.close();
+            //conect.close();
             if (resultSet.next()) {
                 // Usuario y contraseña válidos
                 return true;

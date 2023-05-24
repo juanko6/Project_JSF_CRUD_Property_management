@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Bienvenido a Inmobiliaria SA</title>
+    <link href="css/dashboard.css" rel="stylesheet"/>
+</h:head>
+<h:body>
+    <main>
+        <ui:composition template="WEB-INF/plantillas/home.xhtml">
+        <ui:define name="contenido">
+        <h:form id="form">
+            <p:growl id="messages" showDetail="true"/>
+            <div class="card">
+
+                <p:toolbar>
+                    <p:toolbarGroup>
+                        <p:commandButton value="Nuevo Contrato Cliente" icon="pi pi-plus" actionListener="#{contratoClienteBean.irCrear()}"
+                                         update=":dialogs:manage-contrato-cliente-content" oncomplete="PF('manageContratoClienteDialog').show()"
+                                         styleClass="ui-button-success" style="margin-right: .5rem">
+                            <p:resetInput target=":dialogs:manage-contrato-cliente-content" />
+                        </p:commandButton>
+
+                    </p:toolbarGroup>
+                </p:toolbar>
+
+
+
+                <p:dataTable id="dtcontratocliente" widgetVar="dtcontratocliente" var="contratoCliente" value="#{contratoClienteBean.listar()}"
+                             emptyMessage="No se encuentra"
+                             reflow="true" styleClass="products-table" selection="#{contratoClienteBean.selectedProducts}"
+                             rowKey="#{contratoCliente.codigo}" paginator="true" rows="10" rowSelectMode="add" paginatorPosition="bottom">
+
+                    <f:facet name="header">
+                        <div class="products-table-header">
+                            <span style="font-weight: bold">Contrato Clientes</span>
+                            <span class="filter-container ui-input-icon-left"> <i class="pi pi-search"></i>
+                        <p:inputText id="globalFilter" onkeyup="PF('dtcontratocliente').filter()" placeholder="Search" />
+                    </span>
+                        </div>
+                    </f:facet>
+
+
+
+                    <!-- <p:column selectionMode="multiple" exportable="false"></p:column> -->
+
+                    <p:column headerText="#{msgs['tcodigo']}" filterBy="#{contratocliente.codigo}" filterMatchMode="contains">
+                        <h:outputText value="#{contratocliente.codigo}"/>
+
+                    </p:column>
+
+                    <p:column headerText="#{msgs['tdescripcion']}" filterBy="#{contratocliente.descripcion}">
+                        <h:outputText value="#{contratocliente.descripcion}" />
+                    </p:column>
+
+                    <p:column headerText="#{msgs['ttipo']}" filterBy="#{contratocliente.tipo}">
+                        <h:outputText value="#{contratocliente.tipo}"/>
+                    </p:column>
+
+                    <p:column headerText="#{msgs['tfechacreacion']}" filterBy="#{contratocliente.fecha_creacion}">
+                        <h:outputText value="#{contratocliente.fecha_creacion}" />
+                    </p:column>
+
+                    <p:column headerText="#{msgs['tfechafinal']}" filterBy="#{contratocliente.fecha_finalizacion}">
+                        <h:outputText value="#{contratocliente.fecha_finalizacion}"/>
+                    </p:column>
+
+                    <p:column headerText="#{msgs['tprecio']}" filterBy="#{contratocliente.valor}">
+                        <h:outputText value="#{contratocliente.valor}"/>
+                    </p:column>
+
+
+                    <p:column exportable="false">
+                        <p:commandButton icon="pi pi-pencil" update=":dialogs:actualizar-contrato-cliente-content"
+                                         oncomplete="PF('actualizarContratoClienteDialog').show()"
+                                         styleClass="edit-button rounded-button ui-button-success"
+                                         process="@this">
+                            <f:setPropertyActionListener value="#{contratoCliente}" target="#{contratoClienteBean.contratoCliente}"/>
+                            <p:resetInput target=":dialogs:actualizar-contrato-cliente-content"/>
+                        </p:commandButton>
+                        <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash"
+                                         process="@this"
+                                         oncomplete="PF('deleteContratoClienteDialog').show()">
+                            <f:setPropertyActionListener value="#{contratoCliente}" target="#{contratoClienteBean.contratoCliente}"/>
+                        </p:commandButton>
+                    </p:column>
+
+                </p:dataTable>
+            </div>
+
+            <!-- <h:commandButton action="#{empleadoBean.irCrear()}" value="Crear"/> -->
+
+
+
+            <p:confirmDialog widgetVar="deleteContratoClienteDialog" showEffect="fade" width="300"
+                             message="Desea eliminar el Contrato Cliente?" header="Confirm" severity="warn">
+                <p:commandButton value="Si" icon="pi pi-check" actionListener="#{contratoClienteBean.eliminar()}"
+                                 process="@this"
+                                 oncomplete="PF('deleteContratoClienteDialog').hide()"/>
+                <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                 onclick="PF('deleteContratoClienteDialog').hide()"/>
+            </p:confirmDialog>
+
+        </h:form>
+            <h:form id="dialogs">
+
+                <!--
+                nuevo dialogo para crear empleado
+                   -->
+
+                <p:dialog header="Ingrese Nuevo Contrato Cliente" showEffect="fade" modal="true" widgetVar="manageContratoClienteDialog"
+                          responsive="true">
+                    <p:outputPanel id="manage-contrato-cliente-content" class="ui-fluid">
+                        <p:outputPanel rendered="#{not empty contratoClienteBean.contrato}">
+                            <div class="field">
+                                <p:outputLabel for="codigo">#{msgs['tcodigo']}</p:outputLabel>
+                                <p:inputText id="codigo" value="#{contratoClienteBean.contrato.codigo}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="descripcion">#{msgs['tdescripcion']}</p:outputLabel>
+                                <p:inputText id="descripcion" value="#{contratoClienteBean.contrato.descripcion}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="tipocontrato">#{msgs['ttipo']}</p:outputLabel>
+                                <p:inputText id="tipocontrato" value="#{contratoClienteBean.contrato.tipo}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="fechainicio">#{msgs['tfechacreacion']}</p:outputLabel>
+                                <p:inputText id="fechainicio" value="#{contratoClienteBean.contrato.fecha_creacion}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="fechafin">#{msgs['tfechafinal']}</p:outputLabel>
+                                <p:inputText id="fechafin" value="#{contratoClienteBean.contrato.fecha_finalizacion}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="valor">#{msgs['tprecio']}</p:outputLabel>
+                                <p:inputText id="valor" value="#{contratoClienteBean.contrato.valor}" required="true"/>
+                            </div>
+
+                        </p:outputPanel>
+                    </p:outputPanel>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{contratoClienteBean.guardar()}"
+                                         update="manage-contrato-cliente-content" process="manage-contrato-cliente-content @this"
+                                         oncomplete="PF('manageContratoClienteDialog').hide()"/>
+                        <p:commandButton value="Cancel" icon="pi pi-times"
+                                         onclick="PF('manageContratoClienteDialog').hide()"
+                                         class="ui-button-secondary" type="button"/>
+                    </f:facet>
+                </p:dialog>
+
+
+                <!--
+                nuevo dialogo para actualizar
+                -->
+
+                <p:dialog header="Detalles del Contrato Cliente" showEffect="fade" modal="true" widgetVar="actualizarContratoClienteDialog"
+                          responsive="true">
+                    <p:outputPanel id="actualizar-contrato-cliente-content" class="ui-fluid">
+                        <p:outputPanel rendered="#{not empty contratoClienteBean.contrato}">
+
+                            <div class="field">
+                                <p:outputLabel for="actdescripcion">#{msgs['tdescripcion']}</p:outputLabel>
+                                <p:inputText id="actdescripcion" value="#{contratoClienteBean.contrato.descripcion}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="acttipocontrato">#{msgs['ttipo']}</p:outputLabel>
+                                <p:inputText id="acttipocontrato" value="#{contratoClienteBean.contrato.tipo}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="actfechainicio">#{msgs['tfechacreacion']}</p:outputLabel>
+                                <p:inputText id="actfechainicio" value="#{contratoClienteBean.contrato.fecha_creacion}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="actfechafin">#{msgs['tfechafinal']}</p:outputLabel>
+                                <p:inputText id="actfechafin" value="#{contratoClienteBean.contrato.fecha_finalizacion}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="actvalor">#{msgs['tprecio']}</p:outputLabel>
+                                <p:inputText id="actvalor" value="#{contratoClienteBean.contrato.valor}" required="true"/>
+                            </div>
+
+                        </p:outputPanel>
+                    </p:outputPanel>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{contratoClienteBean.actualizar()}"
+                                         update="actualizar-contrato-cliente-content" process="actualizar-contrato-cliente-content @this"
+                                         oncomplete="PF('actualizarContratoClienteDialog').hide()"/>
+                        <p:commandButton value="Cancel" icon="pi pi-times"
+                                         onclick="PF('actualizarContratoClienteDialog').hide()"
+                                         class="ui-button-secondary" type="button"/>
+                    </f:facet>
+                </p:dialog>
+
+        </h:form>
+        </ui:define>
+        </ui:composition>
+    </main>
+
+</h:body>
+</html>

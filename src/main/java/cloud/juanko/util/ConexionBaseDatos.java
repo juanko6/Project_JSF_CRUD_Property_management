@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class ConexionBaseDatos {
 
-    private static String url = "jdbc:postgresql://localhost:5432/inmobiliaria";
+    private static String url = "jdbc:postgresql://localhost:5432/inmobiliariasa";
     //private static String url = "jdbc:postgresql://152.67.62.67:5432/inmobiliaria";
 
     public static Connection getConnection(){

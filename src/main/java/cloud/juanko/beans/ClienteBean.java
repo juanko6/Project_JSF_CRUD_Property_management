@@ -5,6 +5,10 @@ import cloud.juanko.models.Cliente;
 import cloud.juanko.services.ClienteService;
 
 import org.primefaces.PrimeFaces;
+import org.primefaces.model.datepicker.DateMetadataModel;
+import org.primefaces.model.datepicker.DefaultDateMetadata;
+import org.primefaces.model.datepicker.DefaultDateMetadataModel;
+import org.primefaces.model.datepicker.LazyDateMetadataModel;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -12,6 +16,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,10 +31,13 @@ public class ClienteBean implements Serializable {
     private List<Cliente> clientes = new ArrayList<>();
 
 
+
+
     public ClienteBean() {
         selectedProducts = new ArrayList<>();
         cliente = new Cliente();
         clienteService = new ClienteService();
+
 
     }
 

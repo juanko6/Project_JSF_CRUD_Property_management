@@ -16,17 +16,17 @@ public class ClienteRepository implements IRepository<Cliente>{
              ResultSet rs = stmt.executeQuery("SELECT * FROM Cliente")
         ) {
             while(rs.next()){
-                Cliente Cliente = new Cliente();
-                Cliente.setCedula(rs.getLong("cedula"));
-                Cliente.setNombre(rs.getString("nombre"));
-                Cliente.setApellido(rs.getString("apellido"));
-                Cliente.setFechaNacimiento(rs.getString("fecha_nacimiento"));
-                Cliente.setFechaExpedicion(rs.getString("fecha_expedicion_cedula"));
-                Cliente.setCorreo(rs.getString("correo"));
-                Cliente.setDireccion(rs.getString("direccion"));
-                Cliente.setCelular(rs.getLong("celular"));
+                Cliente cliente = new Cliente();
+                cliente.setCedula(rs.getLong("cedula"));
+                cliente.setNombre(rs.getString("nombre"));
+                cliente.setApellido(rs.getString("apellido"));
+                cliente.setFechaNacimiento(rs.getString("fecha_nacimiento"));
+                cliente.setFechaExpedicion(rs.getString("fecha_expedicion_cedula"));
+                cliente.setCorreo(rs.getString("correo"));
+                cliente.setDireccion(rs.getString("direccion"));
+                cliente.setCelular(rs.getLong("celular"));
 
-                listaCliente.add(Cliente);
+                listaCliente.add(cliente);
 
 
             }

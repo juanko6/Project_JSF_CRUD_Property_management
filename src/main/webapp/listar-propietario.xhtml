@@ -32,7 +32,7 @@
 
 
 
-                <p:dataTable id="dtpropietario" widgetVar="dtpropietario" var="propietario" value="#{propietarioBean.listar()}"
+                <p:dataTable id="dtpropietarios" widgetVar="dtpropietario" var="propietario" value="#{propietarioBean.listar()}"
                              emptyMessage="No se encuentra"
                              reflow="true" styleClass="products-table" selection="#{propietarioBean.selectedProducts}"
                              rowKey="#{propietario.cedula}" paginator="true" rows="10" rowSelectMode="add" paginatorPosition="bottom">
@@ -139,10 +139,16 @@
                             </div>
                             <div class="field">
                                 <p:outputLabel for="fechanacimiento">#{msgs['tfechanacimiento']}</p:outputLabel>
+
+
+
                                 <p:inputText id="fechanacimiento" value="#{propietarioBean.propietario.fechaNacimiento}" required="true"/>
                             </div>
                             <div class="field">
                                 <p:outputLabel for="fechaexpedicion">#{msgs['tfechaexpedicion']}</p:outputLabel>
+
+
+
                                 <p:inputText id="fechaexpedicion" value="#{propietarioBean.propietario.fechaExpedicion}" required="true"/>
                             </div>
                             <div class="field">
@@ -194,10 +200,15 @@
                             </div>
                             <div class="field">
                                 <p:outputLabel for="fechanacimiento">#{msgs['tfechanacimiento']}</p:outputLabel>
+
+
+
                                 <p:inputText id="actfechanacimiento" value="#{propietarioBean.propietario.fechaNacimiento}" required="true"/>
                             </div>
                             <div class="field">
                                 <p:outputLabel for="fechaexpedicion">#{msgs['tfechaexpedicion']}</p:outputLabel>
+
+
                                 <p:inputText id="actfechaexpedicion" value="#{propietarioBean.propietario.fechaExpedicion}" required="true"/>
                             </div>
                             <div class="field">

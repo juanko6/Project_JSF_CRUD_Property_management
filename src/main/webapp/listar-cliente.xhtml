@@ -39,7 +39,7 @@
 
                     <f:facet name="header">
                         <div class="products-table-header">
-                            <span style="font-weight: bold">ClienteS</span>
+                            <span style="font-weight: bold">Clientes</span>
                             <span class="filter-container ui-input-icon-left"> <i class="pi pi-search"></i>
                         <p:inputText id="globalFilter" onkeyup="PF('dtcliente').filter()" placeholder="Search" />
                     </span>
@@ -139,10 +139,14 @@
                             </div>
                             <div class="field">
                                 <p:outputLabel for="fechanacimiento">#{msgs['tfechanacimiento']}</p:outputLabel>
+
+
                                 <p:inputText id="fechanacimiento" value="#{clienteBean.cliente.fechaNacimiento}" required="true"/>
                             </div>
                             <div class="field">
                                 <p:outputLabel for="fechaexpedicion">#{msgs['tfechaexpedicion']}</p:outputLabel>
+
+
                                 <p:inputText id="fechaexpedicion" value="#{clienteBean.cliente.fechaExpedicion}" required="true"/>
                             </div>
                             <div class="field">
@@ -185,19 +189,22 @@
                                 <p:inputText id="actcedula" value="#{agenteBean.empleado.id}" required="true"/>
                             </div>-->
                             <div class="field">
-                                <p:outputLabel for="nombre">#{msgs['tnombre']}</p:outputLabel>
+                                <p:outputLabel for="actnombre">#{msgs['tnombre']}</p:outputLabel>
                                 <p:inputText id="actnombre" value="#{clienteBean.cliente.nombre}" required="true"/>
                             </div>
                             <div class="field">
-                                <p:outputLabel for="apellido">#{msgs['tapellido']}</p:outputLabel>
+                                <p:outputLabel for="actapellido">#{msgs['tapellido']}</p:outputLabel>
                                 <p:inputText id="actapellido" value="#{clienteBean.cliente.apellido}" required="true"/>
                             </div>
                             <div class="field">
-                                <p:outputLabel for="fechanacimiento">#{msgs['tfechanacimiento']}</p:outputLabel>
+                                <p:outputLabel for="actfechanacimiento">#{msgs['tfechanacimiento']}</p:outputLabel>
+
+
                                 <p:inputText id="actfechanacimiento" value="#{clienteBean.cliente.fechaNacimiento}" required="true"/>
                             </div>
                             <div class="field">
-                                <p:outputLabel for="fechaexpedicion">#{msgs['tfechaexpedicion']}</p:outputLabel>
+                                <p:outputLabel for="actfechaexpedicion">#{msgs['tfechaexpedicion']}</p:outputLabel>
+
                                 <p:inputText id="actfechaexpedicion" value="#{clienteBean.cliente.fechaExpedicion}" required="true"/>
                             </div>
                             <div class="field">

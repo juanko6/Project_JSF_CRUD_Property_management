@@ -66,8 +66,8 @@ public class InmuebleBean implements Serializable {
     }
 
     public void eliminar(){
-        System.out.println("Eliminar "+ inmueble.getdescripcion());
-        if(inmuebleService.eliminar(inmueble.getcodigo())){
+        System.out.println("Eliminar "+ inmueble.getCodigo());
+        if(inmuebleService.eliminar(inmueble.getCodigo())){
             System.out.println("Eliminación correcta");
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Inmueble Eliminado"));
         }else {
@@ -78,7 +78,7 @@ public class InmuebleBean implements Serializable {
     }
 
     public String actualizar(){
-        System.out.println("Actualizar "+this.inmueble.getdescripcion());
+        System.out.println("Actualizar "+this.inmueble.getCodigo());
         if(inmuebleService.actualizar(inmueble)){
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Inmueble Actualizado"));
             PrimeFaces.current().ajax().update("form:messages", "form:dtinmueble");

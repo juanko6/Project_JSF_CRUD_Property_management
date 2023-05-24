@@ -147,6 +147,11 @@
                             </div>
                             <div class="field">
                                 <p:outputLabel for="fechanacimiento">#{msgs['tfechanacimiento']}</p:outputLabel>
+
+
+
+
+
                                 <p:inputText id="fechanacimiento" value="#{agenteBean.agente.fechaNacimiento}" required="true"/>
                             </div>
                             <div class="field">
@@ -159,6 +164,9 @@
                             </div>
                             <div class="field">
                                 <p:outputLabel for="fechaexpedicion">#{msgs['tfechaexpedicion']}</p:outputLabel>
+
+
+
                                 <p:inputText id="fechaexpedicion" value="#{agenteBean.agente.fechaExpedicion}" required="true"/>
                             </div>
                             <div class="field">
@@ -201,39 +209,45 @@
                                 <p:inputText id="actcedula" value="#{agenteBean.empleado.id}" required="true"/>
                             </div>-->
                             <div class="field">
-                                <p:outputLabel for="nombre">#{msgs['tnombre']}</p:outputLabel>
+                                <p:outputLabel for="actnombre">#{msgs['tnombre']}</p:outputLabel>
                                 <p:inputText id="actnombre" value="#{agenteBean.agente.nombre}" required="true"/>
                             </div>
                             <div class="field">
-                                <p:outputLabel for="apellido">#{msgs['tapellido']}</p:outputLabel>
+                                <p:outputLabel for="actapellido">#{msgs['tapellido']}</p:outputLabel>
                                 <p:inputText id="actapellido" value="#{agenteBean.agente.apellido}" required="true"/>
                             </div>
                             <div class="field">
-                                <p:outputLabel for="fechanacimiento">#{msgs['tfechanacimiento']}</p:outputLabel>
+                                <p:outputLabel for="actfechanacimiento">#{msgs['tfechanacimiento']}</p:outputLabel>
+
+
+<!--                                <p:calendar id="actfechanacimiento" value="#{agenteBean.agente.fechaNacimiento}" required="true"/>-->
+
                                 <p:inputText id="actfechanacimiento" value="#{agenteBean.agente.fechaNacimiento}" required="true"/>
                             </div>
                             <div class="field">
-                                <p:outputLabel for="usuario">#{msgs['tusuario']}</p:outputLabel>
+                                <p:outputLabel for="actusuario">#{msgs['tusuario']}</p:outputLabel>
                                 <p:inputText id="actusuario" value="#{agenteBean.agente.usuario}" required="true"/>
                             </div>
                             <div class="field">
-                                <p:outputLabel for="contrasena">#{msgs['tcontrasena']}</p:outputLabel>
+                                <p:outputLabel for="actcontrasena">#{msgs['tcontrasena']}</p:outputLabel>
                                 <p:inputText id="actcontrasena" value="#{agenteBean.agente.contrasena}" required="true"/>
                             </div>
                             <div class="field">
-                                <p:outputLabel for="fechaexpedicion">#{msgs['tfechaexpedicion']}</p:outputLabel>
+                                <p:outputLabel for="actfechaexpedicion">#{msgs['tfechaexpedicion']}</p:outputLabel>
+
+
                                 <p:inputText id="actfechaexpedicion" value="#{agenteBean.agente.fechaExpedicion}" required="true"/>
                             </div>
                             <div class="field">
-                                <p:outputLabel for="correo">#{msgs['tcorreo']}</p:outputLabel>
+                                <p:outputLabel for="actcorreo">#{msgs['tcorreo']}</p:outputLabel>
                                 <p:inputText id="actcorreo" value="#{agenteBean.agente.correo}" required="true"/>
                             </div>
                             <div class="field">
-                                <p:outputLabel for="direccion">#{msgs['tdireccion']}</p:outputLabel>
+                                <p:outputLabel for="actdireccion">#{msgs['tdireccion']}</p:outputLabel>
                                 <p:inputText id="actdireccion" value="#{agenteBean.agente.direccion}" required="true"/>
                             </div>
                             <div class="field">
-                                <p:outputLabel for="celular">#{msgs['tcelular']}</p:outputLabel>
+                                <p:outputLabel for="actcelular">#{msgs['tcelular']}</p:outputLabel>
                                 <p:inputText id="actcelular" value="#{agenteBean.agente.celular}" required="true"/>
                             </div>
 

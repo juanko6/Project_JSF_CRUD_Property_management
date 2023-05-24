@@ -3,6 +3,11 @@ package cloud.juanko.beans;
 import cloud.juanko.models.Agente;
 import cloud.juanko.services.AgenteService;
 import org.primefaces.PrimeFaces;
+import org.primefaces.event.DateViewChangeEvent;
+import org.primefaces.model.datepicker.DateMetadataModel;
+import org.primefaces.model.datepicker.DefaultDateMetadata;
+import org.primefaces.model.datepicker.DefaultDateMetadataModel;
+import org.primefaces.model.datepicker.LazyDateMetadataModel;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -10,10 +15,9 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 import javax.servlet.http.HttpSession;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.util.*;
 
 @Named
 @ViewScoped
@@ -25,8 +29,12 @@ public class AgenteBean implements Serializable {
     private String incontrasena ;
     private Agente selectedProduct;
 
+
+
     private List<Agente> selectedProducts;
     private List<Agente> agentes = new ArrayList<>();
+
+
 
 
     public AgenteBean() {
@@ -169,4 +177,6 @@ public class AgenteBean implements Serializable {
     public void setIncontrasena(String incontrasena) {
         this.incontrasena = incontrasena;
     }
+
+
 }

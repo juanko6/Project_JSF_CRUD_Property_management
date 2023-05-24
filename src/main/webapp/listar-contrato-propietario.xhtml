@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Bienvenido a Inmobiliaria SA</title>
+    <link href="css/dashboard.css" rel="stylesheet"/>
+</h:head>
+<h:body>
+    <main>
+        <ui:composition template="WEB-INF/plantillas/home.xhtml">
+        <ui:define name="contenido">
+        <h:form id="form">
+            <p:growl id="messages" showDetail="true"/>
+            <div class="card">
+
+                <p:toolbar>
+                    <p:toolbarGroup>
+                        <p:commandButton value="Nuevo Contrato Propietario" icon="pi pi-plus" actionListener="#{contratoPropietarioBean.irCrear()}"
+                                         update=":dialogs:manage-contrato-propietario-content" oncomplete="PF('manageContratoPropietarioDialog').show()"
+                                         styleClass="ui-button-success" style="margin-right: .5rem">
+                            <p:resetInput target=":dialogs:manage-contrato-propietario-content" />
+                        </p:commandButton>
+
+                    </p:toolbarGroup>
+                </p:toolbar>
+
+
+
+                <p:dataTable id="dtcontratopropietario" widgetVar="dtcontratopropietario" var="contratoPropietario" value="#{contratoPropietarioBean.listar()}"
+                             emptyMessage="No se encuentra"
+                             reflow="true" styleClass="products-table" selection="#{contratoPropietarioBean.selectedProducts}"
+                             rowKey="#{contratoPropietario.codigo}" paginator="true" rows="10" rowSelectMode="add" paginatorPosition="bottom">
+
+                    <f:facet name="header">
+                        <div class="products-table-header">
+                            <span style="font-weight: bold">Contrato Propietarios</span>
+                            <span class="filter-container ui-input-icon-left"> <i class="pi pi-search"></i>
+                        <p:inputText id="globalFilter" onkeyup="PF('dtcontratopropietario').filter()" placeholder="Search" />
+                    </span>
+                        </div>
+                    </f:facet>
+
+
+
+                    <!-- <p:column selectionMode="multiple" exportable="false"></p:column> -->
+
+                    <p:column headerText="#{msgs['tcodigo']}" filterBy="#{contratopropietario.codigo}" filterMatchMode="contains">
+                        <h:outputText value="#{contratopropietario.codigo}"/>
+
+                    </p:column>
+
+                    <p:column headerText="#{msgs['tdescripcion']}" filterBy="#{contratopropietario.descripcion}">
+                        <h:outputText value="#{contratopropietario.descripcion}" />
+                    </p:column>
+
+                    <p:column headerText="#{msgs['ttipo']}" filterBy="#{contratopropietario.tipo}">
+                        <h:outputText value="#{contratopropietario.tipo}"/>
+                    </p:column>
+
+                    <p:column headerText="#{msgs['tfechacreacion']}" filterBy="#{contratopropietario.fecha_creacion}">
+                        <h:outputText value="#{contratopropietario.fecha_creacion}" />
+                    </p:column>
+
+                    <p:column headerText="#{msgs['tfechafinal']}" filterBy="#{contratopropietario.fecha_finalizacion}">
+                        <h:outputText value="#{contratopropietario.fecha_finalizacion}"/>
+                    </p:column>
+
+                    <p:column headerText="#{msgs['tprecio']}" filterBy="#{contratopropietario.valor}">
+                        <h:outputText value="#{contratopropietario.valor}"/>
+                    </p:column>
+
+                    <p:column headerText="#{msgs['tcomision']}" filterBy="#{contratopropietario.comision}">
+                        <h:outputText value="#{contratopropietario.comision}"/>
+                    </p:column>
+
+
+
+                    <p:column exportable="false">
+                        <p:commandButton icon="pi pi-pencil" update=":dialogs:actualizar-contrato-propietario-content"
+                                         oncomplete="PF('actualizarContratoPropietarioDialog').show()"
+                                         styleClass="edit-button rounded-button ui-button-success"
+                                         process="@this">
+                            <f:setPropertyActionListener value="#{contratoPropietario}" target="#{contratoPropietarioBean.contratoPropietario}"/>
+                            <p:resetInput target=":dialogs:actualizar-contrato-propietario-content"/>
+                        </p:commandButton>
+                        <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash"
+                                         process="@this"
+                                         oncomplete="PF('deleteContratoPropietarioDialog').show()">
+                            <f:setPropertyActionListener value="#{contratoPropietario}" target="#{contratoPropietarioBean.contratoPropietario}"/>
+                        </p:commandButton>
+                    </p:column>
+
+                </p:dataTable>
+            </div>
+
+            <!-- <h:commandButton action="#{empleadoBean.irCrear()}" value="Crear"/> -->
+
+
+
+            <p:confirmDialog widgetVar="deleteContratoPropietarioDialog" showEffect="fade" width="300"
+                             message="Desea eliminar el Contrato Propietario?" header="Confirm" severity="warn">
+                <p:commandButton value="Si" icon="pi pi-check" actionListener="#{contratoPropietarioBean.eliminar()}"
+                                 process="@this"
+                                 oncomplete="PF('deleteContratoPropietarioDialog').hide()"/>
+                <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                 onclick="PF('deleteContratoPropietarioDialog').hide()"/>
+            </p:confirmDialog>
+
+        </h:form>
+            <h:form id="dialogs">
+
+                <!--
+                nuevo dialogo para crear empleado
+                   -->
+
+                <p:dialog header="Ingrese Nuevo Contrato Propietario" showEffect="fade" modal="true" widgetVar="manageContratoPropietarioDialog"
+                          responsive="true">
+                    <p:outputPanel id="manage-contrato-propietario-content" class="ui-fluid">
+                        <p:outputPanel rendered="#{not empty contratoPropietarioBean.contratoPropietario}">
+                            <div class="field">
+                                <p:outputLabel for="codigo">#{msgs['tcodigo']}</p:outputLabel>
+                                <p:inputText id="codigo" value="#{contratoPropietarioBean.contratoPropietario.codigo}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="descripcion">#{msgs['tdescripcion']}</p:outputLabel>
+                                <p:inputText id="descripcion" value="#{contratoPropietarioBean.contratoPropietario.descripcion}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="tipocontrato">#{msgs['ttipo']}</p:outputLabel>
+                                <p:inputText id="tipocontrato" value="#{contratoPropietarioBean.contratoPropietario.tipo}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="fechainicio">#{msgs['tfechacreacion']}</p:outputLabel>
+                                <p:inputText id="fechainicio" value="#{contratoPropietarioBean.contratoPropietario.fecha_creacion}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="fechafin">#{msgs['tfechafinal']}</p:outputLabel>
+                                <p:inputText id="fechafin" value="#{contratoPropietarioBean.contratoPropietario.fecha_finalizacion}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="valor">#{msgs['tprecio']}</p:outputLabel>
+                                <p:inputText id="valor" value="#{contratoPropietarioBean.contratoPropietario.valor}" required="true"/>
+                            </div>
+
+                            <div class="field">
+                                <p:outputLabel for="comision">#{msgs['tcomision']}</p:outputLabel>
+                                <p:inputText id="comision" value="#{contratoPropietarioBean.contratoPropietario.comision}" required="true"/>
+                            </div>
+
+                        </p:outputPanel>
+                    </p:outputPanel>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{contratoPropietarioBean.guardar()}"
+                                         update="manage-contrato-propietario-content" process="manage-contrato-propietario-content @this"
+                                         oncomplete="PF('manageContratoPropietarioDialog').hide()"/>
+                        <p:commandButton value="Cancel" icon="pi pi-times"
+                                         onclick="PF('manageContratoPropietarioDialog').hide()"
+                                         class="ui-button-secondary" type="button"/>
+                    </f:facet>
+                </p:dialog>
+
+
+                <!--
+                nuevo dialogo para actualizar
+                -->
+
+                <p:dialog header="Detalles del Contrato Propietario" showEffect="fade" modal="true" widgetVar="actualizarContratoPropietarioDialog"
+                          responsive="true">
+                    <p:outputPanel id="actualizar-contrato-propietario-content" class="ui-fluid">
+                        <p:outputPanel rendered="#{not empty contratoPropietarioBean.contratoPropietario}">
+
+                            <div class="field">
+                                <p:outputLabel for="actdescripcion">#{msgs['tdescripcion']}</p:outputLabel>
+                                <p:inputText id="actdescripcion" value="#{contratoPropietarioBean.contratoPropietario.descripcion}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="acttipocontrato">#{msgs['ttipo']}</p:outputLabel>
+                                <p:inputText id="acttipocontrato" value="#{contratoPropietarioBean.contratoPropietario.tipo}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="actfechainicio">#{msgs['tfechacreacion']}</p:outputLabel>
+                                <p:inputText id="actfechainicio" value="#{contratoPropietarioBean.contratoPropietario.fecha_creacion}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="actfechafin">#{msgs['tfechafinal']}</p:outputLabel>
+                                <p:inputText id="actfechafin" value="#{contratoPropietarioBean.contratoPropietario.fecha_finalizacion}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="actvalor">#{msgs['tprecio']}</p:outputLabel>
+                                <p:inputText id="actvalor" value="#{contratoPropietarioBean.contratoPropietario.valor}" required="true"/>
+                            </div>
+
+                        </p:outputPanel>
+                    </p:outputPanel>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{contratoPropietarioBean.actualizar()}"
+                                         update="actualizar-contrato-propietario-content" process="actualizar-contrato-propietario-content @this"
+                                         oncomplete="PF('actualizarContratoPropietarioDialog').hide()"/>
+                        <p:commandButton value="Cancel" icon="pi pi-times"
+                                         onclick="PF('actualizarContratoPropietarioDialog').hide()"
+                                         class="ui-button-secondary" type="button"/>
+                    </f:facet>
+                </p:dialog>
+
+        </h:form>
+        </ui:define>
+        </ui:composition>
+    </main>
+
+</h:body>
+</html>

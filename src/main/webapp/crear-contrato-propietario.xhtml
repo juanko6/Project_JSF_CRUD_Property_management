@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+<h:head>
+   <title>Crear Contrato Propietario Inmobiliaria SA</title>
+</h:head>
+<h:body>
+   <main>
+
+      <h:form>
+         <p:panel header="Crear Contrato Propietario">
+            <p:messages/>
+            <h:panelGrid columns="2" columnClasses="label, value">
+
+               <h:outputText value="Codigo: *"/>
+               <p:inputText value="#{contratoPropietarioBean.contrato.codigo}" required="true" label="Cedula"/>
+
+               <h:outputText value="Descripcion: *"/>
+               <p:inputText value="#{contratoPropietarioBean.contrato.descripcion}" required="true" label="nombre"/>
+
+               <h:outputText value="Tipo Contrato: *"/>
+               <p:inputText value="#{contratoPropietarioBean.contrato.tipo}" required="true" label="Apellido"/>
+
+               <h:outputText value="Fecha de Creacion: *"/>
+               <p:inputText value="#{contratoPropietarioBean.contrato.fecha_creacion}" required="true" label="Fecha de Expedicion"/>
+
+
+               <h:outputText value="Fecha de Finalizacion: *"/>
+               <p:inputText value="#{contratoPropietarioBean.contrato.fecha_finalizacion}" required="true" label="Direccion"/>
+
+               <h:outputText value="Valor: *"/>
+               <p:inputText value="#{contratoPropietarioBean.contrato.valor}" required="true" label="Correo"/>
+
+               <h:outputText value="Comision: *"/>
+               <p:inputText value="#{contratoPropietarioBean.contrato.comision}" required="true" label="Correo"/>
+
+
+
+            </h:panelGrid>
+            <h:commandButton value="Guardar" action="#{contratoPropietarioBean.guardar()}"/>
+         </p:panel>
+      </h:form>
+   </main>
+</h:body>
+</html>
+
+
