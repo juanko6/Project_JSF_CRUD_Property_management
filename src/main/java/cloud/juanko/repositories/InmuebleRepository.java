@@ -245,15 +245,11 @@ public class InmuebleRepository implements IRepository<Inmueble>{
                 ResultSet rs = stmt.executeQuery("SELECT * FROM inmueble");
         ) {
             while (rs.next()) {
-                System.out.println("Recorriendo inmueble ");
                 Inmueble aux = new Inmueble();
                 aux.setCodigo(rs.getLong("codigo"));
-                System.out.println(inmueble.getCodigo() + " Codigo Ingresado");
-                System.out.println(aux.getCodigo() + " Codigo Listado");
                 int au = aux.getCodigo().intValue();
                 int in = inmueble.getCodigo().intValue();
                 if (au == in) {
-                    System.out.println("Se Comprobo");
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("El codigo ingresado se encuentra en la base de datos de 'INMUEBLE'"));
                     PrimeFaces.current().ajax().update("form:messages", "form:dtinmueble");
                     return true;

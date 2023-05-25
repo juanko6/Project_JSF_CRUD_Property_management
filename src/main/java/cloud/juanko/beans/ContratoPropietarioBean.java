@@ -1,7 +1,13 @@
 package cloud.juanko.beans;
 
+import cloud.juanko.models.Agente;
 import cloud.juanko.models.ContratoPropietario;
+import cloud.juanko.models.Inmueble;
+import cloud.juanko.models.Propietario;
+import cloud.juanko.services.AgenteService;
 import cloud.juanko.services.ContratoPropietarioService;
+import cloud.juanko.services.InmuebleService;
+import cloud.juanko.services.PropietarioService;
 import org.primefaces.PrimeFaces;
 
 import javax.faces.application.FacesMessage;
@@ -22,13 +28,23 @@ public class ContratoPropietarioBean implements Serializable {
     private ContratoPropietario selectedProduct;
     private List<ContratoPropietario> selectedProducts;
     private List<ContratoPropietario> contratoPropietarios = new ArrayList<>();
-
+    private Inmueble inmueble;
+    private Propietario propietario;
+    private Agente agente;
+    private PropietarioService propietarioService;
+    private InmuebleService inmuebleService;
+    private AgenteService agenteService;
 
     public ContratoPropietarioBean() {
         selectedProducts = new ArrayList<>();
         contratoPropietario = new ContratoPropietario();
         contratoPropietarioService = new ContratoPropietarioService();
-
+        inmueble = new Inmueble();
+        propietario = new Propietario();
+        agente = new Agente();
+        propietarioService = new PropietarioService();
+        inmuebleService = new InmuebleService();
+        agenteService = new AgenteService();
     }
 
 
@@ -45,50 +61,52 @@ public class ContratoPropietarioBean implements Serializable {
         return contratoPropietarioService.listar();
     }
 
+
+
     public String guardar(){
 
-        System.out.println("Nombre Contrato ");
-        if(contratoPropietarioService.guardar(contratoPropietario)){
+        System.out.println("Nuevo Contrato ");
+        if(contratoPropietarioService.guardar(contratoPropietario, propietario, inmueble, agente)){
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Contrato Creado"));
-            PrimeFaces.current().ajax().update("form:messages", "form:dtcontrato");
+            PrimeFaces.current().ajax().update("form:messages", "form:dtcontratopropietario");
 
-            return "crear-contrato-propietario.xhtml";
+            return "listar-contrato-propietario.xhtml";
         }
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Falló creando Contrato"));
 
-        return "crear-contrato-propietario.xhtml";
+        return "listar-contrato-propietario.xhtml";
 
     }
 
     public String irCrear() {
         this.contratoPropietario = new ContratoPropietario();
-       return "crear-contrato-propietario.xhtml";
+        return "listar-contrato-propietario.xhtml";
     }
 
 
-    public void eliminar(){
-        System.out.println("Eliminar "+ contratoPropietario.getCodigo());
+    public String eliminar(){
         if(contratoPropietarioService.eliminar(contratoPropietario.getCodigo())){
-            System.out.println("Eliminación correcta");
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Contrato Eliminado"));
-        }else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Falló eliminando Contrato"));
-        }
+            PrimeFaces.current().ajax().update("form:messages", "form:dtcontratopropietario");
 
-        PrimeFaces.current().ajax().update("form:messages", "form:dtpropietario");
+            return "listar-contrato-propietario.xhtml";
+
+        }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Falló eliminando Contrato"));
+        return "listar-contrato-propietario.xhtml";
     }
 
     public String actualizar(){
-        System.out.println("Actualizar "+this.contratoPropietario.getCodigo());
-        if(contratoPropietarioService.actualizar(contratoPropietario)){
+        System.out.println("Actualizar bean");
+        if(contratoPropietarioService.actualizar(contratoPropietario, propietario, inmueble, agente)){
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Contrato Actualizado"));
             PrimeFaces.current().ajax().update("form:messages", "form:dtContrato");
 
-            return "listar-propietario.xhtml";
+            return "listar-contrato-propietario.xhtml";
         }
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Falló Actualizando Propietario"));
 
-        return "listar-propietario.xhtml";
+        return "listar-contrato-propietario.xhtml";
     }
 
     public ContratoPropietarioService getContratoPropietarioService() {
@@ -130,4 +148,54 @@ public class ContratoPropietarioBean implements Serializable {
     public void setContratoPropietarios(List<ContratoPropietario> contratoPropietarios) {
         this.contratoPropietarios = contratoPropietarios;
     }
+
+    public Inmueble getInmueble() {
+        return inmueble;
+    }
+
+    public void setInmueble(Inmueble inmueble) {
+        this.inmueble = inmueble;
+    }
+
+    public Propietario getPropietario() {
+        return propietario;
+    }
+
+    public void setPropietario(Propietario propietario) {
+        this.propietario = propietario;
+    }
+
+    public Agente getAgente() {
+        return agente;
+    }
+
+    public void setAgente(Agente agente) {
+        this.agente = agente;
+    }
+
+    public PropietarioService getPropietarioService() {
+        return propietarioService;
+    }
+
+    public void setPropietarioService(PropietarioService propietarioService) {
+        this.propietarioService = propietarioService;
+    }
+
+    public InmuebleService getInmuebleService() {
+        return inmuebleService;
+    }
+
+    public void setInmuebleService(InmuebleService inmuebleService) {
+        this.inmuebleService = inmuebleService;
+    }
+
+    public AgenteService getAgenteService() {
+        return agenteService;
+    }
+
+    public void setAgenteService(AgenteService agenteService) {
+        this.agenteService = agenteService;
+    }
+
+
 }

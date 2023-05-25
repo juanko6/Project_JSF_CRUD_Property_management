@@ -20,7 +20,7 @@
 
                 <p:toolbar>
                     <p:toolbarGroup>
-                        <p:commandButton value="Nuevo Contrato Propietario" icon="pi pi-plus" actionListener="#{contratoPropietarioBean.irCrear()}"
+                        <p:commandButton value="#{msgs['tnuevocontratopro']}" icon="pi pi-plus" actionListener="#{contratoPropietarioBean.irCrear()}"
                                          update=":dialogs:manage-contrato-propietario-content" oncomplete="PF('manageContratoPropietarioDialog').show()"
                                          styleClass="ui-button-success" style="margin-right: .5rem">
                             <p:resetInput target=":dialogs:manage-contrato-propietario-content" />
@@ -50,34 +50,46 @@
                     <!-- <p:column selectionMode="multiple" exportable="false"></p:column> -->
 
                     <p:column headerText="#{msgs['tcodigo']}" filterBy="#{contratopropietario.codigo}" filterMatchMode="contains">
-                        <h:outputText value="#{contratopropietario.codigo}"/>
-
+                        <h:outputText value="#{contratoPropietario.codigo}"/>
                     </p:column>
 
-                    <p:column headerText="#{msgs['tdescripcion']}" filterBy="#{contratopropietario.descripcion}">
-                        <h:outputText value="#{contratopropietario.descripcion}" />
+                    <p:column headerText="#{msgs['tdescripcion']}" filterBy="#{contratoPropietario.descripcion}">
+                        <h:outputText value="#{contratoPropietario.descripcion}" />
                     </p:column>
 
-                    <p:column headerText="#{msgs['ttipo']}" filterBy="#{contratopropietario.tipo}">
-                        <h:outputText value="#{contratopropietario.tipo}"/>
+                    <p:column headerText="#{msgs['ttipo']}" filterBy="#{contratoPropietario.tipo}">
+                        <h:outputText value="#{contratoPropietario.tipo}"/>
                     </p:column>
 
-                    <p:column headerText="#{msgs['tfechacreacion']}" filterBy="#{contratopropietario.fecha_creacion}">
-                        <h:outputText value="#{contratopropietario.fecha_creacion}" />
+                    <p:column headerText="#{msgs['tfechacreacion']}" filterBy="#{contratoPropietario.fecha_creacion}">
+                        <h:outputText value="#{contratoPropietario.fecha_creacion}" />
                     </p:column>
 
-                    <p:column headerText="#{msgs['tfechafinal']}" filterBy="#{contratopropietario.fecha_finalizacion}">
-                        <h:outputText value="#{contratopropietario.fecha_finalizacion}"/>
+                    <p:column headerText="#{msgs['tfechafinal']}" filterBy="#{contratoPropietario.fecha_finalizacion}">
+                        <h:outputText value="#{contratoPropietario.fecha_finalizacion}"/>
                     </p:column>
 
-                    <p:column headerText="#{msgs['tprecio']}" filterBy="#{contratopropietario.valor}">
-                        <h:outputText value="#{contratopropietario.valor}"/>
+                    <p:column headerText="#{msgs['tprecio']}" filterBy="#{contratoPropietario.valor}">
+                        <h:outputText value="#{contratoPropietario.valor}"/>
                     </p:column>
 
-                    <p:column headerText="#{msgs['tcomision']}" filterBy="#{contratopropietario.comision}">
-                        <h:outputText value="#{contratopropietario.comision}"/>
+                    <p:column headerText="#{msgs['tcomision']}" filterBy="#{contratoPropietario.comision}">
+                        <h:outputText value="#{contratoPropietario.comision}"/>
                     </p:column>
 
+                    <p:column headerText="#{msgs['tpropietario']}" filterBy="#{contratoPropietario.cedula_propietario.cedula}">
+                        <h:outputText value="#{contratoPropietario.cedula_propietario.cedula}"/>
+                    </p:column>
+
+
+
+                    <p:column headerText="#{msgs['tinmueble']}" filterBy="#{contratoPropietario.codigo_imnueble.codigo}">
+                        <h:outputText value="#{contratoPropietario.codigo_imnueble.codigo}"/>
+                    </p:column>
+
+                    <p:column headerText="#{msgs['tagentes']}" filterBy="#{contratoPropietario.cedula_agente.cedula}">
+                        <h:outputText value="#{contratoPropietario.cedula_agente.cedula}"/>
+                    </p:column>
 
 
                     <p:column exportable="false">
@@ -152,6 +164,23 @@
                                 <p:inputText id="comision" value="#{contratoPropietarioBean.contratoPropietario.comision}" required="true"/>
                             </div>
 
+
+
+                            <div class="field">
+                                <p:outputLabel for="propietario">#{msgs['tpropietario']}</p:outputLabel>
+                                <p:inputText id="propietario" value="#{contratoPropietarioBean.propietario.cedula}" required="true"/>
+                            </div>
+
+                            <div class="field">
+                                <p:outputLabel for="inmueble">#{msgs['tinmueble']}</p:outputLabel>
+                                <p:inputText id="inmueble" value="#{contratoPropietarioBean.inmueble.codigo}" required="true"/>
+                            </div>
+
+                            <div class="field">
+                                <p:outputLabel for="agente">#{msgs['tagentes']}</p:outputLabel>
+                                <p:inputText id="agente" value="#{contratoPropietarioBean.agente.cedula}" required="true"/>
+                            </div>
+
                         </p:outputPanel>
                     </p:outputPanel>
 
@@ -170,11 +199,15 @@
                 nuevo dialogo para actualizar
                 -->
 
-                <p:dialog header="Detalles del Contrato Propietario" showEffect="fade" modal="true" widgetVar="actualizarContratoPropietarioDialog"
+                <p:dialog header="Detalle del Contrato Propietario" showEffect="fade" modal="true" widgetVar="actualizarContratoPropietarioDialog"
                           responsive="true">
                     <p:outputPanel id="actualizar-contrato-propietario-content" class="ui-fluid">
                         <p:outputPanel rendered="#{not empty contratoPropietarioBean.contratoPropietario}">
 
+<!--                            <div class="field">-->
+<!--                                <p:outputLabel for="actcodigo">#{msgs['tcodigo']}</p:outputLabel>-->
+<!--                                <p:inputText id="actcodigo" value="#{contratoPropietarioBean.contratoPropietario.codigo}" required="true"/>-->
+<!--                            </div>-->
                             <div class="field">
                                 <p:outputLabel for="actdescripcion">#{msgs['tdescripcion']}</p:outputLabel>
                                 <p:inputText id="actdescripcion" value="#{contratoPropietarioBean.contratoPropietario.descripcion}" required="true"/>
@@ -194,6 +227,26 @@
                             <div class="field">
                                 <p:outputLabel for="actvalor">#{msgs['tprecio']}</p:outputLabel>
                                 <p:inputText id="actvalor" value="#{contratoPropietarioBean.contratoPropietario.valor}" required="true"/>
+                            </div>
+
+                            <div class="field">
+                                <p:outputLabel for="actcomision">#{msgs['tcomision']}</p:outputLabel>
+                                <p:inputText id="actcomision" value="#{contratoPropietarioBean.contratoPropietario.comision}" required="true"/>
+                            </div>
+
+                            <div class="field">
+                                <p:outputLabel for="actpropietario">#{msgs['tpropietario']}</p:outputLabel>
+                                <p:inputText id="actpropietario" value="#{contratoPropietarioBean.propietario.cedula}" required="true"/>
+                            </div>
+
+                            <div class="field">
+                                <p:outputLabel for="actinmueble">#{msgs['tinmueble']}</p:outputLabel>
+                                <p:inputText id="actinmueble" value="#{contratoPropietarioBean.inmueble.codigo}" required="true"/>
+                            </div>
+
+                            <div class="field">
+                                <p:outputLabel for="actagente">#{msgs['tagentes']}</p:outputLabel>
+                                <p:inputText id="actagente" value="#{contratoPropietarioBean.agente.cedula}" required="true"/>
                             </div>
 
                         </p:outputPanel>

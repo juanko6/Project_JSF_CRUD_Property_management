@@ -9,24 +9,10 @@ public class ContratoCliente {
     private String fecha_creacion;
     private String fecha_finalizacion;
     private String descripcion;
+    private Agente cedula_agente;
+    private Inmueble codigo_imnueble;
+    private Cliente cedula_cliente;
 
-
-
-
-
-    public ContratoCliente(Long codigo, String tipo, Long valor, String fecha_creacion, String fecha_finalizacion, String descripcion) {
-        this.codigo = codigo;
-        this.tipo = tipo;
-        this.valor = valor;
-        this.fecha_creacion = fecha_creacion;
-        this.fecha_finalizacion = fecha_finalizacion;
-        this.descripcion = descripcion;
-
-    }
-
-    public ContratoCliente() {
-
-    }
 
     public Long getCodigo() {
         return codigo;
@@ -76,4 +62,27 @@ public class ContratoCliente {
         this.descripcion = descripcion;
     }
 
+    public Agente getCedula_agente() {
+        return cedula_agente;
+    }
+
+    public void setCedula_agente(Agente cedula_agente) {
+        this.cedula_agente = cedula_agente;
+    }
+
+    public Inmueble getCodigo_imnueble() {
+        return codigo_imnueble;
+    }
+
+    public void setCodigo_imnueble(Inmueble codigo_imnueble) {
+        this.codigo_imnueble = codigo_imnueble;
+    }
+
+    public Cliente getCedula_cliente() {
+        return cedula_cliente;
+    }
+
+    public void setCedula_cliente(Cliente cedula_cliente) {
+        this.cedula_cliente = cedula_cliente;
+    }
 }

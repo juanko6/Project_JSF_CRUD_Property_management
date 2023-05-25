@@ -40,8 +40,6 @@ public class InmuebleBean implements Serializable {
         propietario = new Propietario();
         this.propietarios = propietarioService.listar();
 
-
-
     }
 
 
@@ -80,16 +78,15 @@ public class InmuebleBean implements Serializable {
        return "crear-propietario.xhtml";
     }
 
-    public void eliminar(){
-        System.out.println("Eliminar "+ inmueble.getCodigo());
+    public String eliminar(){
         if(inmuebleService.eliminar(inmueble.getCodigo())){
-            System.out.println("Eliminación correcta");
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Inmueble Eliminado"));
-        }else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Falló eliminando Inmueble"));
-        }
+            PrimeFaces.current().ajax().update("form:messages", "form:dtinmueble");
+            return "listar-inmueble.xhtml";
 
-        PrimeFaces.current().ajax().update("form:messages", "form:dtpropietario");
+        }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Falló eliminando Inmueble"));
+        return "listar-inmueble.xhtml";
     }
 
     public String actualizar(){
