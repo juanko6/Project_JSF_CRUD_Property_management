@@ -83,8 +83,8 @@
                         <h:outputText value="#{inmueble.precio}"/>
                     </p:column>
 
-                    <p:column headerText="#{msgs['tpropietario']}" filterBy="#{inmueble.propiedad}">
-                        <h:outputText value="#{inmueble.propiedad}"/>
+                    <p:column headerText="#{msgs['tpropietario']}" filterBy="#{inmueble.propiedad.cedula}">
+                        <h:outputText value="#{inmueble.propiedad.cedula}"/>
                     </p:column>
 
 
@@ -92,16 +92,16 @@
                         <h:outputText value="#{inmueble.direccion}"/>
                     </p:column>
 
-                    <p:column headerText="#{msgs['tpais']}" filterBy="#{inmueble.ubicacion}">
-                        <h:outputText value="#{inmueble.ubicacion}"/>
+                    <p:column headerText="#{msgs['tpais']}" filterBy="#{inmueble.pais}">
+                        <h:outputText value="#{inmueble.pais}"/>
                     </p:column>
 
-                    <p:column headerText="#{msgs['tdepartamento']}" filterBy="#{inmueble.ubicacion}">
-                        <h:outputText value="#{inmueble.ubicacion}"/>
+                    <p:column headerText="#{msgs['tdepartamento']}" filterBy="#{inmueble.departamento}">
+                        <h:outputText value="#{inmueble.departamento}"/>
                     </p:column>
 
-                    <p:column headerText="#{msgs['tciudad']}" filterBy="#{inmueble.ubicacion}">
-                        <h:outputText value="#{inmueble.ubicacion}"/>
+                    <p:column headerText="#{msgs['tciudad']}" filterBy="#{inmueble.ciudad}">
+                        <h:outputText value="#{inmueble.ciudad}"/>
                     </p:column>
 
                     <p:column headerText="#{msgs['tfotos']}" filterBy="#{inmueble.fotos}">
@@ -143,7 +143,7 @@
             <h:form id="dialogs">
 
                 <!--
-                nuevo dialogo para crear empleado
+                nuevo dialogo para crear inmueble
                    -->
 
                 <p:dialog header="Ingrese Nuevo Inmueble" showEffect="fade" modal="true" widgetVar="manageInmuebleDialog"
@@ -162,38 +162,32 @@
                                 <p:outputLabel for="tipo">#{msgs['ttipo']}</p:outputLabel>
 
 
-                                    <p:selectOneMenu id="tipo" value="#{inmuebleBean.inmueble.tipo}">
+                                    <!--<p:selectOneMenu id="tipo" value="#{inmuebleBean.inmueble.tipo}">
                                         <f:selectItem itemLabel="#{msgs['tseleccion']}" itemValue=""/>
                                         <f:selectItem itemLabel="Casa" itemValue="Casa"/>
                                         <f:selectItem itemLabel="Apartamento" itemValue="Apartamento"/>
                                         <f:selectItem itemLabel="Local Comercial" itemValue="Local Comercial"/>
                                         <f:selectItem itemLabel="Finca" itemValue="Finca"/>
-                                    </p:selectOneMenu>
+                                    </p:selectOneMenu>-->
 
 
-<!--                                <p:inputText id="tipo" value="#{inmuebleBean.inmueble.tipo}" required="true"/>-->
+                                <p:inputText id="tipo" value="#{inmuebleBean.inmueble.tipo}" required="true"/>
                             </div>
                             <div class="field">
                                 <p:outputLabel for="estado">#{msgs['testado']}</p:outputLabel>
 
-                                <p:selectOneMenu id="estado" value="#{inmuebleBean.inmueble.estado}">
+                               <!-- <p:selectOneMenu id="estado" value="#{inmuebleBean.inmueble.estado}">
                                     <f:selectItem itemLabel="#{msgs['tseleccion']}" itemValue=""/>
                                     <f:selectItem itemLabel="En Oferta" itemValue="En Oferta"/>
                                     <f:selectItem itemLabel="Vendido" itemValue="Vendido"/>
 
-                                </p:selectOneMenu>
+                                </p:selectOneMenu>-->
 
-<!--                                <p:inputText id="estado" value="#{inmuebleBean.inmueble.estado}" required="true"/>-->
+                                <p:inputText id="estado" value="#{inmuebleBean.inmueble.estado}" required="true"/>
                             </div>
                             <div class="field">
                                 <p:outputLabel for="tamano_m2">#{msgs['ttamano_m2']}</p:outputLabel>
-                                <p:inputText id="tamano_m2" value="#{inmuebleBean.inmueble.tamano_m2}" required="true"/>
-                            </div>
-
-
-                            <div class="field">
-                                <p:outputLabel for="cant_banos">#{msgs['tcant_banos']}</p:outputLabel>
-                                <p:inputText id="cant_banos" value="#{inmuebleBean.inmueble.cant_banos}" required="true"/>
+                                <p:inputText id="tamano_m2" value="#{inmuebleBean.inmueble.tamano_m2}" required="false"/>
                             </div>
 
 
@@ -201,14 +195,14 @@
                                 <p:outputLabel for="modalidad">#{msgs['tmodalidad']}</p:outputLabel>
 
 
-                                <p:selectOneMenu id="modalidad" value="#{inmuebleBean.inmueble.modalidad}">
+                                <!--<p:selectOneMenu id="modalidad" value="#{inmuebleBean.inmueble.modalidad}">
                                     <f:selectItem itemLabel="#{msgs['tseleccion']}" itemValue=""/>
                                     <f:selectItem itemLabel="En Venta" itemValue="En Venta"/>
                                     <f:selectItem itemLabel="En Alquiler" itemValue="En Alquiler"/>
 
-                                </p:selectOneMenu>
+                                </p:selectOneMenu>-->
 
-<!--                                <p:inputText id="modalidad" value="#{inmuebleBean.inmueble.modalidad}" required="true"/>-->
+                                <p:inputText id="modalidad" value="#{inmuebleBean.inmueble.modalidad}" required="true"/>
                             </div>
 
                             <div class="field">
@@ -220,18 +214,31 @@
 
                             <div class="field">
                                 <p:outputLabel for="propiedad">#{msgs['tpropietario']}</p:outputLabel>
+                                <!--<p:selectOneMenu id="propiedad" value="#{inmuebleBean.inmueble.propiedad}" panelStyle="width: 180px" effect="fade" var="c" filter="true" filterMatchMode="startsWith">
+                                    <f:selectItems value="#{inmuebleBean.propietarios}" var="propietarios" itemLabel= "#{propietarios.cedula}" itemValue="#{propietarioBean.propietario.cedula}"/>
+
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Id Propietario"/>
+                                        </f:facet>
+                                        <h:outputText value="#{c.nombre}"/>
+                                    </p:column>
 
 
-                                <p:selectOneMenu id="propiedad" value="#{inmuebleBean.inmueble.propiedad}">
+                                </p:selectOneMenu>-->
+
+
+
+                                <!--<p:selectOneMenu id="propiedad" value="#{inmuebleBean.inmueble.propiedad}">
                                     <f:selectItem itemLabel="#{msgs['tseleccion']}" itemValue=""/>
                                     <f:selectItem itemLabel="Inmobiliaria" itemValue="En Venta"/>
                                     <f:selectItem itemLabel="Propietario" itemValue="En Alquiler"/>
-
-
-
-                                </p:selectOneMenu>
-<!--                                <p:inputText id="propiedad" value="#{inmuebleBean.inmueble.propiedad}" required="true"/>-->
+                                </p:selectOneMenu>-->
+                                <p:inputText id="propiedad" value="#{inmuebleBean.propietario.cedula}" required="true"/>
                             </div>
+
+
+
 
                             <div class="field">
                                 <p:outputLabel for="direccion">#{msgs['tdireccion']}</p:outputLabel>
@@ -298,30 +305,30 @@
                                 <p:outputLabel for="acttipo">#{msgs['ttipo']}</p:outputLabel>
 
 
-                                <p:selectOneMenu id="acttipo" value="#{inmuebleBean.inmueble.tipo}">
+                                <!--<p:selectOneMenu id="acttipo" value="#{inmuebleBean.inmueble.tipo}">
                                     <f:selectItem itemLabel="#{msgs['tseleccion']}" itemValue=""/>
                                     <f:selectItem itemLabel="Casa" itemValue="Casa"/>
                                     <f:selectItem itemLabel="Apartamento" itemValue="Apartamento"/>
                                     <f:selectItem itemLabel="Local Comercial" itemValue="Local Comercial"/>
                                     <f:selectItem itemLabel="Finca" itemValue="Finca"/>
-                                </p:selectOneMenu>
+                                </p:selectOneMenu>-->
 
 
-<!--                                <p:inputText id="acttipo" value="#{inmuebleBean.inmueble.tipo}" required="true"/>-->
+                                <p:inputText id="acttipo" value="#{inmuebleBean.inmueble.tipo}" required="true"/>
                             </div>
                             <div class="field">
                                 <p:outputLabel for="actestado">#{msgs['testado']}</p:outputLabel>
 
 
-                                <p:selectOneMenu id="actestado" value="#{inmuebleBean.inmueble.estado}">
+                                <!--<p:selectOneMenu id="actestado" value="#{inmuebleBean.inmueble.estado}">
                                     <f:selectItem itemLabel="#{msgs['tseleccion']}" itemValue=""/>
                                     <f:selectItem itemLabel="En Oferta" itemValue="En Oferta"/>
                                     <f:selectItem itemLabel="Vendido" itemValue="Vendido"/>
 
-                                </p:selectOneMenu>
+                                </p:selectOneMenu>-->
 
 
-<!--                                <p:inputText id="actestado" value="#{inmuebleBean.inmueble.estado}" required="true"/>-->
+                                <p:inputText id="actestado" value="#{inmuebleBean.inmueble.estado}" required="true"/>
                             </div>
                             <div class="field">
                                 <p:outputLabel for="acttamano_m2">#{msgs['ttamano_m2']}</p:outputLabel>
@@ -337,15 +344,15 @@
                             <div class="field">
                                 <p:outputLabel for="actmodalidad">#{msgs['tmodalidad']}</p:outputLabel>
 
-                                <p:selectOneMenu id="actmodalidad" value="#{inmuebleBean.inmueble.modalidad}">
+                               <!-- <p:selectOneMenu id="actmodalidad" value="#{inmuebleBean.inmueble.modalidad}">
                                     <f:selectItem itemLabel="#{msgs['tseleccion']}" itemValue=""/>
                                     <f:selectItem itemLabel="En Venta" itemValue="En Venta"/>
                                     <f:selectItem itemLabel="En Alquiler" itemValue="En Alquiler"/>
 
                                 </p:selectOneMenu>
+-->
 
-
-<!--                                <p:inputText id="actmodalidad" value="#{inmuebleBean.inmueble.modalidad}" required="true"/>-->
+                                <p:inputText id="actmodalidad" value="#{inmuebleBean.inmueble.modalidad}" required="true"/>
                             </div>
 
                             <div class="field">
@@ -357,15 +364,15 @@
                                 <p:outputLabel for="actpropiedad">#{msgs['tpropietario']}</p:outputLabel>
 
 
-                                <p:selectOneMenu id="actpropiedad" value="#{inmuebleBean.inmueble.propiedad}">
+                               <!-- <p:selectOneMenu id="actpropiedad" value="#{inmuebleBean.inmueble.propiedad}">
                                     <f:selectItem itemLabel="#{msgs['tseleccion']}" itemValue=""/>
                                     <f:selectItem itemLabel="Inmobiliaria" itemValue="En Venta"/>
                                     <f:selectItem itemLabel="Propietario" itemValue="En Alquiler"/>
 
 
 
-                                </p:selectOneMenu>
-                                <!--                                <p:inputText id="propiedad" value="#{inmuebleBean.inmueble.propiedad}" required="true"/>-->
+                                </p:selectOneMenu>-->
+                                <p:inputText id="actpropiedad" value="#{inmuebleBean.propietario.cedula}" required="true"/>
                             </div>
 
                             <div class="field">
