@@ -70,9 +70,9 @@ public class InmuebleRepository implements IRepository<Inmueble>{
     public boolean crear(Inmueble inmueble) {
 
         Connection conect = ConexionBaseDatos.getConnection();
-        String sql =  "insert into inmueble (codigo, descripcion, tipo, estado, tamano_m2, modalidad,direccion, precio, cant_banos,fotos,pais,departamento,ciudad, propiedad) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        String sql = "insert into inmueble (codigo, descripcion, tipo, estado, tamano_m2, modalidad, direccion, precio, cant_banos, fotos, pais, departamento, municipio, propiedad) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 
-        try(
+        try (
                 PreparedStatement stmt = conect.prepareStatement(sql)
         ) {
             stmt.setLong(1, inmueble.getCodigo());
@@ -101,6 +101,39 @@ public class InmuebleRepository implements IRepository<Inmueble>{
         return false;
     }
 
+    public boolean crear(Inmueble inmueble, Propietario propietario ) {
+
+        Connection conect = ConexionBaseDatos.getConnection();
+        String sql = "insert into inmueble (codigo, descripcion, tipo, estado, tamano_m2, modalidad, direccion, precio, cant_banos, fotos, pais, departamento, municipio, propiedad) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
+        try (
+                PreparedStatement stmt = conect.prepareStatement(sql)
+        ) {
+            stmt.setLong(1, inmueble.getCodigo());
+            stmt.setString(2, inmueble.getDescripcion());
+            stmt.setString(3, inmueble.getTipo());
+            stmt.setString(4, inmueble.getEstado());
+            stmt.setInt(5, inmueble.getTamano_m2());
+            stmt.setString(6, inmueble.getModalidad());
+            stmt.setString(7, inmueble.getDireccion());
+            stmt.setLong(8, inmueble.getPrecio());
+            stmt.setLong(9, inmueble.getCant_banos());
+            stmt.setString(10, inmueble.getFotos());
+            stmt.setString(11, inmueble.getPais());
+            stmt.setString(12, inmueble.getDepartamento());
+            stmt.setString(13, inmueble.getCiudad());
+            stmt.setLong(14, propietario.getCedula());
+
+            if (!comprobarId(inmueble)) {
+                stmt.executeUpdate();
+                return true;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
     @Override
     public boolean eliminar(Long codigo) {
@@ -199,6 +232,37 @@ public class InmuebleRepository implements IRepository<Inmueble>{
 
     @Override
     public boolean validar(String usuario, String contrasena) {
+        return false;
+    }
+
+
+    public boolean comprobarId(Inmueble inmueble) {
+        Connection conect = ConexionBaseDatos.getConnection();
+
+
+        try (
+                Statement stmt = conect.createStatement();
+                ResultSet rs = stmt.executeQuery("SELECT * FROM inmueble");
+        ) {
+            while (rs.next()) {
+                System.out.println("Recorriendo inmueble ");
+                Inmueble aux = new Inmueble();
+                aux.setCodigo(rs.getLong("codigo"));
+                System.out.println(inmueble.getCodigo() + " Codigo Ingresado");
+                System.out.println(aux.getCodigo() + " Codigo Listado");
+                int au = aux.getCodigo().intValue();
+                int in = inmueble.getCodigo().intValue();
+                if (au == in) {
+                    System.out.println("Se Comprobo");
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("El codigo ingresado se encuentra en la base de datos de 'INMUEBLE'"));
+                    PrimeFaces.current().ajax().update("form:messages", "form:dtinmueble");
+                    return true;
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return false;
     }
 

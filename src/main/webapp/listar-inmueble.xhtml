@@ -206,6 +206,11 @@
                             </div>
 
                             <div class="field">
+                                <p:outputLabel for="cant_banos">#{msgs['tcant_banos']}</p:outputLabel>
+                                <p:inputText id="cant_banos" value="#{inmuebleBean.inmueble.cant_banos}" required="false"/>
+                            </div>
+
+                            <div class="field">
                                 <p:outputLabel for="precio">#{msgs['tprecio']}</p:outputLabel>
                                 <p:inputText id="precio" value="#{inmuebleBean.inmueble.precio}" required="true"/>
                             </div>

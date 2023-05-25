@@ -21,6 +21,7 @@ public class InmuebleBean implements Serializable {
     private InmuebleService inmuebleService;
     private Inmueble inmueble;
     private Inmueble selectedProduct;
+    private String labeled;
     private List<Inmueble> selectedProducts;
     private List<Inmueble> inmuebles = new ArrayList<>();
     private List<Propietario> propietarios;
@@ -42,6 +43,8 @@ public class InmuebleBean implements Serializable {
 
 
     }
+
+
 
 
     public String logout(){
