@@ -13,6 +13,7 @@ public class Cliente {
     private Long celular;
 
 
+
     public Cliente(Long cedula, String nombre, String apellido, String fechaExpedicion, String correo, String direccion, String fechaNacimiento, Long celular) {
         this.cedula = cedula;
         this.nombre = nombre;

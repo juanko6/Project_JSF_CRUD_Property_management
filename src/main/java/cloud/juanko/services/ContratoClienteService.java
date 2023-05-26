@@ -1,9 +1,5 @@
 package cloud.juanko.services;
-
-import cloud.juanko.models.Agente;
-import cloud.juanko.models.ContratoCliente;
-import cloud.juanko.models.Inmueble;
-import cloud.juanko.models.Propietario;
+import cloud.juanko.models.*;
 import cloud.juanko.repositories.ContratoClienteRepository;
 
 import java.util.List;
@@ -33,8 +29,8 @@ public class ContratoClienteService implements IService<ContratoCliente>{
         return contratoClienteRepository.crear(contratoCliente);
     }
 
-    public boolean guardar(ContratoCliente contratoCliente, Propietario propietario, Inmueble inmueble, Agente agente) {
-        return contratoClienteRepository.crear(contratoCliente, propietario, inmueble, agente);
+    public boolean guardar(ContratoCliente contratoCliente, Cliente cliente, Inmueble inmueble, Agente agente) {
+        return contratoClienteRepository.crear(contratoCliente, cliente, inmueble, agente);
     }
 
     @Override
@@ -43,8 +39,13 @@ public class ContratoClienteService implements IService<ContratoCliente>{
     }
 
     @Override
-    public boolean actualizar(ContratoCliente contratoCliente) {
-        return contratoClienteRepository.actualizar(contratoCliente);
+    public boolean actualizar(ContratoCliente o) {
+        return false;
+    }
+
+
+    public boolean actualizar(ContratoCliente contratoCliente, Cliente cliente, Inmueble inmueble, Agente agente) {
+        return contratoClienteRepository.actualizar(contratoCliente, cliente, inmueble, agente);
     }
 
     @Override

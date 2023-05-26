@@ -1,9 +1,10 @@
 package cloud.juanko.repositories;
+
+import cloud.juanko.util.ConexionBaseDatos;
 import cloud.juanko.models.Agente;
 import cloud.juanko.models.ContratoCliente;
 import cloud.juanko.models.Inmueble;
-import cloud.juanko.models.Propietario;
-import cloud.juanko.util.ConexionBaseDatos;
+import cloud.juanko.models.Cliente;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -50,7 +51,7 @@ public class ContratoClienteRepository implements IRepository<ContratoCliente>{
     public boolean crear(ContratoCliente contratoCliente) {
 
         Connection conect = ConexionBaseDatos.getConnection();
-        String sql =  "insert into contrato_cliente (codigo, tipo, valor, fecha_creacion, fecha_finalizacion, descripcion) values (?,?,?,?,?,?,?)";
+        String sql =  "insert into contrato_cliente (codigo, tipo, valor, fecha_creacion, fecha_finalizacion, descripcion,cedula_agente, cedula_propietario, codigo_inmueble ) values (?,?,?,?,?,?,?,?)";
 
         try(
                 PreparedStatement stmt = conect.prepareStatement(sql)
@@ -61,7 +62,8 @@ public class ContratoClienteRepository implements IRepository<ContratoCliente>{
             stmt.setString(4, contratoCliente.getFecha_creacion());
             stmt.setString(5, contratoCliente.getFecha_finalizacion());
             stmt.setString(6, contratoCliente.getDescripcion());
-            //stmt.setInt(7, contrato.getComision());
+
+
             stmt.executeUpdate();
             return true;
 
@@ -71,10 +73,10 @@ public class ContratoClienteRepository implements IRepository<ContratoCliente>{
         return false;
     }
 
-    public boolean crear(ContratoCliente contratoCliente, Propietario propietario, Inmueble inmueble, Agente agente) {
+    public boolean crear(ContratoCliente contratoCliente, Cliente cliente, Inmueble inmueble, Agente agente ) {
 
         Connection conect = ConexionBaseDatos.getConnection();
-        String sql =  "insert into contrato_cliente (codigo, tipo, valor, fecha_creacion, fecha_finalizacion, descripcion) values (?,?,?,?,?,?,?)";
+        String sql =  "insert into contrato_cliente (codigo, tipo, valor, fecha_creacion, fecha_finalizacion, descripcion,cedula_agente, cedula_cliente, codigo_inmueble) values (?,?,?,?,?,?,?)";
 
         try(
                 PreparedStatement stmt = conect.prepareStatement(sql)
@@ -85,7 +87,9 @@ public class ContratoClienteRepository implements IRepository<ContratoCliente>{
             stmt.setString(4, contratoCliente.getFecha_creacion());
             stmt.setString(5, contratoCliente.getFecha_finalizacion());
             stmt.setString(6, contratoCliente.getDescripcion());
-            //stmt.setInt(7, contrato.getComision());
+            stmt.setLong(8, agente.getCedula());
+            stmt.setLong(9, cliente.getCedula());
+            stmt.setLong(10, inmueble.getCodigo());
             stmt.executeUpdate();
             return true;
 
@@ -115,8 +119,8 @@ public class ContratoClienteRepository implements IRepository<ContratoCliente>{
         return false;
     }
 
-    @Override
-    public boolean actualizar(ContratoCliente contratoCliente) {
+
+    public boolean actualizar(ContratoCliente contratoCliente,  Cliente cliente, Inmueble inmueble, Agente agente) {
 
         Connection conect = ConexionBaseDatos.getConnection();
 
@@ -132,6 +136,9 @@ public class ContratoClienteRepository implements IRepository<ContratoCliente>{
             stmt.setString(5, contratoCliente.getDescripcion());
             stmt.setLong(6, contratoCliente.getCodigo());
 
+            stmt.setLong(7, agente.getCedula());
+            stmt.setLong(8, cliente.getCedula());
+            stmt.setLong(9, inmueble.getCodigo());
 
 
 

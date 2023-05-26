@@ -10,9 +10,8 @@ public class ContratoCliente {
     private String fecha_finalizacion;
     private String descripcion;
     private Agente cedula_agente;
-    private Inmueble codigo_imnueble;
     private Cliente cedula_cliente;
-
+    private Inmueble codigo_imnueble;
 
     public Long getCodigo() {
         return codigo;

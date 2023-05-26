@@ -1,7 +1,7 @@
 package cloud.juanko.beans;
 
-import cloud.juanko.models.ContratoCliente;
-import cloud.juanko.services.ContratoClienteService;
+import cloud.juanko.models.*;
+import cloud.juanko.services.*;
 import org.primefaces.PrimeFaces;
 
 import javax.faces.application.FacesMessage;
@@ -22,12 +22,25 @@ public class ContratoClienteBean implements Serializable {
     private ContratoCliente selectedProduct;
     private List<ContratoCliente> selectedProducts;
     private List<ContratoCliente> contratosClientes = new ArrayList<>();
+    private Inmueble inmueble;
+    private Cliente cliente;
+    private Agente agente;
+    private ClienteService clienteService;
+    private InmuebleService inmuebleService;
+    private AgenteService agenteService;
+
 
 
     public ContratoClienteBean() {
         selectedProducts = new ArrayList<>();
         contratoCliente = new ContratoCliente();
         contratoClienteService = new ContratoClienteService();
+        inmueble = new Inmueble();
+        cliente = new Cliente();
+        agente = new Agente();
+        clienteService = new ClienteService();
+        inmuebleService = new InmuebleService();
+        agenteService = new AgenteService();
 
     }
 
@@ -48,7 +61,7 @@ public class ContratoClienteBean implements Serializable {
     public String guardar(){
 
         System.out.println("Nombre Contrato ");
-        if(contratoClienteService.guardar(contratoCliente)){
+        if(contratoClienteService.guardar(contratoCliente, cliente, inmueble, agente)){
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Contrato Creado"));
             PrimeFaces.current().ajax().update("form:messages", "form:dtcontrato");
 
@@ -78,7 +91,7 @@ public class ContratoClienteBean implements Serializable {
 
     public String actualizar(){
         System.out.println("Actualizar "+this.contratoCliente.getCodigo());
-        if(contratoClienteService.actualizar(contratoCliente)){
+        if(contratoClienteService.actualizar(contratoCliente, cliente, inmueble, agente)){
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Contrato Actualizado"));
             PrimeFaces.current().ajax().update("form:messages", "form:dtContrato");
 
