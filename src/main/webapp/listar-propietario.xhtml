@@ -32,7 +32,7 @@
 
 
 
-                <p:dataTable id="dtpropietarios" widgetVar="dtpropietario" var="propietario" value="#{propietarioBean.listar()}"
+                <p:dataTable id="dtpropietario" widgetVar="dtpropietario" var="propietario" value="#{propietarioBean.listar()}"
                              emptyMessage="No se encuentra"
                              reflow="true" styleClass="products-table" selection="#{propietarioBean.selectedProducts}"
                              rowKey="#{propietario.cedula}" paginator="true" rows="10" rowSelectMode="add" paginatorPosition="bottom">

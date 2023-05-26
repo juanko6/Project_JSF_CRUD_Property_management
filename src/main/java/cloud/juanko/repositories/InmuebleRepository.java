@@ -16,35 +16,40 @@ public class InmuebleRepository implements IRepository<Inmueble>{
         List<Inmueble> listaInmueble = new ArrayList<>();
         Connection conect = ConexionBaseDatos.getConnection();
 
-        try (Statement stmt = conect.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT * FROM inmueble ")
-        ) {
-            while(rs.next()){
-                Inmueble inmueble = new Inmueble();
-                inmueble.setCodigo(rs.getLong("codigo"));
-                inmueble.setDescripcion(rs.getString("descripcion"));
-                inmueble.setTipo(rs.getString("tipo"));
-                inmueble.setEstado(rs.getString("estado"));
-                inmueble.setTamano_m2(rs.getInt("tamano_m2"));
-                inmueble.setModalidad(rs.getString("modalidad"));
-                inmueble.setDireccion(rs.getString("direccion"));
-                inmueble.setPrecio(rs.getLong("precio"));
-                inmueble.setCant_banos(rs.getLong("cant_banos"));
-                inmueble.setFotos(rs.getString("fotos"));
-                inmueble.setPais(rs.getString("pais"));
-                inmueble.setDepartamento(rs.getString("departamento"));
-                inmueble.setCiudad(rs.getString("municipio"));
+        try {
+            assert conect != null;
+            try (Statement stmt = conect.createStatement();
+                     ResultSet rs = stmt.executeQuery("SELECT * FROM inmueble ")
+            ) {
+                while(rs.next()){
+                    Inmueble inmueble = new Inmueble();
+                    inmueble.setCodigo(rs.getLong("codigo"));
+                    inmueble.setDescripcion(rs.getString("descripcion"));
+                    inmueble.setTipo(rs.getString("tipo"));
+                    inmueble.setEstado(rs.getString("estado"));
+                    inmueble.setTamano_m2(rs.getInt("tamano_m2"));
+                    inmueble.setModalidad(rs.getString("modalidad"));
+                    inmueble.setDireccion(rs.getString("direccion"));
+                    inmueble.setPrecio(rs.getLong("precio"));
+                    inmueble.setCant_banos(rs.getLong("cant_banos"));
+                    inmueble.setFotos(rs.getString("fotos"));
+                    inmueble.setPais(rs.getString("pais"));
+                    inmueble.setDepartamento(rs.getString("departamento"));
+                    inmueble.setCiudad(rs.getString("municipio"));
 
-                Propietario propietario = new Propietario();
-                propietario.setCedula(rs.getLong("propiedad"));
-
-
-                inmueble.setPropiedad(propietario);
-
-
-                listaInmueble.add(inmueble);
+                    Propietario propietario = new Propietario();
+                    propietario.setCedula(rs.getLong("propiedad"));
 
 
+                    inmueble.setPropiedad(propietario);
+
+
+                    listaInmueble.add(inmueble);
+                    conect.close();
+
+
+
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -61,11 +66,6 @@ public class InmuebleRepository implements IRepository<Inmueble>{
     }
 
 
-    /*
-    *
-    *
-    * TODO: cambiar tanto base de datos como aqui el model inmueble para que se almacene pais, departamento y ciudad
-     */
     @Override
     public boolean crear(Inmueble inmueble) {
 

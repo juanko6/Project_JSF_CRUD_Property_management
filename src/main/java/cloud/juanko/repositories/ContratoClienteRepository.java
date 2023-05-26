@@ -16,22 +16,39 @@ public class ContratoClienteRepository implements IRepository<ContratoCliente>{
         List<ContratoCliente> listaContratoCliente = new ArrayList<>();
         Connection conect = ConexionBaseDatos.getConnection();
 
-        try (Statement stmt = conect.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT * FROM contrato_cliente")
-        ) {
-            while(rs.next()){
-                ContratoCliente contratoCliente = new ContratoCliente();
-                contratoCliente.setCodigo(rs.getLong("codigo"));
-                contratoCliente.setDescripcion(rs.getString("descripcion"));
-                contratoCliente.setTipo(rs.getString("tipo"));
-                contratoCliente.setFecha_creacion(rs.getString("fecha_creacion"));
-                contratoCliente.setFecha_finalizacion(rs.getString("fecha_finalizacion"));
-                contratoCliente.setValor(rs.getLong("valor"));
+        try {
+            assert conect != null;
+            try (Statement stmt = conect.createStatement();
+                     ResultSet rs = stmt.executeQuery("SELECT * FROM contrato_cliente")
+            ) {
+                while(rs.next()){
+                    ContratoCliente contratoCliente = new ContratoCliente();
+                    contratoCliente.setCodigo(rs.getLong("codigo"));
+                    contratoCliente.setDescripcion(rs.getString("descripcion"));
+                    contratoCliente.setTipo(rs.getString("tipo"));
+                    contratoCliente.setFecha_creacion(rs.getString("fecha_creacion"));
+                    contratoCliente.setFecha_finalizacion(rs.getString("fecha_finalizacion"));
+                    contratoCliente.setValor(rs.getLong("valor"));
+
+                    Agente agente = new Agente();
+                    agente.setCedula(rs.getLong("cedula_agente"));
+                    contratoCliente.setCedula_agente(agente);
+
+                    Cliente cliente = new Cliente();
+                    cliente.setCedula(rs.getLong("cedula_cliente"));
+                    contratoCliente.setCedula_cliente(cliente);
+
+                    Inmueble inmueble = new Inmueble();
+                    inmueble.setCodigo(rs.getLong("codigo_inmueble"));
+                    contratoCliente.setCodigo_imnueble(inmueble);
+
+                    listaContratoCliente.add(contratoCliente);
+
+                    conect.close();
 
 
-                listaContratoCliente.add(contratoCliente);
 
-
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -116,6 +133,11 @@ public class ContratoClienteRepository implements IRepository<ContratoCliente>{
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return false;
+    }
+
+    @Override
+    public boolean actualizar(ContratoCliente contratoCliente) {
         return false;
     }
 

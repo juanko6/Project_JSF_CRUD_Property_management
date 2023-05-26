@@ -59,35 +59,35 @@
                         <h:outputText value="#{agente.nombre}" />
                     </p:column>
 
-                    <p:column headerText="#{msgs['tapellido']}" filterBy="#{agente.apellido}">
+                    <p:column headerText="#{msgs['tapellido']}" filterBy="#{agente.apellido}" filterMatchMode="contains">
                         <h:outputText value="#{agente.apellido}"/>
                     </p:column>
 
-                    <p:column headerText="#{msgs['tfechanacimiento']}" filterBy="#{agente.fechaNacimiento}">
+                    <p:column headerText="#{msgs['tfechanacimiento']}" filterBy="#{agente.fechaNacimiento}" filterMatchMode="contains">
                         <h:outputText value="#{agente.fechaNacimiento}" />
                     </p:column>
 
-                    <p:column headerText="#{msgs['tusuario']}" filterBy="#{agente.usuario}">
+                    <p:column headerText="#{msgs['tusuario']}" filterBy="#{agente.usuario}" filterMatchMode="contains">
                         <h:outputText value="#{agente.usuario}"/>
                     </p:column>
 
-                    <p:column headerText="#{msgs['tcontrasena']}" filterBy="#{agente.contrasena}">
+                    <p:column headerText="#{msgs['tcontrasena']}" filterBy="#{agente.contrasena}" filterMatchMode="contains">
                         <h:outputText value="#{agente.contrasena}"/>
                     </p:column>
 
-                    <p:column headerText="#{msgs['tfechaexpedicion']}" filterBy="#{agente.fechaExpedicion}">
+                    <p:column headerText="#{msgs['tfechaexpedicion']}" filterBy="#{agente.fechaExpedicion}" filterMatchMode="contains">
                         <h:outputText value="#{agente.fechaExpedicion}"/>
                     </p:column>
 
-                    <p:column headerText="#{msgs['tcorreo']}" filterBy="#{agente.correo}">
+                    <p:column headerText="#{msgs['tcorreo']}" filterBy="#{agente.correo}" filterMatchMode="contains">
                         <h:outputText value="#{agente.correo}"/>
                     </p:column>
 
-                    <p:column headerText="#{msgs['tdireccion']}" filterBy="#{agente.direccion}">
+                    <p:column headerText="#{msgs['tdireccion']}" filterBy="#{agente.direccion}" filterMatchMode="contains">
                         <h:outputText value="#{agente.direccion}"/>
                     </p:column>
 
-                    <p:column headerText="#{msgs['tcelular']}" filterBy="#{agente.celular}">
+                    <p:column headerText="#{msgs['tcelular']}" filterBy="#{agente.celular}" filterMatchMode="contains">
                         <h:outputText value="#{agente.celular}"/>
                     </p:column>
 

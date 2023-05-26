@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+        xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Clientes Potenciales de Inmobiliaria SA</title>
+    <link href="css/dashboard.css" rel="stylesheet"/>
+</h:head>
+<h:body>
+    <main>
+        <ui:composition template="WEB-INF/plantillas/home.xhtml">
+        <ui:define name="contenido">
+        <h:form id="form">
+            <p:growl id="messages" showDetail="true"/>
+            <div class="card">
+
+                <p:toolbar>
+                    <p:toolbarGroup>
+                        <p:commandButton value="#{msgs['tclientespotenciales']}" icon="pi pi-plus" actionListener="#{clientePotencialBean.irCrear()}"
+                                         update=":dialogs:manage-cliente-potencial-content" oncomplete="PF('manageClientePotencialDialog').show()"
+                                         styleClass="ui-button-success" style="margin-right: .5rem">
+                            <p:resetInput target=":dialogs:manage-cliente-potencial-content" />
+                        </p:commandButton>
+
+                    </p:toolbarGroup>
+                </p:toolbar>
+
+
+
+                <p:dataTable id="dtclientepotencial" widgetVar="dtclientepotencial" var="clientePotencial" value="#{clientePotencialBean.listar()}"
+                             emptyMessage="No se encuentra"
+                             reflow="true" styleClass="products-table" selection="#{clientePotencialBean.selectedProducts}"
+                             rowKey="#{clientePotencial.id}" paginator="true" rows="10" rowSelectMode="add" paginatorPosition="bottom">
+
+                    <f:facet name="header">
+                        <div class="products-table-header">
+                            <span style="font-weight: bold">Clientes Potenciales</span>
+                            <span class="filter-container ui-input-icon-left"> <i class="pi pi-search"></i>
+                        <p:inputText id="globalFilter" onkeyup="PF('dtclientepotencial').filter()" placeholder="Search" />
+                    </span>
+                        </div>
+                    </f:facet>
+
+
+
+                    <!-- <p:column selectionMode="multiple" exportable="false"></p:column> -->
+
+                    <p:column headerText="#{msgs['tcodigo']}" filterBy="#{clientePotencial.id}" filterMatchMode="contains">
+                        <h:outputText value="#{clientePotencial.id}"/>
+                    </p:column>
+
+                    <p:column headerText="#{msgs['tinmueble']}" filterBy="#{clientePotencial.inmueble.codigo}">
+                        <h:outputText value="#{clientePotencial.inmueble.codigo}" />
+                    </p:column>
+
+                    <p:column headerText="#{msgs['tclientes']}" filterBy="#{clientePotencial.cliente.cedula}">
+                        <h:outputText value="#{clientePotencial.cliente.cedula}"/>
+                    </p:column>
+
+                    <p:column headerText="#{msgs['tagentes']}" filterBy="#{clientePotencial.agente.cedula}">
+                        <h:outputText value="#{clientePotencial.agente.cedula}" />
+                    </p:column>
+
+
+                    <p:column exportable="false">
+                        <p:commandButton icon="pi pi-pencil" update=":dialogs:actualizar-cliente-potencial-content"
+                                         oncomplete="PF('actualizarClientePotencialDialog').show()"
+                                         styleClass="edit-button rounded-button ui-button-success"
+                                         process="@this">
+                            <f:setPropertyActionListener value="#{clientePotencial}" target="#{clientePotencialBean.clientePotencial}"/>
+                            <p:resetInput target=":dialogs:actualizar-cliente-potencial-content"/>
+                        </p:commandButton>
+                        <p:commandButton class="ui-button-warning rounded-button" icon="pi pi-trash"
+                                         process="@this"
+                                         oncomplete="PF('deleteClientePotencialDialog').show()">
+                            <f:setPropertyActionListener value="#{clientePotencial}" target="#{clientePotencialBean.clientePotencial}"/>
+                        </p:commandButton>
+                    </p:column>
+
+                </p:dataTable>
+            </div>
+
+            <!-- <h:commandButton action="#{empleadoBean.irCrear()}" value="Crear"/> -->
+
+
+
+            <p:confirmDialog widgetVar="deleteClientePotencialDialog" showEffect="fade" width="300"
+                             message="Desea eliminar el Cliente Potencial?" header="Confirm" severity="warn">
+                <p:commandButton value="Si" icon="pi pi-check" actionListener="#{clientePotencialBean.eliminar()}"
+                                 process="@this"
+                                 oncomplete="PF('deleteClientePotencialDialog').hide()"/>
+                <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                                 onclick="PF('deleteClientePotencialDialog').hide()"/>
+            </p:confirmDialog>
+
+        </h:form>
+            <h:form id="dialogs">
+
+                <!--
+                nuevo dialogo para crear empleado
+                   -->
+
+                <p:dialog header="Ingrese Nuevo Cliente Potencial" showEffect="fade" modal="true" widgetVar="manageClientePotencialDialog"
+                          responsive="true">
+                    <p:outputPanel id="manage-cliente-potencial-content" class="ui-fluid">
+                        <p:outputPanel rendered="#{not empty clientePotencialBean.clientePotencial}">
+                            <div class="field">
+                                <p:outputLabel for="codigo">#{msgs['tcodigo']}</p:outputLabel>
+                                <p:inputText id="codigo" value="#{clientePotencialBean.clientePotencial.id}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="inmueble">#{msgs['tinmueble']}</p:outputLabel>
+                                <p:inputText id="inmueble" value="#{clientePotencialBean.inmueble.codigo}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="cliente">#{msgs['tclientes']}</p:outputLabel>
+                                <p:inputText id="cliente" value="#{clientePotencialBean.cliente.cedula}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="agente">#{msgs['tagentes']}</p:outputLabel>
+                                <p:inputText id="agente" value="#{clientePotencialBean.agente.cedula}" required="true"/>
+                            </div>
+
+                        </p:outputPanel>
+                    </p:outputPanel>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{clientePotencialBean.guardar()}"
+                                         update="manage-cliente-potencial-content" process="manage-cliente-potencial-content @this"
+                                         oncomplete="PF('manageClientePotencialDialog').hide()"/>
+                        <p:commandButton value="Cancel" icon="pi pi-times"
+                                         onclick="PF('manageClientePotencialDialog').hide()"
+                                         class="ui-button-secondary" type="button"/>
+                    </f:facet>
+                </p:dialog>
+
+
+                <!--
+                nuevo dialogo para actualizar
+                -->
+
+                <p:dialog header="Detalle del Cliente Potencial" showEffect="fade" modal="true" widgetVar="actualizarClientePotencialDialog"
+                          responsive="true">
+                    <p:outputPanel id="actualizar-cliente-potencial-content" class="ui-fluid">
+                        <p:outputPanel rendered="#{not empty clientePotencialBean.clientePotencial}">
+
+                            <div class="field">
+                                <p:outputLabel for="actinmueble">#{msgs['tinmueble']}</p:outputLabel>
+                                <p:inputText id="actinmueble" value="#{clientePotencialBean.inmueble.codigo}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="actcliente">#{msgs['tclientes']}</p:outputLabel>
+                                <p:inputText id="actcliente" value="#{clientePotencialBean.cliente.cedula}" required="true"/>
+                            </div>
+                            <div class="field">
+                                <p:outputLabel for="actagente">#{msgs['tagentes']}</p:outputLabel>
+                                <p:inputText id="actagente" value="#{clientePotencialBean.agente.cedula}" required="true"/>
+                            </div>
+
+
+                        </p:outputPanel>
+                    </p:outputPanel>
+
+                    <f:facet name="footer">
+                        <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{clientePotencialBean.actualizar()}"
+                                         update="actualizar-cliente-potencial-content" process="actualizar-cliente-potencial-content @this"
+                                         oncomplete="PF('actualizarClientePotencialDialog').hide()"/>
+                        <p:commandButton value="Cancel" icon="pi pi-times"
+                                         onclick="PF('actualizarClientePotencialDialog').hide()"
+                                         class="ui-button-secondary" type="button"/>
+                    </f:facet>
+                </p:dialog>
+
+        </h:form>
+        </ui:define>
+        </ui:composition>
+    </main>
+
+</h:body>
+</html>

@@ -13,8 +13,6 @@ public class ContratoClienteService implements IService<ContratoCliente>{
     }
 
     public List<ContratoCliente> listar(){
-
-
         List<ContratoCliente> listaContratoCliente = contratoClienteRepository.listar();
         return listaContratoCliente;
     }

@@ -12,25 +12,30 @@ public class AgenteRepository implements IRepository<Agente>{
         List<Agente> listaAgente = new ArrayList<>();
         Connection conect = ConexionBaseDatos.getConnection();
 
-        try (Statement stmt = conect.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT * FROM agente_comercial")
-        ) {
-            while(rs.next()){
-                Agente agente = new Agente();
-                agente.setCedula(rs.getLong("cedula"));
-                agente.setNombre(rs.getString("nombre"));
-                agente.setApellido(rs.getString("apellido"));
-                agente.setFechaNacimiento(rs.getString("fecha_nacimiento"));
-                agente.setUsuario(rs.getString("usuario"));
-                agente.setContrasena(rs.getString("contrasena"));
-                agente.setFechaExpedicion(rs.getString("fecha_expedicioncedula"));
-                agente.setCorreo(rs.getString("correo"));
-                agente.setDireccion(rs.getString("direccion"));
-                agente.setCelular(rs.getLong("celular"));
-
-                listaAgente.add(agente);
 
 
+        try {
+            assert conect != null;
+            try (Statement stmt = conect.createStatement();
+                 ResultSet rs = stmt.executeQuery("SELECT * FROM agente_comercial")
+            ) {
+                while(rs.next()){
+                    Agente agente = new Agente();
+                    agente.setCedula(rs.getLong("cedula"));
+                    agente.setNombre(rs.getString("nombre"));
+                    agente.setApellido(rs.getString("apellido"));
+                    agente.setFechaNacimiento(rs.getString("fecha_nacimiento"));
+                    agente.setUsuario(rs.getString("usuario"));
+                    agente.setContrasena(rs.getString("contrasena"));
+                    agente.setFechaExpedicion(rs.getString("fecha_expedicioncedula"));
+                    agente.setCorreo(rs.getString("correo"));
+                    agente.setDireccion(rs.getString("direccion"));
+                    agente.setCelular(rs.getLong("celular"));
+
+                    listaAgente.add(agente);
+
+                    conect.close();
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -85,7 +90,6 @@ public class AgenteRepository implements IRepository<Agente>{
         ) {
             stmt.setLong(1,cedula);
             stmt.executeUpdate();
-            //conect.close();
             return true;
 
         } catch (SQLException e) {

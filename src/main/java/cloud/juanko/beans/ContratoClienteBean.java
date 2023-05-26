@@ -78,7 +78,6 @@ public class ContratoClienteBean implements Serializable {
 
 
     public void eliminar(){
-        System.out.println("Eliminar "+ contratoCliente.getCodigo());
         if(contratoClienteService.eliminar(contratoCliente.getCodigo())){
             System.out.println("Eliminación correcta");
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Contrato Eliminado"));
@@ -100,19 +99,19 @@ public class ContratoClienteBean implements Serializable {
 
         return "crear-contrato-cliente.xhtml";    }
 
-    public ContratoClienteService getContratoService() {
+    public ContratoClienteService getContratoClienteService() {
         return contratoClienteService;
     }
 
-    public void setContratoService(ContratoClienteService contratoClienteService) {
+    public void setContratoClienteService(ContratoClienteService contratoClienteService) {
         this.contratoClienteService = contratoClienteService;
     }
 
-    public ContratoCliente getContrato() {
+    public ContratoCliente getContratoCliente() {
         return contratoCliente;
     }
 
-    public void setContrato(ContratoCliente contratoCliente) {
+    public void setContratoCliente(ContratoCliente contratoCliente) {
         this.contratoCliente = contratoCliente;
     }
 
@@ -132,13 +131,59 @@ public class ContratoClienteBean implements Serializable {
         this.selectedProducts = selectedProducts;
     }
 
-    public List<ContratoCliente> getContratos() {
+    public List<ContratoCliente> getContratosClientes() {
         return contratosClientes;
     }
 
-    public void setContratos(List<ContratoCliente> contratosClientes) {
+    public void setContratosClientes(List<ContratoCliente> contratosClientes) {
         this.contratosClientes = contratosClientes;
     }
 
+    public Inmueble getInmueble() {
+        return inmueble;
+    }
 
+    public void setInmueble(Inmueble inmueble) {
+        this.inmueble = inmueble;
+    }
+
+    public Cliente getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Cliente cliente) {
+        this.cliente = cliente;
+    }
+
+    public Agente getAgente() {
+        return agente;
+    }
+
+    public void setAgente(Agente agente) {
+        this.agente = agente;
+    }
+
+    public ClienteService getClienteService() {
+        return clienteService;
+    }
+
+    public void setClienteService(ClienteService clienteService) {
+        this.clienteService = clienteService;
+    }
+
+    public InmuebleService getInmuebleService() {
+        return inmuebleService;
+    }
+
+    public void setInmuebleService(InmuebleService inmuebleService) {
+        this.inmuebleService = inmuebleService;
+    }
+
+    public AgenteService getAgenteService() {
+        return agenteService;
+    }
+
+    public void setAgenteService(AgenteService agenteService) {
+        this.agenteService = agenteService;
+    }
 }

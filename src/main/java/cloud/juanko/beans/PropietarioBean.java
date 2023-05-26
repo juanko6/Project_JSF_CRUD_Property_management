@@ -52,7 +52,7 @@ public class PropietarioBean implements Serializable {
         System.out.println("Nombre Propietario ");
         if(propietarioService.guardar(propietario)){
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Propietario Creado"));
-            PrimeFaces.current().ajax().update("form:messages", "form:dtpropietarios");
+            PrimeFaces.current().ajax().update("form:messages", "form:dtpropietario");
 
             return "listar-propietario.xhtml";
         }

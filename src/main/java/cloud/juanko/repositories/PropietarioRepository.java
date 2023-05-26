@@ -13,24 +13,29 @@ public class PropietarioRepository implements IRepository<Propietario>{
         List<Propietario> listaPropietario = new ArrayList<>();
         Connection conect = ConexionBaseDatos.getConnection();
 
-        try (Statement stmt = conect.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT * FROM propietario")
-        ) {
-            while(rs.next()){
-                Propietario propietario = new Propietario();
-                propietario.setCedula(rs.getLong("cedula"));
-                propietario.setNombre(rs.getString("nombre"));
-                propietario.setApellido(rs.getString("apellido"));
-                propietario.setFechaNacimiento(rs.getString("fecha_nacimiento"));
-                propietario.setFechaExpedicion(rs.getString("fecha_expedicion_cedula"));
-                propietario.setCorreo(rs.getString("correo"));
+        try {
+            assert conect != null;
+            try (Statement stmt = conect.createStatement();
+                     ResultSet rs = stmt.executeQuery("SELECT * FROM propietario")
+            ) {
+                while(rs.next()){
+                    Propietario propietario = new Propietario();
+                    propietario.setCedula(rs.getLong("cedula"));
+                    propietario.setNombre(rs.getString("nombre"));
+                    propietario.setApellido(rs.getString("apellido"));
+                    propietario.setFechaNacimiento(rs.getString("fecha_nacimiento"));
+                    propietario.setFechaExpedicion(rs.getString("fecha_expedicion_cedula"));
+                    propietario.setCorreo(rs.getString("correo"));
 
-                propietario.setCelular(rs.getLong("celular"));
-                propietario.setDireccion(rs.getString("direccion"));
+                    propietario.setCelular(rs.getLong("celular"));
+                    propietario.setDireccion(rs.getString("direccion"));
 
-                listaPropietario.add(propietario);
+                    listaPropietario.add(propietario);
+                    conect.close();
 
 
+
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();

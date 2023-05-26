@@ -12,23 +12,29 @@ public class ClienteRepository implements IRepository<Cliente>{
         List<Cliente> listaCliente = new ArrayList<>();
         Connection conect = ConexionBaseDatos.getConnection();
 
-        try (Statement stmt = conect.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT * FROM Cliente")
-        ) {
-            while(rs.next()){
-                Cliente cliente = new Cliente();
-                cliente.setCedula(rs.getLong("cedula"));
-                cliente.setNombre(rs.getString("nombre"));
-                cliente.setApellido(rs.getString("apellido"));
-                cliente.setFechaNacimiento(rs.getString("fecha_nacimiento"));
-                cliente.setFechaExpedicion(rs.getString("fecha_expedicion_cedula"));
-                cliente.setCorreo(rs.getString("correo"));
-                cliente.setDireccion(rs.getString("direccion"));
-                cliente.setCelular(rs.getLong("celular"));
+        try {
+            assert conect != null;
+            try (Statement stmt = conect.createStatement();
+                     ResultSet rs = stmt.executeQuery("SELECT * FROM Cliente")
+            ) {
+                while(rs.next()){
+                    Cliente cliente = new Cliente();
+                    cliente.setCedula(rs.getLong("cedula"));
+                    cliente.setNombre(rs.getString("nombre"));
+                    cliente.setApellido(rs.getString("apellido"));
+                    cliente.setFechaNacimiento(rs.getString("fecha_nacimiento"));
+                    cliente.setFechaExpedicion(rs.getString("fecha_expedicion_cedula"));
+                    cliente.setCorreo(rs.getString("correo"));
+                    cliente.setDireccion(rs.getString("direccion"));
+                    cliente.setCelular(rs.getLong("celular"));
 
-                listaCliente.add(cliente);
+                    listaCliente.add(cliente);
+
+                    conect.close();
 
 
+
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();

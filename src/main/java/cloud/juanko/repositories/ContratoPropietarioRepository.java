@@ -17,34 +17,39 @@ public class ContratoPropietarioRepository implements IRepository<ContratoPropie
         List<ContratoPropietario> listaContratoPropietario = new ArrayList<>();
         Connection conect = ConexionBaseDatos.getConnection();
 
-        try (Statement stmt = conect.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT * FROM contrato_propietario")
-        ) {
-            while(rs.next()){
-                ContratoPropietario contratoPropietario = new ContratoPropietario();
-                contratoPropietario.setCodigo(rs.getLong("codigo"));
-                contratoPropietario.setTipo(rs.getString("tipo"));
-                contratoPropietario.setFecha_finalizacion(rs.getString("fecha_finalizacion"));
-                contratoPropietario.setFecha_creacion(rs.getString("fecha_creacion"));
-                contratoPropietario.setDescripcion(rs.getString("descripcion"));
-                contratoPropietario.setValor(rs.getLong("valor"));
-                contratoPropietario.setComision(rs.getString("comision"));
+        try {
+            assert conect != null;
+            try (Statement stmt = conect.createStatement();
+                     ResultSet rs = stmt.executeQuery("SELECT * FROM contrato_propietario")
+            ) {
+                while(rs.next()){
+                    ContratoPropietario contratoPropietario = new ContratoPropietario();
+                    contratoPropietario.setCodigo(rs.getLong("codigo"));
+                    contratoPropietario.setTipo(rs.getString("tipo"));
+                    contratoPropietario.setFecha_finalizacion(rs.getString("fecha_finalizacion"));
+                    contratoPropietario.setFecha_creacion(rs.getString("fecha_creacion"));
+                    contratoPropietario.setDescripcion(rs.getString("descripcion"));
+                    contratoPropietario.setValor(rs.getLong("valor"));
+                    contratoPropietario.setComision(rs.getString("comision"));
 
-                Agente agente = new Agente();
-                agente.setCedula(rs.getLong("cedula_agente"));
-                contratoPropietario.setCedula_agente(agente);
+                    Agente agente = new Agente();
+                    agente.setCedula(rs.getLong("cedula_agente"));
+                    contratoPropietario.setCedula_agente(agente);
 
-                Propietario propietario = new Propietario();
-                propietario.setCedula(rs.getLong("cedula_propietario"));
-                contratoPropietario.setCedula_propietario(propietario);
+                    Propietario propietario = new Propietario();
+                    propietario.setCedula(rs.getLong("cedula_propietario"));
+                    contratoPropietario.setCedula_propietario(propietario);
 
-                Inmueble inmueble = new Inmueble();
-                inmueble.setCodigo(rs.getLong("codigo_inmueble"));
-                contratoPropietario.setCodigo_imnueble(inmueble);
+                    Inmueble inmueble = new Inmueble();
+                    inmueble.setCodigo(rs.getLong("codigo_inmueble"));
+                    contratoPropietario.setCodigo_imnueble(inmueble);
 
-                listaContratoPropietario.add(contratoPropietario);
+                    listaContratoPropietario.add(contratoPropietario);
+                    conect.close();
 
 
+
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -126,7 +131,6 @@ public class ContratoPropietarioRepository implements IRepository<ContratoPropie
         ) {
             stmt.setLong(1,codigo);
             stmt.executeUpdate();
-            conect.close();
 
             return true;
 
@@ -169,7 +173,6 @@ public class ContratoPropietarioRepository implements IRepository<ContratoPropie
 
             stmt.executeUpdate();
             System.out.println("se actualizo contrato");
-            conect.close();
             return true;
 
         } catch (SQLException e) {
