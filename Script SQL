@@ -1,0 +1,309 @@
+-- Crear tabla agente_comercial --
+CREATE TABLE agente_comercial (
+    cedula NUMERIC(50),
+    nombre VARCHAR(50),
+    apellido VARCHAR(50),
+    fecha_nacimiento VARCHAR(20),
+    usuario VARCHAR(50),
+    contrasena VARCHAR(50),
+    fecha_expedicioncedula VARCHAR(20),
+    correo VARCHAR(50),
+    direccion VARCHAR(50),
+    celular NUMERIC(50),
+    PRIMARY KEY (cedula)
+);
+
+-- Crear tabla cliente --
+CREATE TABLE cliente (
+    cedula NUMERIC(50),
+    nombre VARCHAR(50),
+    apellido VARCHAR(50),
+    fecha_expedicion_cedula VARCHAR(20),
+    direccion VARCHAR(50),
+    correo VARCHAR(50),
+    fecha_nacimiento VARCHAR(20),
+    celular NUMERIC(50),
+    PRIMARY KEY (cedula)
+);
+
+-- Crear tabla propietario --
+CREATE TABLE propietario (
+    cedula NUMERIC(50),
+    nombre VARCHAR(50),
+    apellido VARCHAR(50),
+    fecha_nacimiento VARCHAR(20),
+    fecha_expedicion_cedula VARCHAR(20),
+    correo VARCHAR(50),
+    celular NUMERIC(50),
+    direccion VARCHAR(50),
+    PRIMARY KEY (cedula)
+);
+
+
+-- Crear tabla inmueble --
+CREATE TABLE inmueble (
+    codigo NUMERIC(50),
+    descripcion VARCHAR(300),
+    tipo VARCHAR(50),
+    estado VARCHAR(50),
+    tamano_m2 NUMERIC(50),
+    modalidad VARCHAR(50),
+    direccion VARCHAR(50),
+    precio NUMERIC(50),
+    cant_banos NUMERIC(50),
+    fotos VARCHAR(200),
+    pais VARCHAR(50),
+    departamento VARCHAR(50),
+    municipio VARCHAR(50),
+    propiedad NUMERIC(20),
+
+    PRIMARY KEY (codigo),
+	FOREIGN KEY (propiedad) REFERENCES propietario(cedula)
+	
+);
+
+
+
+
+-- Crear tabla contrato cliente--
+CREATE TABLE contrato_cliente (
+    codigo NUMERIC(50),
+    tipo VARCHAR(50),
+    valor NUMERIC(50),
+    fecha_finalizacion VARCHAR(20),
+    fecha_creacion VARCHAR(20),
+    descripcion VARCHAR(300),
+    cedula_agente NUMERIC(50),
+    cedula_cliente NUMERIC(50),
+    codigo_inmueble NUMERIC(50),
+    PRIMARY KEY (codigo),
+
+    FOREIGN KEY (cedula_agente) REFERENCES agente_comercial(cedula),
+    FOREIGN KEY (cedula_cliente) REFERENCES cliente(cedula),
+    FOREIGN KEY (codigo_inmueble) REFERENCES inmueble(codigo)
+);
+
+-- Crear tabla contrato propietario--
+CREATE TABLE contrato_propietario (
+    codigo NUMERIC(50),
+    tipo VARCHAR(50),
+    fecha_finalizacion VARCHAR(20),
+    fecha_creacion VARCHAR(20),
+    descripcion VARCHAR(300),
+    valor NUMERIC(50),
+    comision VARCHAR(20), 
+    cedula_agente NUMERIC(50),
+    cedula_propietario NUMERIC(50),
+    codigo_inmueble NUMERIC(50),
+    PRIMARY KEY (codigo),
+    FOREIGN KEY (cedula_agente) REFERENCES agente_comercial(cedula),
+    FOREIGN KEY (cedula_propietario) REFERENCES propietario(cedula),
+    FOREIGN KEY (codigo_inmueble) REFERENCES inmueble(codigo)
+);
+
+CREATE TABLE cliente_potencial(
+    id NUMERIC(50),
+    codigo  NUMERIC(50),
+    cedula  NUMERIC(50),
+    cedula_agente  NUMERIC(50),
+    FOREIGN KEY (codigo) REFERENCES inmueble (codigo),
+    FOREIGN KEY (cedula) REFERENCES cliente(cedula),
+    FOREIGN KEY (cedula_agente) REFERENCES agente_comercial (cedula)
+);
+
+
+INSERT INTO public.agente_comercial(
+	cedula, nombre, apellido, fecha_nacimiento, usuario, contrasena, fecha_expedicioncedula, correo, direccion, celular)
+	VALUES 
+	(0, 'admin', 'admin', '?', 'admin', 'admin', '?', '?', '?', 0),
+	(1, 'Juan', 'admin', '?', 'juan', 'juan01', '?', '?', '?', 0),
+	(2, 'emanuel', 'admin', '?', 'emanuel', 'emanuel01', '?', '?', '?', 0),
+	(3, 'Antonio', 'admin', '?', 'antonio', 'antonio01', '?', '?', '?', 0),
+	(4, 'Steven', 'admin', '?', 'steven', 'steven01', '?', '?', '?', 0);
+
+
+INSERT INTO public.propietario(cedula, nombre, apellido, fecha_nacimiento, fecha_expedicion_cedula, correo, celular, direccion)
+VALUES 
+
+(21, 'Juan', 'Pérez', '1980-05-10', '2000-06-15', 'juanperez@example.com', 1234567890, 'Calle 123'),
+(22, 'María', 'González', '1995-12-01', '2015-02-20', 'mariagonzalez@example.com', 9876543210, 'Avenida Principal'),
+(23, 'Pedro', 'Sánchez', '1988-08-20', '2008-11-30', 'pedrosanchez@example.com', 5678901234, 'Carrera 45'),
+(24, 'Laura', 'Martínez', '1992-04-18', '2012-09-05', 'lauramartinez@example.com', 1029384756, 'Callejón 87'),
+(25, 'Ana', 'López', '1976-11-25', '1996-03-12', 'analopez@example.com', 5432109876, 'Avenida Central'),
+(26, 'Roberto', 'Rodríguez', '1985-09-15', '2005-11-10', 'robertorodriguez@example.com', 9876543210, 'Calle 234'),
+(27, 'Carolina', 'Gómez', '1990-07-05', '2010-09-01', 'carolinagomez@example.com', 1234567890, 'Calle 567'),
+(28, 'Andrés', 'Hernández', '1982-03-25', '2002-05-20', 'andreshernandez@example.com', 5678901234, 'Avenida Principal'),
+(29, 'Sofía', 'Fernández', '1998-01-15', '2018-03-10', 'sofiafernandez@example.com', 1029384756, 'Carrera 78'),
+(30, 'Diego', 'Ortega', '1987-10-05', '2007-12-01', 'diegoortega@example.com', 5432109876, 'Calle 890'),
+(31, 'Gabriela', 'Morales', '1993-06-25', '2013-08-20', 'gabrielamorales@example.com', 9876543210, 'Callejón 12'),
+(32, 'Javier', 'Rojas', '1984-04-15', '2004-06-10', 'javierrojas@example.com', 1234567890, 'Avenida Central'),
+(33, 'Valeria', 'Silva', '1989-02-05', '2009-04-01', 'valeriasilva@example.com', 5678901234, 'Calle 345'),
+(34, 'Roberto', 'González', '1996-12-25', '2016-02-20', 'robertogonzalez@example.com', 1029384756, 'Avenida Principal'),
+(35, 'María', 'Torres', '1981-08-15', '1999-10-10', 'mariatorres@example.com', 5432109876, 'Carrera 56'),
+(36, 'Luis', 'López', '1986-06-05', '2006-08-01', 'luislopez@example.com', 9876543210, 'Callejón 23'),
+(37, 'Ana', 'Herrera', '1991-04-25', '2011-06-20', 'anaherrera@example.com', 1234567890, 'Calle 678'),
+(38, 'Pedro', 'García', '1983-02-15', '2003-04-10', 'pedrogarcia@example.com', 5678901234, 'Avenida Central'),
+(39, 'María', 'Luna', '1988-12-05', '2009-02-01', 'marialuna@example.com', 1029384756, 'Calle 901'),
+(40,'Carlos', 'Gómez', '1995-10-25', '2015-12-20', 'carlosgomez@example.com', 5432109876, 'Carrera 12'),
+(41, 'Laura', 'Rodríguez', '1980-06-15', '2000-08-10', 'laurarodriguez@example.com', 9876543210, 'Callejón 34'),
+(42, 'David', 'Sánchez', '1992-04-05', '2012-06-01', 'davidsanchez@example.com', 1234567890, 'Avenida Principal'),
+(43, 'María', 'Fernández', '1997-01-25', '2017-03-20', 'mariafernandez@example.com', 5678901234, 'Calle 567'),
+(44, 'Daniel', 'Ortega', '1988-09-15', '2008-11-10', 'danielortega@example.com', 1029384756, 'Carrera 89'),
+(999, 'Inmobiliaria', 'SA', '?', '?', 'inmobiliaria@example.com', 3152003623, 'Calle 123');
+
+
+INSERT INTO public.cliente(cedula, nombre, apellido, fecha_expedicion_cedula, direccion, correo, fecha_nacimiento, celular)
+VALUES 
+(60, 'Juan', 'Pérez', '2000-06-15', 'Calle 123', 'juanperez@example.com', '1980-05-10', 1234567890),
+(61, 'María', 'González', '2015-02-20', 'Avenida Principal', 'mariagonzalez@example.com', '1995-12-01', 9876543210),
+(62, 'Pedro', 'Sánchez', '2008-11-30', 'Carrera 45', 'pedrosanchez@example.com', '1988-08-20', 5678901234),
+(63, 'Laura', 'Martínez', '2012-09-05', 'Callejón 87', 'lauramartinez@example.com', '1992-04-18', 1029384756),
+(64, 'Ana', 'López', '1996-03-12', 'Avenida Central', 'analopez@example.com', '1976-11-25', 5432109876),
+(65, 'Roberto', 'Rodríguez', '2005-11-10', 'Calle 234', 'robertorodriguez@example.com', '1985-09-15', 9876543210),
+(66, 'Carolina', 'Gómez', '2010-09-01', 'Calle 567', 'carolinagomez@example.com', '1990-07-05', 1234567890),
+(67, 'Andrés', 'Hernández', '2002-05-20', 'Avenida Principal', 'andreshernandez@example.com', '1982-03-25', 5678901234),
+(68, 'Sofía', 'Fernández', '2018-03-10', 'Carrera 78', 'sofiafernandez@example.com', '1998-01-15', 1029384756),
+(69, 'Diego', 'Ortega', '2007-12-01', 'Calle 890', 'diegoortega@example.com', '1987-10-05', 5432109876),
+(70, 'Gabriela', 'Morales', '2013-08-20', 'Callejón 12', 'gabrielamorales@example.com', '1993-06-25', 9876543210),
+(71, 'Javier', 'Rojas', '2004-06-10', 'Avenida Central', 'javierrojas@example.com', '1984-04-15', 1234567890),
+(72, 'Valeria', 'Silva', '2009-04-01', 'Calle 345', 'valeriasilva@example.com', '1989-02-05', 5678901234),
+(73, 'Roberto', 'González', '2016-02-20', 'Avenida Principal', 'robertogonzalez@example.com', '1996-12-25', 1029384756),
+(74, 'María', 'Torres', '1999-10-10', 'Carrera 56', 'mariatorres@example.com', '1981-08-15', 5432109876),
+(75, 'Luis', 'López', '2006-08-01', 'Callejón 23', 'luislopez@example.com', '1986-06-05', 9876543210),
+(76, 'Ana', 'Herrera', '2011-06-20', 'Calle 678', 'anaherrera@example.com', '1991-04-25', 1234567890),
+(77, 'Pedro', 'García', '2003-04-10', 'Avenida Central', 'pedrogarcia@example.com', '1983-02-15', 5678901234),
+(78, 'María', 'Luna', '2009-02-01', 'Calle 901', 'marialuna@example.com', '1988-12-05', 1029384756),
+(79, 'Carlos', 'Gómez', '2015-12-20', 'Carrera 12', 'carlosgomez@example.com', '1995-10-25', 5432109876),
+(80, 'Laura', 'Rodríguez', '2000-08-10', 'Callejón 34', 'laurarodriguez@example.com', '1980-06-15', 9876543210),
+(81, 'David', 'Sánchez', '2012-06-01', 'Avenida Principal', 'davidsanchez@example.com', '1992-04-05', 1234567890),
+(82, 'María', 'Fernández', '2017-03-20', 'Calle 567', 'mariafernandez@example.com', '1997-01-25', 5678901234),
+(83, 'Daniel', 'Ortega', '2008-11-10', 'Carrera 89', 'danielortega@example.com', '1988-09-15', 1029384756);
+
+INSERT INTO public.inmueble(codigo, descripcion, tipo, estado, tamano_m2, modalidad, direccion, precio, cant_banos, fotos, pais, departamento, municipio, propiedad)
+VALUES 
+(100, 'Casa amplia con jardín', 'Casa', 'Disponible', 200, 'Venta', 'Calle 123', 250000, 3, 'casa1.jpg', 'País 1', 'Departamento 1', 'Municipio 1', 21),
+(101, 'Apartamento céntrico', 'Apartamento', 'En proceso', 80, 'Venta', 'Avenida Principal', 150000, 2, 'apto1.jpg', 'País 1', 'Departamento 1', 'Municipio 2', 22),
+(102, 'Terreno para construcción', 'Terreno', 'Disponible', 500, 'Venta', 'Carrera 45', 350000, 0, 'terreno1.jpg', 'País 1', 'Departamento 2', 'Municipio 3', 23),
+(103, 'Oficina en edificio corporativo', 'Oficina', 'Alquilado', 150, 'Alquiler', 'Calle Principal', 2000, 1, 'oficina1.jpg', 'País 2', 'Departamento 3', 'Municipio 4', 24),
+(104, 'Local comercial en zona comercial', 'Local Comercial', 'Disponible', 100, 'Venta', 'Avenida Central', 180000, 1, 'local1.jpg', 'País 2', 'Departamento 4', 'Municipio 5', 25),
+(105, 'Casa de campo con piscina', 'Casa', 'Disponible', 300, 'Venta', 'Callejón 87', 400000, 4, 'casa2.jpg', 'País 3', 'Departamento 5', 'Municipio 6', 26),
+(106, 'Apartamento moderno cerca del mar', 'Apartamento', 'En proceso', 120, 'Venta', 'Avenida Costera', 180000, 2, 'apto2.jpg', 'País 3', 'Departamento 5', 'Municipio 7', 27),
+(107, 'Terreno con vista panorámica', 'Terreno', 'Disponible', 800, 'Venta', 'Carrera 56', 500000, 0, 'terreno2.jpg', 'País 4', 'Departamento 6', 'Municipio 8', 999),
+(108, 'Oficina en centro empresarial', 'Oficina', 'Disponible', 200, 'Alquiler', 'Calle Principal', 2500, 2, 'oficina2.jpg', 'País 4', 'Departamento 7', 'Municipio 9', 29),
+(109, 'Local comercial en zona turística', 'Local Comercial', 'Disponible', 150, 'Venta', 'Avenida Costanera', 250000, 1, 'local2.jpg', 'País 5', 'Departamento 8', 'Municipio 10', 30),
+
+(111, 'Apartamento con vista al mar', 'Apartamento', 'En proceso', 100, 'Venta', 'Avenida Principal', 200000, 2, 'apto3.jpg', 'País 6', 'Departamento 10', 'Municipio 12', 32),
+(112, 'Terreno en área residencial', 'Terreno', 'Disponible', 600, 'Venta', 'Carrera 67', 380000, 0, 'terreno3.jpg', 'País 6', 'Departamento 11', 'Municipio 13', 33),
+(113, 'Oficina en centro financiero', 'Oficina', 'Alquilado', 180, 'Alquiler', 'Calle Principal', 3000, 1, 'oficina3.jpg', 'País 7', 'Departamento 12', 'Municipio 14', 34),
+(114, 'Local comercial en zona residencial', 'Local Comercial', 'Disponible', 120, 'Venta', 'Avenida Central', 220000, 1, 'local3.jpg', 'País 7', 'Departamento 13', 'Municipio 15', 35),
+(115, 'Casa de playa con acceso directo', 'Casa', 'Disponible', 250, 'Venta', 'Callejón 56', 380000, 2, 'casa4.jpg', 'País 8', 'Departamento 14', 'Municipio 16', 999),
+(116, 'Apartamento amoblado en zona exclusiva', 'Apartamento', 'En proceso', 90, 'Venta', 'Avenida Costera', 160000, 1, 'apto4.jpg', 'País 8', 'Departamento 14', 'Municipio 17', 37),
+(117, 'Terreno con vistas al campo', 'Terreno', 'Disponible', 700, 'Venta', 'Carrera 78', 420000, 0, 'terreno4.jpg', 'País 9', 'Departamento 15', 'Municipio 18', 38),
+(118, 'Oficina en edificio corporativo', 'Oficina', 'Disponible', 220, 'Alquiler', 'Calle Principal', 2800, 2, 'oficina4.jpg', 'País 9', 'Departamento 16', 'Municipio 19', 999),
+(119, 'Local comercial en centro comercial', 'Local Comercial', 'Disponible', 180, 'Venta', 'Avenida Costanera', 280000, 1, 'local4.jpg', 'País 10', 'Departamento 17', 'Municipio 20', 40),
+(120, 'Casa moderna con piscina', 'Casa', 'Disponible', 400, 'Venta', 'Calle 345', 480000, 4, 'casa5.jpg', 'País 10', 'Departamento 18', 'Municipio 21', 41),
+(121, 'Casa remodelada en zona residencial', 'Casa', 'Disponible', 180, 'Venta', 'Calle 456', 280000, 2, 'casa6.jpg', 'País 11', 'Departamento 19', 'Municipio 22', 999),
+(122, 'Apartamento amoblado en centro histórico', 'Apartamento', 'En proceso', 110, 'Venta', 'Avenida Principal', 180000, 1, 'apto5.jpg', 'País 12', 'Departamento 20', 'Municipio 23', 999),
+(123, 'Terreno con vista panorámica al mar', 'Terreno', 'Disponible', 700, 'Venta', 'Carrera 67', 500000, 0, 'terreno5.jpg', 'País 13', 'Departamento 21', 'Municipio 24', 999),
+(124, 'Oficina en edificio moderno', 'Oficina', 'Disponible', 200, 'Alquiler', 'Calle Principal', 2500, 2, 'oficina5.jpg', 'País 14', 'Departamento 22', 'Municipio 25', 999),
+(125, 'Local comercial en centro comercial', 'Local Comercial', 'Disponible', 150, 'Venta', 'Avenida Central', 220000, 1, 'local5.jpg', 'País 15', 'Departamento 23', 'Municipio 26', 999);
+
+INSERT INTO public.contrato_propietario(codigo, tipo, fecha_finalizacion, fecha_creacion, descripcion, valor, comision, cedula_agente, cedula_propietario, codigo_inmueble)
+VALUES 
+(1, 'Venta', '2023-05-30', '2023-05-01', 'Contrato de venta de propiedad', 200000, 4.5, 1, 21, 100),
+(2, 'Alquiler', '2023-06-30', '2023-05-02', 'Contrato de alquiler residencial', 1500, 3.8, 2, 22, 101),
+(3, 'Venta', '2023-07-15', '2023-05-05', 'Contrato de venta de terreno', 300000, 5.2, 3, 23, 102),
+(4, 'Alquiler', '2023-08-31', '2023-05-10', 'Contrato de alquiler comercial', 2500, 4.2, 4, 24, 103),
+(5, 'Venta', '2023-06-30', '2023-05-15', 'Contrato de venta de casa', 350000, 4.9, 1, 25, 104),
+(6, 'Venta', '2023-09-30', '2023-05-18', 'Contrato de venta de apartamento', 180000, 4.1, 2, 26, 105),
+(7, 'Alquiler', '2023-07-31', '2023-05-20', 'Contrato de alquiler residencial', 2000, 3.5, 3, 27, 106),
+(8, 'Venta', '2023-08-15', '2023-05-22', 'Contrato de venta de terreno', 400000, 5.6, 4, 999, 107),
+(9, 'Alquiler', '2023-10-31', '2023-05-24', 'Contrato de alquiler comercial', 2800, 4.4, 1, 29, 108),
+(10, 'Venta', '2023-07-30', '2023-05-26', 'Contrato de venta de local comercial', 220000, 4.7, 2, 30, 109),
+(11, 'Venta', '2023-09-30', '2023-05-28', 'Contrato de venta de casa', 450000, 5.3, 3, 32, 111),
+(12, 'Alquiler', '2023-11-30', '2023-06-01', 'Contrato de alquiler residencial', 1600, 3.9, 4, 33, 112),
+(13, 'Venta', '2023-08-31', '2023-06-05', 'Contrato de venta de terreno', 500000, 5.1, 1, 34, 113),
+(14, 'Alquiler', '2023-12-31', '2023-06-10', 'Contrato de alquiler comercial', 3000, 4.3, 2, 35, 114),
+(15, 'Venta', '2023-09-15', '2023-06-15', 'Contrato de venta de casa', 380000, 4.8, 3, 999, 115),
+(16, 'Venta', '2023-10-30', '2023-06-18', 'Contrato de venta de apartamento', 200000, 4.0, 4, 37, 116),
+(17, 'Alquiler', '2023-11-30', '2023-06-20', 'Contrato de alquiler residencial', 1800, 3.6, 1, 38, 117),
+(18, 'Venta', '2023-10-15', '2023-06-22', 'Contrato de venta de terreno', 380000, 5.4, 2, 999, 118),
+(19, 'Alquiler', '2023-12-31', '2023-06-24', 'Contrato de alquiler comercial', 2800, 4.5, 3, 40, 119),
+(20, 'Venta', '2023-11-30', '2023-06-26', 'Contrato de venta de local comercial', 280000, 4.2, 4, 41, 120),
+(21, 'Venta', '2023-12-31', '2023-06-30', 'Contrato de venta de casa', 480000, 5.0, 1, 999, 121),
+(22, 'Alquiler', '2024-01-31', '2023-07-01', 'Contrato de alquiler residencial', 2000, 3.7, 2, 999, 122),
+(23, 'Venta', '2024-01-15', '2023-07-05', 'Contrato de venta de terreno', 280000, 5.5, 3, 999, 123),
+(24, 'Alquiler', '2024-02-29', '2023-07-10', 'Contrato de alquiler comercial', 2500, 4.7, 4, 999, 124),
+(25, 'Venta', '2023-12-31', '2023-07-15', 'Contrato de venta de local comercial', 280000, 4.4, 1, 999, 125);
+
+
+INSERT INTO public.contrato_cliente(codigo, tipo, valor, fecha_finalizacion, fecha_creacion, descripcion, cedula_agente, cedula_cliente, codigo_inmueble)
+VALUES 
+(1, 'Venta', 200000, '2023-05-30', '2023-05-01', 'Contrato de venta de propiedad', 1, 62, 101),
+(2, 'Alquiler', 1500, '2023-06-30', '2023-05-02', 'Contrato de alquiler residencial', 2, 75, 105),
+(3, 'Venta', 300000, '2023-07-15', '2023-05-05', 'Contrato de venta de terreno', 3, 79, 102),
+(4, 'Alquiler', 2500, '2023-08-31', '2023-05-10', 'Contrato de alquiler comercial', 4, 70, 109),
+(5, 'Venta', 350000, '2023-06-30', '2023-05-15', 'Contrato de venta de casa', 1, 66, 100),
+(6, 'Venta', 180000, '2023-09-30', '2023-05-18', 'Contrato de venta de apartamento', 2, 80, 111),
+(7, 'Alquiler', 2000, '2023-07-31', '2023-05-20', 'Contrato de alquiler residencial', 3, 63, 114),
+(8, 'Venta', 400000, '2023-08-15', '2023-05-22', 'Contrato de venta de terreno', 4, 76, 120),
+(9, 'Alquiler', 2800, '2023-10-31', '2023-05-24', 'Contrato de alquiler comercial', 1, 69, 118),
+(10, 'Venta', 220000, '2023-07-30', '2023-05-26', 'Contrato de venta de local comercial', 2, 81, 119),
+(11, 'Venta', 450000, '2023-09-30', '2023-05-28', 'Contrato de venta de casa', 3, 73, 107),
+(12, 'Alquiler', 1600, '2023-11-30', '2023-06-01', 'Contrato de alquiler residencial', 4, 78, 116),
+(13, 'Venta', 500000, '2023-08-31', '2023-06-05', 'Contrato de venta de terreno', 1, 82, 117),
+(14, 'Alquiler', 3000, '2023-12-31', '2023-06-10', 'Contrato de alquiler comercial', 2, 68, 118),
+(15, 'Venta', 380000, '2023-09-15', '2023-06-15', 'Contrato de venta de casa', 1, 71, 119),
+(16, 'Venta', 200000, '2023-10-30', '2023-06-18', 'Contrato de venta de apartamento', 2, 65, 120),
+(17, 'Alquiler', 1800, '2023-11-30', '2023-06-20', 'Contrato de alquiler residencial', 3, 83, 121),
+(18, 'Venta', 380000, '2023-10-15', '2023-06-22', 'Contrato de venta de terreno', 4, 64, 122),
+(19, 'Alquiler', 2800, '2023-12-31', '2023-06-24', 'Contrato de alquiler comercial', 1, 77, 123),
+(20, 'Venta', 280000, '2023-11-30', '2023-06-26', 'Contrato de venta de local comercial', 2, 67, 124),
+(21, 'Venta', 480000, '2023-12-31', '2023-06-30', 'Contrato de venta de casa', 3, 72, 125),
+(22, 'Alquiler', 2000, '2024-01-31', '2023-07-01', 'Contrato de alquiler residencial', 4, 74, 121),
+(23, 'Venta', 280000, '2024-01-15', '2023-07-05', 'Contrato de venta de terreno', 3, 61, 103),
+(24, 'Alquiler', 2500, '2024-02-29', '2023-07-10', 'Contrato de alquiler comercial', 1, 71, 124),
+(25, 'Venta', 280000, '2023-12-31', '2023-07-15', 'Contrato de venta de local comercial', 4, 76, 104);
+
+
+--Clientes potenciales--
+INSERT INTO public.cliente(cedula, nombre, apellido, fecha_expedicion_cedula, direccion, correo, fecha_nacimiento, celular)
+VALUES 
+(84, 'John', 'Smith', '2023-05-01', 'Main Street 123', 'john.smith@example.com', '2000-01-01', 555111100),
+(85, 'Emma', 'Johnson', '2023-05-02', 'Central Avenue 456', 'emma.johnson@example.com', '1998-05-15', 555111101),
+(86, 'William', 'Brown', '2023-05-05', 'Secondary Street 789', 'william.brown@example.com', '1995-09-30', 555111102),
+(87, 'Olivia', 'Taylor', '2023-05-10', 'Main Street 234', 'olivia.taylor@example.com', '1997-03-12', 555111103),
+(88, 'James', 'Anderson', '2023-05-15', 'Main Street 567', 'james.anderson@example.com', '1994-11-20', 555111104),
+(89, 'Sophia', 'Wilson', '2023-05-18', 'Central Avenue 890', 'sophia.wilson@example.com', '1999-07-05', 555111105),
+(90, 'Benjamin', 'Clark', '2023-05-20', 'Secondary Street 123', 'benjamin.clark@example.com', '1996-02-28', 555111106),
+(91, 'Mia', 'Martin', '2023-05-22', 'Main Street 789', 'mia.martin@example.com', '2001-06-10', 555111107),
+(92, 'Alexander', 'Thomas', '2023-05-24', 'Secondary Avenue 456', 'alexander.thomas@example.com', '1993-09-25', 555111108),
+(93, 'Abigail', 'Davis', '2023-05-26', 'Main Street 234', 'abigail.davis@example.com', '1997-11-30', 555111109);
+
+
+INSERT INTO public.inmueble(
+    codigo, descripcion, tipo, estado, tamano_m2, modalidad, direccion, precio, cant_banos, fotos, pais, departamento, municipio, propiedad)
+VALUES
+    (126, 'Apartamento en venta', 'Residencial', 'Disponible', 80, 'Venta', 'Calle Principal 123', 180000, 2, 5, 'Colombia', 'Cundinamarca', 'Bogotá', 999),
+    (127, 'Casa en alquiler', 'Residencial', 'Disponible', 150, 'Alquiler', 'Avenida Central 456', 2500, 3, 8, 'Colombia', 'Antioquia', 'Medellín', 30),
+    (128, 'Oficina en venta', 'Comercial', 'Disponible', 100, 'Venta', 'Carrera Principal 789', 350000, 1, 3, 'Colombia', 'Valle del Cauca', 'Cali', 999),
+    (129, 'Local comercial en alquiler', 'Comercial', 'Disponible', 60, 'Alquiler', 'Calle Secundaria 234', 2000, 1, 4, 'Colombia', 'Atlántico', 'Barranquilla', 35),
+    (130, 'Terreno en venta', 'Terreno', 'Disponible', 500, 'Venta', 'Avenida Principal 567', 500000, 0, 2, 'Colombia', 'Santander', 'Bucaramanga', 999),
+    (131, 'Apartamento en venta', 'Residencial', 'Disponible', 70, 'Venta', 'Calle Principal 890', 150000, 2, 6, 'Colombia', 'Cundinamarca', 'Bogotá', 25),
+    (132, 'Casa en alquiler', 'Residencial', 'Disponible', 200, 'Alquiler', 'Avenida Central 123', 3000, 4, 10, 'Colombia', 'Antioquia', 'Medellín', 40),
+    (133, 'Oficina en venta', 'Comercial', 'Disponible', 120, 'Venta', 'Carrera Principal 456', 400000, 2, 4, 'Colombia', 'Valle del Cauca', 'Cali', 999),
+    (134, 'Local comercial en alquiler', 'Comercial', 'Disponible', 80, 'Alquiler', 'Calle Secundaria 789', 2500, 2, 5, 'Colombia', 'Atlántico', 'Barranquilla', 29),
+    (135, 'Terreno en venta', 'Terreno', 'Disponible', 1000, 'Venta', 'Avenida Principal 234', 800000, 0, 1, 'Colombia', 'Santander', 'Bucaramanga', 999);
+
+INSERT INTO public.cliente_potencial(id, codigo, cedula, cedula_agente)
+VALUES
+    (1, 126, 84, 1),
+    (2, 127, 85, 2),
+    (3, 128, 86, 3),
+    (4, 129, 87, 4),
+    (5, 130, 88, 1),
+    (6, 131, 89, 2),
+    (7, 132, 90, 3),
+    (8, 133, 91, 4),
+    (9, 134, 92, 1),
+    (10, 135, 93, 2);
