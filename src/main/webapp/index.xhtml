@@ -82,7 +82,7 @@
 <main class="form-signin w-100 m-auto">
     <h:form id="dtagentes">
         <p:growl id="messages" showDetail="true"/>
-        <img class="mb-4" src="img/bootstrap-logo.svg" alt="" width="72" height="57"/>
+        <img class="mb-4" src="img/LOGOIN.png" alt="" width="150" height="150"/>
         <h1 class="h3 mb-3 fw-normal">#{msgs['tinisesion']}</h1>
 
         <div class="form-floating">
@@ -94,11 +94,11 @@
             <h:outputLabel for="incontrasena" value="#{msgs['tcontrasena']}"/>
         </div>
 
-        <div class="checkbox mb-3">
+        <!--<div class="checkbox mb-3">
             <label>
                 <input type="checkbox" value="remember-me"> #{msgs['trecordar']}</input>
             </label>
-        </div>
+        </div>-->
         <h:commandButton value="#{msgs['tinisesion']}" class="w-100 btn btn-lg btn-primary" type="submit" action="#{agenteBean.validar()}" process="@this"/>
         <p class="mt-5 mb-3 text-body-secondary">PI 2023</p>
     </h:form>

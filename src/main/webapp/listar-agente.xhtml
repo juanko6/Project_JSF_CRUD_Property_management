@@ -32,7 +32,7 @@
 
 
 
-                <p:dataTable id="dtagentes" widgetVar="dtagentes" var="agente" value="#{agenteBean.listar()}"
+                <p:dataTable id="dtagente" widgetVar="dtagente" var="agente" value="#{agenteBean.listar()}"
                              emptyMessage="No se encuentra"
                              reflow="true" styleClass="products-table" selection="#{agenteBean.selectedProducts}"
                              rowKey="#{agente.cedula}" paginator="true" rows="10" rowSelectMode="add" paginatorPosition="bottom">
@@ -41,7 +41,7 @@
                         <div class="products-table-header">
                             <span style="font-weight: bold">AGENTES COMERCIALES</span>
                             <span class="filter-container ui-input-icon-left"> <i class="pi pi-search"></i>
-                        <p:inputText id="globalFilter" onkeyup="PF('dtagentes').filter()" placeholder="Search" />
+                        <p:inputText id="globalFilter" onkeyup="PF('dtagente').filter()" placeholder="Search" />
                     </span>
                         </div>
                     </f:facet>

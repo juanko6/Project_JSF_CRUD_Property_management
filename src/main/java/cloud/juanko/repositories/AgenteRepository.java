@@ -155,9 +155,7 @@ public class AgenteRepository implements IRepository<Agente>{
             } else {
                 // Usuario o contraseña incorrectos
                 return false;
-
             }
-
 
         } catch (SQLException e) {
             e.printStackTrace();

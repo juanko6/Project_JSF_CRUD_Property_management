@@ -60,7 +60,7 @@ public class AgenteBean implements Serializable {
         System.out.println("entra en AgenteBean "+ getInusuario() + getIncontrasena()+"");
 
         if(agenteService.validar(getInusuario(), getIncontrasena())){
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Bienvenido" + agente.getNombre() + " " + agente.getApellido() ));
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Bienvenido"));
             PrimeFaces.current().ajax().update("form:messages", "form:dtagente");
 
             System.out.println("Validando Agente "+getIncontrasena());
@@ -90,7 +90,7 @@ public class AgenteBean implements Serializable {
         System.out.println("Nombre Agente "+ agente.getNombre());
         if(agenteService.guardar(agente)){
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Agente Creado"));
-            PrimeFaces.current().ajax().update("form:messages", "form:dtagentes");
+            PrimeFaces.current().ajax().update("form:messages", "form:dtagente");
 
             return "listar-agente.xhtml";
         }
@@ -105,23 +105,23 @@ public class AgenteBean implements Serializable {
        return "crear-agente.xhtml";
     }
 
-    public void eliminar(){
+    public String eliminar(){
         System.out.println("Eliminar "+ agente.getNombre());
         if(agenteService.eliminar(agente.getCedula())){
             System.out.println("Eliminación correcta");
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Agente Eliminado"));
-        }else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Falló eliminando Agente"));
+            PrimeFaces.current().ajax().update("form:messages", "form:dtagente");
+            return "listar-agente.xhtml";
         }
-
-        PrimeFaces.current().ajax().update("form:messages", "form:dtagentes");
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Falló eliminando Agente"));
+        return "listar-agente.xhtml";
     }
 
     public String actualizar(){
         System.out.println("Actualizar "+this.agente.getNombre());
         if(agenteService.actualizar(agente)){
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Agente Actualizado"));
-            PrimeFaces.current().ajax().update("form:messages", "form:dtagentes");
+            PrimeFaces.current().ajax().update("form:messages", "form:dtagente");
 
             return "listar-agente.xhtml";
         }

@@ -31,10 +31,10 @@
 
 
 
-                <p:dataTable id="dtcontratocliente" widgetVar="dtcontratocliente" var="contratoCliente" value="#{contratoClienteBean.listar()}"
+                <p:dataTable id="dtcontratocliente" widgetVar="dtcontratocliente" var="contratocliente" value="#{contratoClienteBean.listar()}"
                              emptyMessage="No se encuentra"
                              reflow="true" styleClass="products-table" selection="#{contratoClienteBean.selectedProducts}"
-                             rowKey="#{contratoCliente.codigo}" paginator="true" rows="10" rowSelectMode="add" paginatorPosition="bottom">
+                             rowKey="#{contratocliente.codigo}" paginator="true" rows="10" rowSelectMode="add" paginatorPosition="bottom">
 
                     <f:facet name="header">
                         <div class="products-table-header">
@@ -74,16 +74,16 @@
                         <h:outputText value="#{contratocliente.valor}"/>
                     </p:column>
 
-                    <p:column headerText="#{msgs['tclientes']}" filterBy="#{contratoCliente.cedula_cliente.cedula}">
-                        <h:outputText value="#{contratoCliente.cedula_cliente.cedula}"/>
+                    <p:column headerText="#{msgs['tclientes']}" filterBy="#{contratocliente.cedula_cliente.cedula}">
+                        <h:outputText value="#{contratocliente.cedula_cliente.cedula}"/>
                     </p:column>
 
-                    <p:column headerText="#{msgs['tinmueble']}" filterBy="#{contratoCliente.codigo_imnueble.codigo}">
-                        <h:outputText value="#{contratoCliente.codigo_imnueble.codigo}"/>
+                    <p:column headerText="#{msgs['tinmueble']}" filterBy="#{contratocliente.codigo_imnueble.codigo}">
+                        <h:outputText value="#{contratocliente.codigo_imnueble.codigo}"/>
                     </p:column>
 
-                    <p:column headerText="#{msgs['tagentes']}" filterBy="#{contratoCliente.cedula_agente.cedula}">
-                        <h:outputText value="#{contratoCliente.cedula_agente.cedula}"/>
+                    <p:column headerText="#{msgs['tagentes']}" filterBy="#{contratocliente.cedula_agente.cedula}">
+                        <h:outputText value="#{contratocliente.cedula_agente.cedula}"/>
                     </p:column>
 
 

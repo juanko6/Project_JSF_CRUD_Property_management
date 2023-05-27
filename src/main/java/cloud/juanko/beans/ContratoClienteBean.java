@@ -63,41 +63,49 @@ public class ContratoClienteBean implements Serializable {
         System.out.println("Nombre Contrato ");
         if(contratoClienteService.guardar(contratoCliente, cliente, inmueble, agente)){
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Contrato Creado"));
-            PrimeFaces.current().ajax().update("form:messages", "form:dtcontrato");
+            PrimeFaces.current().ajax().update("form:messages", "form:dtcontratocliente");
 
-            return "crear-contrato-cliente.xhtml";        }
+            return "listar-contrato-cliente.xhtml";
+        }
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Falló creando Contrato"));
 
-        return "crear-contrato-cliente.xhtml";
+        return "listar-contrato-cliente.xhtml";
     }
 
     public String irCrear() {
         this.contratoCliente = new ContratoCliente();
-       return "crear-contrato-cliente.xhtml";
+       return "listar-contrato-cliente.xhtml";
     }
 
 
-    public void eliminar(){
+    public String eliminar(){
         if(contratoClienteService.eliminar(contratoCliente.getCodigo())){
             System.out.println("Eliminación correcta");
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Contrato Eliminado"));
-        }else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Falló eliminando Contrato"));
-        }
+            PrimeFaces.current().ajax().update("form:messages", "form:dtcontratocliente");
 
-        PrimeFaces.current().ajax().update("form:messages", "form:dtpropietario");
+            return "listar-contrato-cliente.xhtml";
+
+        }
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Falló eliminando Contrato"));
+        return "listar-contrato-cliente.xhtml";
+
+
+
     }
 
     public String actualizar(){
         System.out.println("Actualizar "+this.contratoCliente.getCodigo());
         if(contratoClienteService.actualizar(contratoCliente, cliente, inmueble, agente)){
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Contrato Actualizado"));
-            PrimeFaces.current().ajax().update("form:messages", "form:dtContrato");
+            PrimeFaces.current().ajax().update("form:messages", "form:dtcontratocliente");
 
-            return "crear-contrato-cliente.xhtml";        }
+            return "listar-contrato-cliente.xhtml";
+        }
         FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Falló Actualizando Contrato"));
 
-        return "crear-contrato-cliente.xhtml";    }
+        return "listar-contrato-cliente.xhtml";
+    }
 
     public ContratoClienteService getContratoClienteService() {
         return contratoClienteService;
@@ -186,4 +194,6 @@ public class ContratoClienteBean implements Serializable {
     public void setAgenteService(AgenteService agenteService) {
         this.agenteService = agenteService;
     }
+
+
 }
