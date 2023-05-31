@@ -3,7 +3,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core"
         xmlns:p="http://primefaces.org/ui">
 
 <h:head>
@@ -16,9 +15,9 @@
         <ui:define name="contenido">
             <h1>ECUACION DIFERENCIAL "LOGISTICA" PI</h1>
             <h:form>
-                <p:inputNumber value="#{logisticBean.r}" label="Tasa de crecimiento" >Tasa de Crecimiento</p:inputNumber><br></br>
-                <p:inputNumber value="#{logisticBean.k}" label="Capacidad de carga" >Capacidad de Carga</p:inputNumber><br></br>
-                <p:inputNumber value="#{logisticBean.x0}" label="Población inicial" >Población Inicial</p:inputNumber><br></br>
+                <p:inputNumber value="#{logisticBean.r}" label="Tasa de crecimiento" >Tasa de Crecimiento</p:inputNumber><br/>
+                <p:inputNumber value="#{logisticBean.k}" label="Capacidad de carga" >Capacidad de Carga</p:inputNumber><br/>
+                <p:inputNumber value="#{logisticBean.x0}" label="Población inicial" >Población Inicial</p:inputNumber><br/>
                 <p:commandButton value="Generar Gráfica" action="#{logisticBean.generarGrafica}" update="chart" />
                 <p:chart id="chart" type="line" model="#{logisticBean.lineModel}" style="width:600px;height:400px;" />
 
